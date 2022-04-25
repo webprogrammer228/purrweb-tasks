@@ -17,25 +17,25 @@ function App() {
 
   const [cards, setCards] = useState<
     {
-      name?: string;
-      cardId?: number;
-      columnId?: number;
+      name: string | undefined;
+      cardId: number | undefined;
+      columnId: number | undefined;
     }[]
   >([]);
 
   const [description, setDescription] = useState<
     {
-      name?: string;
-      cardId?: number | undefined | null;
-      columnId?: number | null | undefined;
+      name: string | undefined;
+      cardId: number | undefined | null;
+      columnId: number | null | undefined;
     }[]
   >([]);
 
   const [comments, setComments] = useState<
     {
-      name?: string;
-      cardId?: number | undefined | null;
-      columnId?: number | null | undefined;
+      name: string | undefined;
+      cardId: number | undefined | null;
+      columnId: number | null | undefined;
       commentId?: number | null | undefined;
     }[]
   >([]);
