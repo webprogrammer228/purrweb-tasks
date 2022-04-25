@@ -349,7 +349,27 @@ const Column: React.FC<column> = ({
       elem.columnId !== undefined &&
       elem.columnId !== 0 &&
       elem.columnId >= id
-        ? elem.columnId-- && (elem.cardId = description.length + 1)
+        ? elem.columnId--
+        : false
+    );
+
+    updatedDescription.map((elem) =>
+      elem.columnId !== null &&
+      elem.columnId !== id &&
+      elem.columnId !== undefined &&
+      elem.columnId !== 0 &&
+      elem.columnId >= id
+        ? elem.columnId--
+        : false
+    );
+
+    updatedComments.map((elem) =>
+      elem.columnId !== null &&
+      elem.columnId !== id &&
+      elem.columnId !== undefined &&
+      elem.columnId !== 0 &&
+      elem.columnId >= id
+        ? elem.columnId--
         : false
     );
 
@@ -360,10 +380,18 @@ const Column: React.FC<column> = ({
     localStorage.setItem("cards", JSON.stringify(updatedCards));
 
     setDescription(updatedDescription);
+
     localStorage.setItem("description", JSON.stringify(updatedDescription));
 
     setComments(updatedComments);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
+    //localStorage.setItem("comments", JSON.stringify(updatedComments));
+
+    console.log("UpdatedColumns", updatedColumns);
+    console.log("UpdatedCards", updatedCards);
+    console.log("UpdatedDescription", updatedDescription);
+    console.log("UpdatedComments", updatedComments);
+    console.log("id", id);
+    console.log("Description length", description.length);
   };
 
   const deleteCard = (id: number | null | undefined) => {
@@ -673,7 +701,7 @@ const Column: React.FC<column> = ({
                               e.currentTarget.value === ""
                                 ? comment.name
                                 : e.currentTarget.value,
-                            columnId: currentCardId,
+                            columnId: currentColumnId,
                           })
                         }
                         onChange={(e) =>
@@ -683,7 +711,7 @@ const Column: React.FC<column> = ({
                               e.currentTarget.value === ""
                                 ? comment.name
                                 : e.currentTarget.value,
-                            columnId: currentCardId,
+                            columnId: currentColumnId,
                           })
                         }
                         onBlur={(e) =>
