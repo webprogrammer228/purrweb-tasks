@@ -279,14 +279,7 @@ const Board: React.FC<Name> = ({
     localStorage.setItem("description", JSON.stringify(updatedDescription));
 
     setComments(updatedComments);
-    //localStorage.setItem("comments", JSON.stringify(updatedComments));
-
-    console.log("UpdatedColumns", updatedColumns);
-    console.log("UpdatedCards", updatedCards);
-    console.log("UpdatedDescription", updatedDescription);
-    console.log("UpdatedComments", updatedComments);
-    console.log("id", id);
-    console.log("Description length", description.length);
+    localStorage.setItem("comments", JSON.stringify(updatedComments));
   };
 
   const deleteDescription = (id: number | null | undefined) => {
@@ -302,6 +295,7 @@ const Board: React.FC<Name> = ({
     setShowPopup(false);
   };
 
+  console.log("1")
   return (
     <>
       <Header>
