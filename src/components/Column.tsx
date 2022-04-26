@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CommentType } from "../types/type";
+import { CardType, CommentType } from "../types/type";
 import { TypeProps } from "./Board";
+import Card from "./Card";
 
 type ColumnProps = {
   id: number;
@@ -27,6 +28,13 @@ const Column: React.FC<TypeProps & ColumnProps> = ({
   const [initialState, setInitialState] = useState<CommentType>({
     id: 0,
     title: "",
+  });
+
+  const [cardInitialValue, setCardInitialValue] = useState<CardType>({
+    id: 0,
+    title: "",
+    description: "",
+    comments: [],
   });
 
   const editElem = (h3: HTMLElement) => {
@@ -59,7 +67,82 @@ const Column: React.FC<TypeProps & ColumnProps> = ({
     e.currentTarget.previousElementSibling?.classList.remove("active");
   };
 
-  console.log(title);
+  const endEditColumn = (e: React.SyntheticEvent) => {
+    e.currentTarget.previousElementSibling?.classList.remove("active");
+  };
+
+  const removeColumn = (id: number) => {
+    const updatedColumns = columns.filter((elem) =>
+      elem.id !== id ? elem : false
+    );
+
+    //const updatedCards = cards.filter((elem) =>
+    //  elem.columnId !== id ? elem : false
+    //);
+
+    //const updatedDescription = description.filter((elem) =>
+    //  elem.columnId !== id ? elem : false
+    //);
+
+    //const updatedComments = comments.filter((elem) =>
+    //  elem.columnId !== id ? elem : false
+    //);
+
+    updatedColumns.map((elem, index) =>
+      elem.id !== index ? (elem.id = index) : false
+    );
+
+    //updatedCards.map((elem) =>
+    //  elem.columnId !== id &&
+    //  elem.columnId !== undefined &&
+    //  elem.columnId !== 0 &&
+    //  elem.columnId >= id
+    //    ? elem.columnId--
+    //    : false
+    //);
+
+    //updatedDescription.map((elem) =>
+    //  elem.columnId !== null &&
+    //  elem.columnId !== id &&
+    //  elem.columnId !== undefined &&
+    //  elem.columnId !== 0 &&
+    //  elem.columnId >= id
+    //    ? elem.columnId--
+    //    : false
+    //);
+
+    //updatedComments.map((elem) =>
+    //  elem.columnId !== null &&
+    //  elem.columnId !== id &&
+    //  elem.columnId !== undefined &&
+    //  elem.columnId !== 0 &&
+    //  elem.columnId >= id
+    //    ? elem.columnId--
+    //    : false
+    //);
+
+    setColumns(updatedColumns);
+    localStorage.setItem("columns", JSON.stringify(updatedColumns));
+
+    //setCards(updatedCards);
+    //localStorage.setItem("cards", JSON.stringify(updatedCards));
+
+    //setDescription(updatedDescription);
+
+    //localStorage.setItem("description", JSON.stringify(updatedDescription));
+
+    //setComments(updatedComments);
+    //localStorage.setItem("comments", JSON.stringify(updatedComments));
+  };
+
+  const addCard = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    cards.push(cardInitialValue);
+    setCards(cards);
+
+    localStorage.setItem("columns", JSON.stringify(columns));
+
+    e.currentTarget.value = "";
+  };
 
   return (
     <ColumnBody>
@@ -93,6 +176,53 @@ const Column: React.FC<TypeProps & ColumnProps> = ({
             e.key === "Enter" ? editColumnName(e, id, initialState) : false
           }
         />
+
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            name={name}
+            title={card.title}
+            id={card.id}
+            description={card.description}
+            comments={card.comments}
+            cards={cards}
+            setCards={setCards}
+            setDescription={setDescription}
+            setComments={setComments}
+            columns={columns}
+          />
+        ))}
+
+        <AddCardHeader
+          onClick={(e: React.SyntheticEvent) => {
+            let target = e.target;
+
+            if ((target as HTMLElement).tagName !== "H4") return;
+            editElem(target as HTMLElement);
+          }}
+        >
+          + Добавить карточку
+        </AddCardHeader>
+        <AddCardTextArea
+          onBlur={(e: React.SyntheticEvent) => endEditColumn(e)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setCardInitialValue({
+              id: cards.length,
+              title: e.currentTarget.value,
+              description: "",
+              comments: [],
+            })
+          }
+          onKeyDown={(e) =>
+            e.key === "Enter" && e.currentTarget.value.trim() !== ""
+              ? addCard(e)
+              : false
+          }
+        />
+
+        <RemoveColumn onClick={() => removeColumn(id)}>
+          Удалить колонку
+        </RemoveColumn>
       </Col>
     </ColumnBody>
   );
@@ -130,6 +260,19 @@ const HeaderCol = styled.h3`
   cursor: pointer;
 `;
 
+const RemoveColumn = styled.p`
+  min-width: 100%;
+  background: transparent;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+
+  flex: 1;
+`;
+
 const ColEdit = styled.input`
   width: 95%;
   height: auto;
@@ -139,4 +282,35 @@ const ColEdit = styled.input`
   display: none;
   margin-bottom: 18px;
   outline: 0;
+`;
+
+const AddCardHeader = styled.h4`
+  font-weight: bold;
+  margin-bottom: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all 0.5s;
+
+  &:hover {
+    background: lightgray;
+    color: black;
+  }
+
+  &.active {
+    display: none;
+  }
+
+  &.active + textarea {
+    display: block;
+  }
+
+  cursor: pointer;
+`;
+
+const AddCardTextArea = styled.textarea`
+  width: 100%;
+  display: none;
+
+  margin-bottom: 25px;
 `;

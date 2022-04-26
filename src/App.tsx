@@ -6,7 +6,7 @@ import { CardType, ColumnType, CommentType } from "./types/type";
 
 function App() {
   //localStorage.clear();
-  const name: string | number | null = localStorage.getItem("name");
+  const name: string | null = localStorage.getItem("name");
   const [isGreeting, setIsGreeting] = useState(Boolean(name));
 
   const [columns, setColumns] = useState<ColumnType[]>([
@@ -34,7 +34,7 @@ function App() {
 
   const [cards, setCards] = useState<CardType[]>([]);
 
-  const [description, setDescription] = useState<ColumnType[]>([]);
+  const [description, setDescription] = useState<string>("");
 
   const [comments, setComments] = useState<CommentType[]>([]);
 
@@ -44,8 +44,7 @@ function App() {
     } else if (JSON.parse(localStorage.getItem("columns")!) !== columns) {
       setColumns(JSON.parse(localStorage.getItem("columns")!));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [columns]);
 
   //useEffect(() => {
   //  if (localStorage.getItem("cards") === null) {

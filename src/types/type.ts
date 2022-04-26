@@ -17,8 +17,3 @@ export type CommentType = {
   id: number;
   title: string;
 };
-
-export type DescriptionType = {
-  id: number;
-  title: string;
-};

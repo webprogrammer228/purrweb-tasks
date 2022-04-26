@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {
-  CardType,
-  ColumnType,
-  CommentType,
-  DescriptionType,
-} from "../types/type";
+import { CardType, ColumnType, CommentType } from "../types/type";
 import Column from "./Column";
 
 export type TypeProps = {
-  name: string | number | null;
+  name: string | null;
   columns: ColumnType[];
   cards: CardType[];
-  description: DescriptionType[];
+  description: string;
   comments: CommentType[];
 
   setColumns: React.Dispatch<React.SetStateAction<ColumnType[]>>;
   setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
-  setDescription: React.Dispatch<React.SetStateAction<ColumnType[]>>;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
   setComments: React.Dispatch<React.SetStateAction<CommentType[]>>;
 };
 
