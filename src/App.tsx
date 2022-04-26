@@ -47,34 +47,34 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("cards") === null) {
-      localStorage.setItem("cards", JSON.stringify(cards));
-    } else if (JSON.parse(localStorage.getItem("cards")!) !== cards) {
-      setCards(JSON.parse(localStorage.getItem("cards")!));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //useEffect(() => {
+  //  if (localStorage.getItem("cards") === null) {
+  //    localStorage.setItem("cards", JSON.stringify(cards));
+  //  } else if (JSON.parse(localStorage.getItem("cards")!) !== cards) {
+  //    setCards(JSON.parse(localStorage.getItem("cards")!));
+  //  }
+  //  // eslint-disable-next-line react-hooks/exhaustive-deps
+  //}, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("description") === null) {
-      localStorage.setItem("description", JSON.stringify(description));
-    } else if (
-      JSON.parse(localStorage.getItem("description")!) !== description
-    ) {
-      setDescription(JSON.parse(localStorage.getItem("description")!));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //useEffect(() => {
+  //  if (localStorage.getItem("description") === null) {
+  //    localStorage.setItem("description", JSON.stringify(description));
+  //  } else if (
+  //    JSON.parse(localStorage.getItem("description")!) !== description
+  //  ) {
+  //    setDescription(JSON.parse(localStorage.getItem("description")!));
+  //  }
+  //  // eslint-disable-next-line react-hooks/exhaustive-deps
+  //}, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("comments") === null) {
-      localStorage.setItem("comments", JSON.stringify(comments));
-    } else if (JSON.parse(localStorage.getItem("comments")!) !== comments) {
-      setComments(JSON.parse(localStorage.getItem("comments")!));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //useEffect(() => {
+  //  if (localStorage.getItem("comments") === null) {
+  //    localStorage.setItem("comments", JSON.stringify(comments));
+  //  } else if (JSON.parse(localStorage.getItem("comments")!) !== comments) {
+  //    setComments(JSON.parse(localStorage.getItem("comments")!));
+  //  }
+  //  // eslint-disable-next-line react-hooks/exhaustive-deps
+  //}, []);
 
   useEffect(() => {
     localStorage.getItem("name") === null
