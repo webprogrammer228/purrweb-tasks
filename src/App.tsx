@@ -8,7 +8,7 @@ function App() {
   const name: string | number | null = localStorage.getItem("name");
   const [isGreeting, setIsGreeting] = useState(Boolean(name));
 
-  const [data, setData] = useState([
+  const [columns, setColumns] = useState([
     { id: 0, name: "TODO" },
     { id: 1, name: "In Progress" },
     { id: 2, name: "Testing" },
@@ -42,9 +42,9 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("columns") === null) {
-      localStorage.setItem("columns", JSON.stringify(data));
-    } else if (JSON.parse(localStorage.getItem("columns")!) !== data) {
-      setData(JSON.parse(localStorage.getItem("columns")!));
+      localStorage.setItem("columns", JSON.stringify(columns));
+    } else if (JSON.parse(localStorage.getItem("columns")!) !== columns) {
+      setColumns(JSON.parse(localStorage.getItem("columns")!));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -91,8 +91,8 @@ function App() {
       ) : (
         <Board
           name={name}
-          data={data}
-          setData={setData}
+          columns={columns}
+          setColumns={setColumns}
           cards={cards}
           setCards={setCards}
           description={description}

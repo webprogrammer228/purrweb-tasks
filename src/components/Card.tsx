@@ -5,18 +5,40 @@ import styled from "styled-components";
 const Card: React.FC<card> = ({
   cards,
   id,
-  setCurrentCardId,
-  setCurrentColumnId,
   setShowPopup,
-  setCardColumnName,
   setCards,
   deleteDescription,
   data,
   endEditColumn,
-  cardsMas,
   editElem,
   removeColumn,
 }) => {
+  const [card, setCard] = useState("");
+  const [currentCardId, setCurrentCardId] = useState<null | number | undefined>(
+    0
+  );
+  const [cardColumnName, setCardColumnName] = useState("");
+  const [currentColumnId, setCurrentColumnId] = useState<
+    null | number | undefined
+  >(0);
+
+  let descriptionMas: {
+    name: string | undefined;
+    cardId: number | null | undefined;
+    columnId: number | null | undefined;
+  }[] = [];
+  let commentsMas: {
+    name: string | undefined;
+    cardId: number | undefined | null;
+    columnId: number | null | undefined;
+    commentId?: number | null | undefined;
+  }[] = [];
+  let cardsMas: {
+    name: string | undefined;
+    cardId: number | undefined;
+    columnId: number | undefined;
+  }[] = [];
+
   const showCardData = (
     e: React.SyntheticEvent<HTMLElement>,
     id: number | undefined,
@@ -62,6 +84,8 @@ const Card: React.FC<card> = ({
     columnId: 0,
   });
 
+  const cardsFromStorage = JSON.parse(localStorage.getItem("cards")!);
+
   const deleteCard = (id: number | null | undefined) => {
     const updatedCards = cards.filter((elem) =>
       elem.cardId !== id ? elem : false
@@ -73,7 +97,7 @@ const Card: React.FC<card> = ({
     deleteDescription(id);
   };
 
-  const [card, setCard] = useState("");
+
   return (
     <>
       {cards !== null
