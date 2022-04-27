@@ -30,13 +30,10 @@ const Card: React.FC<CardProps> = ({
   id,
 }) => {
   const deleteCard = (id: number) => {
-    const updatedCards = cards.filter((card) =>
-      card.id !== id ? card : false
-    );
+    const newCards = cards.filter((card) => card.id !== id);
+    setCards(newCards);
 
-    console.log(updatedCards);
-    setCards(updatedCards);
-    console.log(cards);
+    //localStorage.setItem("columns", JSON.stringify(columns));
   };
 
   return (

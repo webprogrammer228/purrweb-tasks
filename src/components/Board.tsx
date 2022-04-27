@@ -19,6 +19,7 @@ export type TypeProps = {
 const Board: React.FC<TypeProps> = ({
   name,
   columns,
+  cards,
   setColumns,
   setCards,
   description,
