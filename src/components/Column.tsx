@@ -1,148 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { CardType, CommentType } from "../types/type";
-import { TypeProps } from "./Board";
+import { CardType, ColumnType } from "../types/type";
+import { addCard, editColumn, removeColumn } from "../store/addColumnsSlice";
+import { endEditColumn } from "./Board";
 import Card from "./Card";
+import { editElem } from "./Board";
+import CardDetails from "./CardDetails";
 
 type ColumnProps = {
   id: number;
   title: string;
+  name: string | null;
+  cards: CardType[];
 };
 
-const Column: React.FC<TypeProps & ColumnProps> = ({
-  id,
-  title,
-  name,
-  cards,
-  setCards,
-  columns,
-  setColumns,
-  description,
-  setDescription,
-  comments,
-  setComments,
-}) => {
-  let selectedItem: HTMLElement;
-  let nextElem: HTMLInputElement;
+const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
+  const dispatch = useDispatch();
 
-  const [initialState, setInitialState] = useState<CommentType>({
+  const colEdit = (id: number, editedTitleColumn: ColumnType) =>
+    dispatch(editColumn({ id, editedTitleColumn }));
+  const removeCol = (id: number) => dispatch(removeColumn({ id }));
+
+  function cardAdd(id: number, e: React.SyntheticEvent) {
+    dispatch(addCard({ cardTitle, id }));
+    endEditColumn(e);
+    setCardTitle("");
+  }
+
+  const [editedTitleColumn, setEditedTitleColumn] = useState<ColumnType>({
     id: 0,
     title: "",
+    cards: [],
   });
 
-  const [cardInitialValue, setCardInitialValue] = useState<CardType>({
-    id: 0,
-    title: "",
-    description: "",
-    comments: [],
-  });
+  const [cardTitle, setCardTitle] = useState(String(""));
 
-  const editElem = (h3: HTMLElement) => {
-    if (selectedItem) {
-      selectedItem.classList.remove("active");
-      nextElem.classList.remove("active");
-    }
-    selectedItem = h3;
-    nextElem = h3 as HTMLInputElement;
-    let focusedInput = nextElem.nextElementSibling as HTMLInputElement;
+  // Hide popup on esc
+  useEffect(() => {
+    const keyDownHandler = (e: { key: string; preventDefault: () => void }) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
 
-    selectedItem.classList.add("active");
-    focusedInput?.focus();
+        showPopupOnEsc();
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
+
+  const showPopupOnEsc = () => {
+    setShowPopup(false);
   };
-
-  const editColumnName = (
-    e: React.SyntheticEvent,
-    id: number,
-    initialState: { id: number; title: string }
-  ) => {
-    columns.map((elem) =>
-      elem.id === id ? Object.assign(elem, initialState) : false
-    );
-
-    setColumns(columns);
-
-    localStorage.setItem("columns", JSON.stringify(columns));
-    setColumns(JSON.parse(localStorage.getItem("columns")!));
-
-    e.currentTarget.previousElementSibling?.classList.remove("active");
-  };
-
-  const endEditColumn = (e: React.SyntheticEvent) => {
-    e.currentTarget.previousElementSibling?.classList.remove("active");
-  };
-
-  const removeColumn = (id: number) => {
-    const updatedColumns = columns.filter((elem) =>
-      elem.id !== id ? elem : false
-    );
-
-    //const updatedCards = cards.filter((elem) =>
-    //  elem.columnId !== id ? elem : false
-    //);
-
-    //const updatedDescription = description.filter((elem) =>
-    //  elem.columnId !== id ? elem : false
-    //);
-
-    //const updatedComments = comments.filter((elem) =>
-    //  elem.columnId !== id ? elem : false
-    //);
-
-    updatedColumns.map((elem, index) =>
-      elem.id !== index ? (elem.id = index) : false
-    );
-
-    //updatedCards.map((elem) =>
-    //  elem.columnId !== id &&
-    //  elem.columnId !== undefined &&
-    //  elem.columnId !== 0 &&
-    //  elem.columnId >= id
-    //    ? elem.columnId--
-    //    : false
-    //);
-
-    //updatedDescription.map((elem) =>
-    //  elem.columnId !== null &&
-    //  elem.columnId !== id &&
-    //  elem.columnId !== undefined &&
-    //  elem.columnId !== 0 &&
-    //  elem.columnId >= id
-    //    ? elem.columnId--
-    //    : false
-    //);
-
-    //updatedComments.map((elem) =>
-    //  elem.columnId !== null &&
-    //  elem.columnId !== id &&
-    //  elem.columnId !== undefined &&
-    //  elem.columnId !== 0 &&
-    //  elem.columnId >= id
-    //    ? elem.columnId--
-    //    : false
-    //);
-
-    setColumns(updatedColumns);
-    localStorage.setItem("columns", JSON.stringify(updatedColumns));
-
-    //setCards(updatedCards);
-    //localStorage.setItem("cards", JSON.stringify(updatedCards));
-
-    //setDescription(updatedDescription);
-
-    //localStorage.setItem("description", JSON.stringify(updatedDescription));
-
-    //setComments(updatedComments);
-    //localStorage.setItem("comments", JSON.stringify(updatedComments));
-  };
-
-  const addCard = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    cards.push(cardInitialValue);
-    setCards(cards);
-
-    localStorage.setItem("columns", JSON.stringify(columns));
-
-    e.currentTarget.value = "";
-  };
+  const [showPopup, setShowPopup] = useState(Boolean(false));
 
   return (
     <ColumnBody>
@@ -157,41 +71,44 @@ const Column: React.FC<TypeProps & ColumnProps> = ({
         <HeaderCol>{title}</HeaderCol>
         <ColEdit
           defaultValue={title}
-          onFocus={(e) =>
-            setInitialState({
-              id: id,
-              title:
-                e.currentTarget.value === "" ? title : e.currentTarget.value,
-            })
-          }
           onChange={(e) =>
-            setInitialState({
+            setEditedTitleColumn({
               id: id,
               title:
-                e.currentTarget.value === "" ? title : e.currentTarget.value,
+                e.currentTarget.value.trim() === ""
+                  ? title
+                  : e.currentTarget.value,
+              cards: [],
             })
           }
-          onBlur={(e) => editColumnName(e, id, initialState)}
+          onBlur={(e) => endEditColumn(e)}
           onKeyDown={(e) =>
-            e.key === "Enter" ? editColumnName(e, id, initialState) : false
+            e.key === "Enter"
+              ? colEdit(id, editedTitleColumn) && endEditColumn(e)
+              : false
           }
         />
 
         {cards.map((card) => (
           <Card
             key={card.id}
-            name={name}
             title={card.title}
-            id={card.id}
+            cardId={card.id}
             description={card.description}
-            comments={card.comments}
-            cards={cards}
-            setCards={setCards}
-            setDescription={setDescription}
-            setComments={setComments}
-            columns={columns}
+            columnId={id}
+            setShowPopup={setShowPopup}
           />
         ))}
+
+        {showPopup ? (
+          <CardDetails
+            columnTitle={title}
+            setShowPopup={setShowPopup}
+            name={name}
+          />
+        ) : (
+          false
+        )}
 
         <AddCardHeader
           onClick={(e: React.SyntheticEvent) => {
@@ -204,23 +121,19 @@ const Column: React.FC<TypeProps & ColumnProps> = ({
           + Добавить карточку
         </AddCardHeader>
         <AddCardTextArea
+          value={cardTitle}
           onBlur={(e: React.SyntheticEvent) => endEditColumn(e)}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setCardInitialValue({
-              id: cards.length,
-              title: e.currentTarget.value,
-              description: "",
-              comments: [],
-            })
+            setCardTitle(e.currentTarget.value)
           }
           onKeyDown={(e) =>
             e.key === "Enter" && e.currentTarget.value.trim() !== ""
-              ? addCard(e)
+              ? cardAdd(id, e)
               : false
           }
         />
 
-        <RemoveColumn onClick={() => removeColumn(id)}>
+        <RemoveColumn onClick={() => removeCol(id)}>
           Удалить колонку
         </RemoveColumn>
       </Col>

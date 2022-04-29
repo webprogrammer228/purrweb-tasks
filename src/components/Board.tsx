@@ -1,67 +1,42 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CardType, ColumnType, CommentType } from "../types/type";
+import { useDispatch } from "react-redux";
+import { ColumnType } from "../types/type";
 import Column from "./Column";
 
-export type TypeProps = {
-  name: string | null;
-  columns: ColumnType[];
-  cards: CardType[];
-  description: string;
-  comments: CommentType[];
+import { addColumn } from "../store/addColumnsSlice";
 
-  setColumns: React.Dispatch<React.SetStateAction<ColumnType[]>>;
-  setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
-  setComments: React.Dispatch<React.SetStateAction<CommentType[]>>;
+export const endEditColumn = (e: React.SyntheticEvent) => {
+  e.currentTarget.previousElementSibling?.classList.remove("active");
 };
 
-const Board: React.FC<TypeProps> = ({
-  name,
-  columns,
-  cards,
-  setColumns,
-  setCards,
-  description,
-  setDescription,
-  comments,
-  setComments,
-}) => {
-  const [addValue, setAddValue] = useState(String(""));
-  const addNewColumn = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    let lastElem: number | false = 0;
-    columns.forEach(
-      (elem) => (lastElem = elem.id === columns.length - 1 ? elem.id : false)
-    );
-    let newColumn = { id: lastElem + 1, title: addValue, cards: [] };
+type BoardProps = {
+  name: string | null;
+  columns: ColumnType[];
+};
 
-    let updatedMas: ColumnType[] = [];
-    updatedMas.push(...columns, newColumn);
+let selectedItem: HTMLElement;
+let nextElem: HTMLInputElement;
+export const editElem = (h3: HTMLElement) => {
+  if (selectedItem) {
+    selectedItem.classList.remove("active");
+    nextElem.classList.remove("active");
+  }
+  selectedItem = h3;
+  nextElem = h3 as HTMLInputElement;
+  let focusedInput = nextElem.nextElementSibling as HTMLInputElement;
 
-    setColumns(updatedMas);
-    localStorage.setItem("columns", JSON.stringify(updatedMas));
-    setColumns(JSON.parse(localStorage.getItem("columns")!));
+  selectedItem.classList.add("active");
 
-    e.currentTarget.value = "";
-  };
-  const endEditColumn = (e: React.SyntheticEvent) => {
-    e.currentTarget.previousElementSibling?.classList.remove("active");
-  };
+  focusedInput?.focus();
+};
 
-  let selectedItem: HTMLElement;
-  let nextElem: HTMLInputElement;
-  const editElem = (h3: HTMLElement) => {
-    if (selectedItem) {
-      selectedItem.classList.remove("active");
-      nextElem.classList.remove("active");
-    }
-    selectedItem = h3;
-    nextElem = h3 as HTMLInputElement;
-    let focusedInput = nextElem.nextElementSibling as HTMLInputElement;
+const Board: React.FC<BoardProps> = ({ name, columns }) => {
+  const dispatch = useDispatch();
 
-    selectedItem.classList.add("active");
-    focusedInput?.focus();
-  };
+  const [columnTitle, setColumnTitle] = useState(String(""));
+
+  const colAdd = () => dispatch(addColumn({ columnTitle }));
 
   return (
     <>
@@ -70,7 +45,7 @@ const Board: React.FC<TypeProps> = ({
       </Header>
       <Content>
         <BoardBlock>
-          <Form>
+          <Form onSubmit={(e) => e.preventDefault()}>
             {columns.map((column) => (
               <Column
                 key={column.id}
@@ -78,13 +53,6 @@ const Board: React.FC<TypeProps> = ({
                 title={column.title}
                 cards={column.cards}
                 name={name}
-                columns={columns}
-                setColumns={setColumns}
-                setCards={setCards}
-                description={description}
-                setDescription={setDescription}
-                comments={comments}
-                setComments={setComments}
               />
             ))}
           </Form>
@@ -100,18 +68,15 @@ const Board: React.FC<TypeProps> = ({
               + Добавить колонку
             </HeaderCol>
             <ColEdit
-              defaultValue={""}
+              value={columnTitle}
               placeholder="Введите название колонки"
               onBlur={(e: React.SyntheticEvent) => endEditColumn(e)}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAddValue(e.currentTarget.value)
-              }
-              onFocus={(e: React.ChangeEvent<HTMLInputElement>) =>
-                e.currentTarget.value
+                setColumnTitle(e.currentTarget.value)
               }
               onKeyDown={(e) =>
                 e.key === "Enter" && e.currentTarget.value !== ""
-                  ? addNewColumn(e)
+                  ? colAdd() && setColumnTitle("")
                   : false
               }
             />

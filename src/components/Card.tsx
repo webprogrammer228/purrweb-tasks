@@ -1,50 +1,39 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { CardType, ColumnType, CommentType } from "../types/type";
+import { addData, deleteCard } from "../store/addColumnsSlice";
+import { endEditColumn } from "./Board";
 
 type CardProps = {
-  name: string | null;
-  description: string;
-  comments: CommentType[];
-  cards: CardType[];
-  columns: ColumnType[];
-
-  setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
-  setComments: React.Dispatch<React.SetStateAction<CommentType[]>>;
-
-  id: number;
+  cardId: number;
+  columnId: number;
   title: string;
+  description: string;
+  setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Card: React.FC<CardProps> = ({
-  name,
   title,
-  columns,
-  comments,
-  setComments,
+  cardId,
+  columnId,
+  setShowPopup,
   description,
-  setDescription,
-  cards,
-  setCards,
-  id,
 }) => {
-  const deleteCard = (id: number) => {
-    const newCards = cards.filter((card) => card.id !== id);
-    setCards(newCards);
+  const dispatch = useDispatch();
+  const removeCard = () => dispatch(deleteCard({ cardId, columnId }));
 
-    //localStorage.setItem("columns", JSON.stringify(columns));
-  };
+  const addDataToCurrentCard = () =>
+    dispatch(addData({ cardId, columnId, title, description }));
 
   return (
     <>
       <CardWrapper>
-        <CardName
-        //onClick={(e) => showCardData(e, id, cardName.cardId)}
-        >
+        <CardName onClick={(e) => addDataToCurrentCard() && setShowPopup(true)}>
           {title}
         </CardName>
-        <CardDelete onClick={() => deleteCard(id)}>X</CardDelete>
+        <CardDelete onClick={(e) => removeCard() && endEditColumn(e)}>
+          X
+        </CardDelete>
       </CardWrapper>
     </>
   );
