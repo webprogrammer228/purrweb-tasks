@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 //import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../store";
 import { editCard } from "../store/addColumnsSlice";
-import { editElem } from "./Board";
+import { CommentType } from "../types/type";
+import { editElem, Form, Warning } from "./Board";
+import { ColumnSubmit } from "./Column";
 //import showData from "../store/addColumnsSlice";
-//import Comments from './Comment';
+import Comments from "./Comment";
 import Description from "./Description";
 type Cards = {
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +23,7 @@ export type CurrentCard = {
   columnId: number;
   title: string;
   description: string;
+  comments: Array<CommentType>;
 };
 
 const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
@@ -27,16 +31,27 @@ const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
     (state) => state.columns.currentCard
   );
 
-  const dispatch = useDispatch();
-  function redactCard(e: React.SyntheticEvent<HTMLInputElement>) {
-    dispatch(editCard({ currentCard, cardName }));
-    endEditCard(e);
-  }
+  let { cardId, columnId } = currentCard;
 
-  const [cardName, setCardName] = useState(String(""));
+  const dispatch = useDispatch();
 
   const endEditCard = (e: React.SyntheticEvent<HTMLInputElement>) => {
     e.currentTarget.previousElementSibling?.classList.remove("active");
+  };
+
+  const formRef = useRef<any>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ColumnSubmit>();
+  const onSubmit: SubmitHandler<ColumnSubmit> = (data) => {
+    dispatch(editCard({ cardId, columnId, data }));
+    formRef.current?.classList.remove("active");
+    formRef.current?.children[0].classList.remove("active");
+    reset();
   };
 
   return (
@@ -45,31 +60,26 @@ const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
         <CardPopup>
           <PopupCross onClick={() => setShowPopup(false)}>X</PopupCross>
           <CardPopupContent>
-            <CardNamePopup
-              onClick={(e: React.SyntheticEvent) => {
-                let target = e.target;
+            <Form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
+              <CardNamePopup
+                onClick={(e: React.SyntheticEvent) => {
+                  let target = e.target;
 
-                if ((target as HTMLElement).tagName !== "H3") return;
-                editElem(target as HTMLElement);
-              }}
-            >
-              {currentCard.title}
-            </CardNamePopup>
-            <ColEdit
-              defaultValue={currentCard.title}
-              onBlur={(e: React.SyntheticEvent<HTMLInputElement>) =>
-                redactCard(e)
-              }
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setCardName(e.currentTarget.value)
-              }
-              onKeyDown={(e) =>
-                e.key === "Enter" && e.currentTarget.value !== ""
-                  ? redactCard(e)
-                  : false
-              }
-            />
-
+                  if ((target as HTMLElement).tagName !== "H3") return;
+                  editElem(target as HTMLElement);
+                }}
+              >
+                {currentCard.title}
+              </CardNamePopup>
+              <ColEdit
+                {...register("cardTitle", { required: true })}
+                defaultValue={currentCard.title}
+                onBlur={(e: React.SyntheticEvent<HTMLInputElement>) =>
+                  endEditCard(e)
+                }
+              />
+              {errors.cardTitle && <Warning>This field is required</Warning>}
+            </Form>
             <ColumnDetailsPopup>
               <CardColumnPopupSpan>в колонке </CardColumnPopupSpan>
               <CardColumnPopup>{columnTitle}</CardColumnPopup>
@@ -79,14 +89,7 @@ const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
             <Description />
 
             <CommentHeader>Комментарии:</CommentHeader>
-            {/*<Comments
-                comments={comments}
-                setComments={setComments}
-                currentCardId={currentCardId}
-                currentColumnId={currentColumnId}
-                commentsMas={commentsMas}
-                editElem={editElem}
-              />*/}
+            <Comments />
 
             <CardPopupAuthor>Автор карточки: {name} </CardPopupAuthor>
           </CardPopupContent>

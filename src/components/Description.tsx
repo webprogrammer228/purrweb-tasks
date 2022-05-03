@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -16,18 +17,21 @@ const Description: React.FC = () => {
     (state) => state.columns.currentCard
   );
 
+  let { cardId, columnId } = currentCard;
+
   const dispatch = useDispatch();
 
   const [descriptionCard, setDescriptionCard] = useState(String(""));
   const [currentDescription, setCurrentDescription] = useState(String(""));
 
   const appendDescription = () =>
-    dispatch(addDescription({ currentCard, descriptionCard }));
-
-  const deleteDescription = () => dispatch(removeDescription({ currentCard }));
+    dispatch(addDescription({ cardId, columnId, descriptionCard }));
 
   const redactDescription = () =>
-    dispatch(editDescription({ currentCard, currentDescription }));
+    dispatch(editDescription({ cardId, columnId, currentDescription }));
+
+  const deleteDescription = () =>
+    dispatch(removeDescription({ cardId, columnId }));
 
   const hideElem = (e: React.SyntheticEvent) => {
     e.currentTarget.classList.add("hidden");
@@ -56,7 +60,10 @@ const Description: React.FC = () => {
             }
             onKeyDown={(e) =>
               e.key === "Enter" && e.currentTarget.value.trim() !== ""
-                ? redactDescription()
+                ? redactDescription() &&
+                  e.currentTarget.previousElementSibling?.classList.remove(
+                    "active"
+                  )
                 : false
             }
           />

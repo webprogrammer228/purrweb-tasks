@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ColumnType } from "../types/type";
+import { ColumnType, CommentType } from "../types/type";
 
 type StateType = {
   columns: Array<ColumnType>;
@@ -8,6 +8,7 @@ type StateType = {
     columnId: number;
     title: string;
     description: string;
+    comments: CommentType[];
   };
 };
 
@@ -34,7 +35,13 @@ export const initialState: StateType = {
       cards: [],
     },
   ],
-  currentCard: { cardId: 0, columnId: 0, title: "", description: "" },
+  currentCard: {
+    cardId: 0,
+    columnId: 0,
+    title: "",
+    description: "",
+    comments: [{ id: 0, title: "" }],
+  },
 };
 
 const addColumnSlice = createSlice({
@@ -43,71 +50,117 @@ const addColumnSlice = createSlice({
   reducers: {
     //Columns
     addColumn(state, action) {
+      let { title } = action.payload;
+
       state.columns.push({
         id: state.columns.length,
-        title: action.payload.columnTitle,
+        title: title,
         cards: [],
       });
     },
     editColumn(state, action) {
-      state.columns[action.payload.id].title =
-        action.payload.editedTitleColumn.title;
+      let { id, columnTitle } = action.payload;
+
+      state.columns[id].title = columnTitle;
     },
     removeColumn(state, action) {
-      state.columns = state.columns.filter(
-        (state) => state.id !== action.payload.id
-      );
+      let { id } = action.payload;
+
+      state.columns = state.columns.filter((state) => state.id !== id);
       state.columns.forEach((state, index) => (state.id = index));
     },
 
     //Cards
     addCard(state, action) {
-      state.columns[action.payload.id].cards.push({
-        id: state.columns[action.payload.id].cards.length,
+      let { id, cardTitle } = action.payload;
+
+      state.columns[id].cards.push({
+        id: state.columns[id].cards.length,
         description: "",
-        title: action.payload.cardTitle,
+        title: cardTitle,
         comments: [],
       });
     },
     deleteCard(state, action) {
-      state.columns[action.payload.columnId].cards = state.columns[
-        action.payload.columnId
-      ].cards.filter((state) => state.id !== action.payload.cardId);
-      state.columns[action.payload.columnId].cards.forEach(
+      let { columnId, cardId } = action.payload;
+
+      state.columns[columnId].cards = state.columns[columnId].cards.filter(
+        (state) => state.id !== cardId
+      );
+      state.columns[columnId].cards.forEach(
         (state, index) => (state.id = index)
       );
     },
     addData(state, action) {
+      let { cardId, columnId, title, description, comments } = action.payload;
+
       state.currentCard = {
-        cardId: action.payload.cardId,
-        columnId: action.payload.columnId,
-        title: action.payload.title,
-        description: action.payload.description,
+        cardId: cardId,
+        columnId: columnId,
+        title: title,
+        description: description,
+        comments: comments,
       };
     },
     editCard(state, action) {
-      state.columns[action.payload.currentCard.columnId].cards[
-        action.payload.currentCard.cardId
-      ].title = action.payload.cardName;
-      state.currentCard.title = action.payload.cardName;
+      let { columnId, cardId, data } = action.payload;
+
+      state.columns[columnId].cards[cardId].title = data.cardTitle;
+      state.currentCard.title = data.cardTitle;
     },
+
+    // Description
     addDescription(state, action) {
-      state.columns[action.payload.currentCard.columnId].cards[
-        action.payload.currentCard.cardId
-      ].description = action.payload.descriptionCard;
-      state.currentCard.description = action.payload.descriptionCard;
+      let { cardId, columnId, descriptionCard } = action.payload;
+
+      state.columns[columnId].cards[cardId].description = descriptionCard;
+      state.currentCard.description = descriptionCard;
     },
     editDescription(state, action) {
-      state.columns[action.payload.currentCard.columnId].cards[
-        action.payload.currentCard.cardId
-      ].description = action.payload.currentDescription;
-      state.currentCard.description = action.payload.currentDescription;
+      let { cardId, columnId, currentDescription } = action.payload;
+
+      state.columns[columnId].cards[cardId].description = currentDescription;
+      state.currentCard.description = currentDescription;
     },
     removeDescription(state, action) {
-      state.columns[action.payload.currentCard.columnId].cards[
-        action.payload.currentCard.cardId
-      ].description = "";
+      let { cardId, columnId } = action.payload;
+
+      state.columns[columnId].cards[cardId].description = "";
       state.currentCard.description = "";
+    },
+    // Comments
+    commentAdd(state, action) {
+      let { cardId, columnId, data } = action.payload;
+
+      state.currentCard.comments.push({
+        id: state.columns[columnId].cards[cardId].comments.length,
+        title: data.commentTitle,
+      });
+      state.columns[columnId].cards[cardId].comments.push({
+        id: state.columns[columnId].cards[cardId].comments.length,
+        title: data.commentTitle,
+      });
+    },
+    commentEdit(state, action) {
+      let { cardId, columnId, data, id } = action.payload;
+
+      state.columns[columnId].cards[cardId].comments[id].title = data.comment;
+      state.currentCard.comments[id].title = data.comment;
+    },
+    commentDelete(state, action) {
+      let { id, columnId, cardId } = action.payload;
+
+      state.currentCard.comments = state.currentCard.comments.filter(
+        (com) => com.id !== id
+      );
+      state.currentCard.comments.forEach((com, index) => (com.id = index));
+
+      state.columns[columnId].cards[cardId].comments = state.columns[
+        columnId
+      ].cards[cardId].comments.filter((com) => com.id !== id);
+      state.columns[columnId].cards[cardId].comments.forEach(
+        (comment, index) => (comment.id = index)
+      );
     },
   },
 });
@@ -123,6 +176,9 @@ export const {
   addDescription,
   editDescription,
   removeDescription,
+  commentAdd,
+  commentEdit,
+  commentDelete,
 } = addColumnSlice.actions;
 
 export default addColumnSlice.reducer;

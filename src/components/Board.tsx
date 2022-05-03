@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { ColumnType } from "../types/type";
 import Column from "./Column";
 
 import { addColumn } from "../store/addColumnsSlice";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-export const endEditColumn = (e: React.SyntheticEvent) => {
-  e.currentTarget.previousElementSibling?.classList.remove("active");
+export const endEditColumn = (e?: React.SyntheticEvent) => {
+  e?.currentTarget.previousElementSibling?.classList.remove("active");
+  e?.currentTarget.classList.remove("active");
 };
 
 type BoardProps = {
@@ -15,8 +17,13 @@ type BoardProps = {
   columns: ColumnType[];
 };
 
+type Inputs = {
+  columnName: string;
+};
+
 let selectedItem: HTMLElement;
 let nextElem: HTMLInputElement;
+
 export const editElem = (h3: HTMLElement) => {
   if (selectedItem) {
     selectedItem.classList.remove("active");
@@ -24,19 +31,45 @@ export const editElem = (h3: HTMLElement) => {
   }
   selectedItem = h3;
   nextElem = h3 as HTMLInputElement;
+
   let focusedInput = nextElem.nextElementSibling as HTMLInputElement;
 
   selectedItem.classList.add("active");
-
+  nextElem.parentElement?.classList.add("active");
   focusedInput?.focus();
 };
 
 const Board: React.FC<BoardProps> = ({ name, columns }) => {
+  const blockElem = useRef<any>(null);
+
+  const hideActiveBlock = (block: HTMLDivElement | null) => {
+    block?.classList.remove("active");
+    block?.children[0].classList.remove("active");
+  };
+
+  useEffect(() => {
+    const onClick = (e: any) =>
+      blockElem.current?.contains(e.target) ||
+      hideActiveBlock(blockElem.current);
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
   const dispatch = useDispatch();
 
-  const [columnTitle, setColumnTitle] = useState(String(""));
+  const colAdd = (title: string) => dispatch(addColumn({ title }));
 
-  const colAdd = () => dispatch(addColumn({ columnTitle }));
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    colAdd(data.columnName);
+    hideActiveBlock(blockElem.current);
+    reset();
+  };
 
   return (
     <>
@@ -45,42 +78,36 @@ const Board: React.FC<BoardProps> = ({ name, columns }) => {
       </Header>
       <Content>
         <BoardBlock>
-          <Form onSubmit={(e) => e.preventDefault()}>
-            {columns.map((column) => (
-              <Column
-                key={column.id}
-                id={column.id}
-                title={column.title}
-                cards={column.cards}
-                name={name}
-              />
-            ))}
-          </Form>
-          <AddNewCol>
-            <HeaderCol
-              onClick={(e: React.SyntheticEvent) => {
-                let target = e.target;
-
-                if ((target as HTMLElement).tagName !== "H3") return;
-                editElem(target as HTMLElement);
-              }}
-            >
-              + Добавить колонку
-            </HeaderCol>
-            <ColEdit
-              value={columnTitle}
-              placeholder="Введите название колонки"
-              onBlur={(e: React.SyntheticEvent) => endEditColumn(e)}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setColumnTitle(e.currentTarget.value)
-              }
-              onKeyDown={(e) =>
-                e.key === "Enter" && e.currentTarget.value !== ""
-                  ? colAdd() && setColumnTitle("")
-                  : false
-              }
+          {columns.map((column) => (
+            <Column
+              key={column.id}
+              id={column.id}
+              title={column.title}
+              cards={column.cards}
+              name={name}
             />
-          </AddNewCol>
+          ))}
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <AddNewCol ref={blockElem}>
+              <HeaderCol
+                onClick={(e: React.SyntheticEvent) => {
+                  let target = e.target;
+
+                  if ((target as HTMLElement).tagName !== "H3") return;
+                  editElem(target as HTMLElement);
+                }}
+              >
+                + Добавить колонку
+              </HeaderCol>
+
+              <ColEdit
+                {...register("columnName", { required: true })}
+                placeholder="Введите название колонки"
+              />
+              {errors.columnName && <Warning>This field is required</Warning>}
+              <SaveButton type="submit">Сохранить</SaveButton>
+            </AddNewCol>
+          </Form>
         </BoardBlock>
       </Content>
     </>
@@ -108,8 +135,16 @@ const Content = styled.div`
   padding: 20px;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
+  flex-direction: column;
+`;
+
+export const Warning = styled.span`
+  display: none;
+  color: black;
+  margin-bottom: 10px;
+  font-weight: bold;
 `;
 
 const AddNewCol = styled.div`
@@ -130,6 +165,10 @@ const AddNewCol = styled.div`
   &:hover {
     background-color: rgba(89, 89, 89, 0.5);
   }
+
+  &.active {
+    height: 112px;
+  }
 `;
 
 const ColEdit = styled.input`
@@ -139,8 +178,19 @@ const ColEdit = styled.input`
   font-size: 18px;
 
   display: none;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   outline: 0;
+`;
+
+const SaveButton = styled.button`
+  display: none;
+  width: 150px;
+  height: 32px;
+  background: lightblue;
+  color: white;
+  font-size: 18px;
+  font-family: sans-serif;
+  border: 0;
 `;
 
 const HeaderCol = styled.h3`
@@ -152,6 +202,14 @@ const HeaderCol = styled.h3`
   }
 
   &.active + input {
+    display: block;
+  }
+
+  &.active ~ button {
+    display: block;
+  }
+
+  &.active ~ span {
     display: block;
   }
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { addData, deleteCard } from "../store/addColumnsSlice";
+import { CommentType } from "../types/type";
 import { endEditColumn } from "./Board";
 
 type CardProps = {
@@ -9,6 +10,7 @@ type CardProps = {
   columnId: number;
   title: string;
   description: string;
+  comments: Array<CommentType>;
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -18,12 +20,13 @@ const Card: React.FC<CardProps> = ({
   columnId,
   setShowPopup,
   description,
+  comments,
 }) => {
   const dispatch = useDispatch();
   const removeCard = () => dispatch(deleteCard({ cardId, columnId }));
 
   const addDataToCurrentCard = () =>
-    dispatch(addData({ cardId, columnId, title, description }));
+    dispatch(addData({ cardId, columnId, title, description, comments }));
 
   return (
     <>
