@@ -2,8 +2,9 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { commentDelete, commentEdit } from "../store/addColumnsSlice";
-import { editElem, endEditColumn, Form } from "./Board";
+import { commentDelete, commentEdit } from "../../store/addColumnsSlice";
+import { Form } from "../Board/Board";
+import { editElem, endEditColumn } from "../../utils";
 
 type CommentEditt = {
   comment: string;
@@ -53,6 +54,7 @@ const CommentEdit: React.FC<CommentEditProps> = ({
             defaultValue={title}
             {...register("comment")}
             onKeyDown={(e) => (e.key === "Enter" ? endEditColumn(e) : false)}
+            onBlur={(e) => endEditColumn(e)}
           />
         </CommentWrapper>
       </Form>

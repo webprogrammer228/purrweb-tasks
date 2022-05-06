@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { addData, deleteCard } from "../store/addColumnsSlice";
-import { CommentType } from "../types/type";
-import { endEditColumn } from "./Board";
+import { showData, deleteCard } from "../../store/addColumnsSlice";
+import { CommentType } from "../../types/type";
+import { endEditColumn } from "../../utils";
 
 type CardProps = {
   cardId: number;
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({
   const removeCard = () => dispatch(deleteCard({ cardId, columnId }));
 
   const addDataToCurrentCard = () =>
-    dispatch(addData({ cardId, columnId, title, description, comments }));
+    dispatch(showData({ cardId, columnId, title, description, comments }));
 
   return (
     <>

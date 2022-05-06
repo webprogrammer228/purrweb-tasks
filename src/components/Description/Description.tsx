@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 import {
   addDescription,
   editDescription,
   removeDescription,
-} from "../store/addColumnsSlice";
-import { editElem } from "./Board";
-import { CurrentCard } from "./CardDetails";
+} from "../../store/addColumnsSlice";
+import { editElem } from "../../utils";
+import { CurrentCard } from "../CardDetails/CardDetails";
 
 const Description: React.FC = () => {
   const currentCard = useSelector<RootState, CurrentCard>(
@@ -56,7 +56,7 @@ const Description: React.FC = () => {
             defaultValue={currentCard.description}
             onChange={(e) => setCurrentDescription(e.currentTarget.value)}
             onBlur={(e) =>
-              e.currentTarget.value.trim() !== "" ? redactDescription() : false
+              e.currentTarget.previousElementSibling?.classList.remove("active")
             }
             onKeyDown={(e) =>
               e.key === "Enter" && e.currentTarget.value.trim() !== ""

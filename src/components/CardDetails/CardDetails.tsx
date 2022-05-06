@@ -1,17 +1,15 @@
 import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-//import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "../store";
-import { editCard } from "../store/addColumnsSlice";
-import { CommentType } from "../types/type";
-import { editElem, Form, Warning } from "./Board";
-import { ColumnSubmit } from "./Column";
-//import showData from "../store/addColumnsSlice";
-import Comments from "./Comment";
-import Description from "./Description";
+import { RootState } from "../../store";
+import { editCard } from "../../store/addColumnsSlice";
+import { CommentType } from "../../types/type";
+import { Form, Warning } from "../Board/Board";
+import { editElem } from "../../utils";
+import { ColumnSubmit } from "../Column/Column";
+import Comments from "../Comment/Comment";
+import Description from "../Description/Description";
 type Cards = {
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
   columnTitle: string;

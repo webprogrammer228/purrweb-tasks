@@ -91,7 +91,7 @@ const addColumnSlice = createSlice({
         (state, index) => (state.id = index)
       );
     },
-    addData(state, action) {
+    showData(state, action) {
       let { cardId, columnId, title, description, comments } = action.payload;
 
       state.currentCard = {
@@ -171,7 +171,7 @@ export const {
   removeColumn,
   addCard,
   deleteCard,
-  addData,
+  showData,
   editCard,
   addDescription,
   editDescription,

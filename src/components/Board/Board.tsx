@@ -1,16 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { ColumnType } from "../types/type";
-import Column from "./Column";
+import { ColumnType } from "../../types/type";
+import Column from "../Column/Column";
 
-import { addColumn } from "../store/addColumnsSlice";
+import { addColumn } from "../../store/addColumnsSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-export const endEditColumn = (e?: React.SyntheticEvent) => {
-  e?.currentTarget.previousElementSibling?.classList.remove("active");
-  e?.currentTarget.classList.remove("active");
-};
+import {editElem} from "../../utils";
 
 type BoardProps = {
   name: string | null;
@@ -21,23 +17,6 @@ type Inputs = {
   columnName: string;
 };
 
-let selectedItem: HTMLElement;
-let nextElem: HTMLInputElement;
-
-export const editElem = (h3: HTMLElement) => {
-  if (selectedItem) {
-    selectedItem.classList.remove("active");
-    nextElem.classList.remove("active");
-  }
-  selectedItem = h3;
-  nextElem = h3 as HTMLInputElement;
-
-  let focusedInput = nextElem.nextElementSibling as HTMLInputElement;
-
-  selectedItem.classList.add("active");
-  nextElem.parentElement?.classList.add("active");
-  focusedInput?.focus();
-};
 
 const Board: React.FC<BoardProps> = ({ name, columns }) => {
   const blockElem = useRef<any>(null);

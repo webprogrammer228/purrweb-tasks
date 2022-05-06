@@ -2,11 +2,11 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "../store";
-import { Form } from "./Board";
-import { commentAdd } from "../store/addColumnsSlice";
-import { CurrentCard } from "./CardDetails";
-import CommentEdit from "./CommentEdit";
+import { RootState } from "../../store";
+import { Form } from "../Board/Board";
+import { commentAdd } from "../../store/addColumnsSlice";
+import { CurrentCard } from "../CardDetails/CardDetails";
+import CommentEdit from "../CommentEdit/CommentEdit";
 
 type CommentInput = {
   commentTitle: string;

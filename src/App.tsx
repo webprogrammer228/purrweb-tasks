@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Board from "./components/Board";
-import GreetingPopup from "./components/GreetingPopup";
+import Board from "./components/Board/Board";
+import GreetingPopup from "./components/GreetingPopup/GreetingPopup";
 import "./index.css";
 import { RootState } from "./store";
-
 import { ColumnType } from "./types/type";
 
 function App() {

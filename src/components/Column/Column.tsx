@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { CardType } from "../types/type";
-import { addCard, editColumn, removeColumn } from "../store/addColumnsSlice";
-import { endEditColumn, Warning } from "./Board";
-import Card from "./Card";
-import { editElem } from "./Board";
-import CardDetails from "./CardDetails";
+import { CardType } from "../../types/type";
+import { addCard, editColumn, removeColumn } from "../../store/addColumnsSlice";
+import { Warning } from "../Board/Board";
+import Card from "../Card/Card";
+import { editElem, endEditColumn } from "../../utils";
+import CardDetails from "../CardDetails/CardDetails";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type ColumnProps = {
@@ -60,13 +60,10 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
     reset,
     formState: { errors },
   } = useForm<ColumnSubmit>();
-  const onSubmit: SubmitHandler<ColumnSubmit> = (data) => {
-    colEdit(id, data.columnTitle);
-    reset();
-  };
+
   const cardSubmit: SubmitHandler<ColumnSubmit> = (data) => {
-    cardAdd(id, data.cardTitle);
     reset();
+    cardAdd(id, data.cardTitle);
   };
 
   return (
@@ -79,20 +76,18 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
           editElem(target as HTMLElement);
         }}
       >
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <HeaderCol>{title}</HeaderCol>
-          <ColEdit
-            {...register("columnTitle", { required: true })}
-            defaultValue={title}
-            onBlur={(e) => endEditColumn(e)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && e.currentTarget.value !== ""
-                ? endEditColumn(e)
-                : false
-            }
-          />
-          {errors.columnTitle && <Warning>This field is required</Warning>}
-        </Form>
+        <HeaderCol>{title}</HeaderCol>
+        <ColEdit
+          {...register("columnTitle", { required: true })}
+          defaultValue={title}
+          onBlur={(e) => endEditColumn(e)}
+          onKeyDown={(e) =>
+            e.key === "Enter" && e.currentTarget.value !== ""
+              ? colEdit(id, e.currentTarget.value) && endEditColumn(e)
+              : false
+          }
+        />
+        {errors.columnTitle && <Warning>This field is required</Warning>}
 
         {cards.map((card) => (
           <Card
@@ -128,16 +123,21 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
             + Добавить карточку
           </AddCardHeader>
           <ColEdit
+            defaultValue={""}
             {...register("cardTitle", { required: true })}
-            onBlur={(e: React.SyntheticEvent) => endEditColumn(e)}
+            onBlur={(e) => endEditColumn(e)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && e.currentTarget.value.trim() !== " "
+                ? endEditColumn(e)
+                : false
+            }
           />
 
           {errors.cardTitle && <Warning>This field is required</Warning>}
-
-          <RemoveColumn onClick={() => removeCol(id)}>
-            Удалить колонку
-          </RemoveColumn>
         </Form>
+        <RemoveColumn onClick={() => removeCol(id)}>
+          Удалить колонку
+        </RemoveColumn>
       </Col>
     </ColumnBody>
   );
