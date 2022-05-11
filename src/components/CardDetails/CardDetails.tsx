@@ -8,8 +8,8 @@ import { CommentType } from "../../types/type";
 import { Form, Warning } from "../Board/Board";
 import { editElem } from "../../utils";
 import { ColumnSubmit } from "../Column/Column";
-import Comments from "../Comment/Comment";
-import Description from "../Description/Description";
+import Comments from "./Comment/Comment";
+import Description from "./Description/Description";
 type Cards = {
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
   columnTitle: string;
