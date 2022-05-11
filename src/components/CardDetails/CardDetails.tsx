@@ -8,8 +8,7 @@ import { CommentType } from "../../types/type";
 import { Form, Warning } from "../Board/Board";
 import { editElem } from "../../utils";
 import { ColumnSubmit } from "../Column/Column";
-import Comments from "./Comment/Comment";
-import Description from "./Description/Description";
+import { Comment, Description } from "./components";
 type Cards = {
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
   columnTitle: string;
@@ -87,7 +86,7 @@ const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
             <Description />
 
             <CommentHeader>Комментарии:</CommentHeader>
-            <Comments />
+            <Comment />
 
             <CardPopupAuthor>Автор карточки: {name} </CardPopupAuthor>
           </CardPopupContent>

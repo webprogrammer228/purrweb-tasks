@@ -2,9 +2,9 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { commentDelete, commentEdit } from "../../../store/addColumnsSlice";
-import { Form } from "../../Board/Board";
-import { editElem, endEditColumn } from "../../../utils";
+import { commentDelete, commentEdit } from "../../../../../store/addColumnsSlice";
+import { Form } from "../../../../Board/Board";
+import { editElem, endEditColumn } from "../../../../../utils";
 
 type CommentEditt = {
   comment: string;
