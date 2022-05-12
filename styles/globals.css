@@ -1,16 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: #181818;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* inter-300 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-300.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-300.woff") format("woff");
+}
+/* inter-regular - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-regular.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-regular.woff") format("woff");
+}
+/* inter-500 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-500.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-500.woff") format("woff");
+}
+/* inter-600 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-600.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-600.woff") format("woff");
+}
+/* inter-700 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-700.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-700.woff") format("woff");
+}
+/* inter-800 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-800.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-800.woff") format("woff");
+}
+/* inter-900 - latin */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-900.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../assets/fonts/Inter/inter-v11-latin-900.woff") format("woff");
 }
 
-* {
-  box-sizing: border-box;
+/* Thicccboi */
+
+/* Thicccboi-300 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 300;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Light.woff2")
+      format("woff2");
+}
+/* Thicccboi-500 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Medium.woff2")
+      format("woff2");
+}
+
+/* Thicccboi-600 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-SemiBold.woff2")
+      format("woff2");
+}
+
+/* Thicccboi-650 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 650;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-ExtraBold.woff2")
+      format("woff2");
+}
+
+/* Thicccboi-700 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Bold.woff2")
+      format("woff2");
+}
+
+/* Thicccboi-800 */
+@font-face {
+  font-family: "Thicccboi";
+  font-style: normal;
+  font-weight: 800;
+  src: local(""),
+    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Black.woff2")
+      format("woff2");
 }
