@@ -35,7 +35,8 @@ const CardDetails: React.FC<Cards> = ({ setShowPopup, columnTitle, name }) => {
   const endEditCard = (e: React.SyntheticEvent<HTMLInputElement>) => {
     e.currentTarget.previousElementSibling?.classList.remove("active");
   };
-
+  //any!!
+  //вообще лучше не использовать этот хук, использовать его только в крайних случаях. в данном приложении можно обойтись без него
   const formRef = useRef<any>(null);
 
   const {

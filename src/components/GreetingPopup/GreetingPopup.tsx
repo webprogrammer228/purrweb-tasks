@@ -8,6 +8,7 @@ interface GreetingProps {
 const GreetingPopup: React.FC<GreetingProps> = ({ closeWindow }) => {
   const [value, setValue] = useState("");
 
+  //здесь лучше будет сетать имя при клике на кнопку, чем сетать его на каждое нажатие клавиш
   useEffect(() => {
     if (value.length > 0) {
       window.localStorage.setItem("name", value);

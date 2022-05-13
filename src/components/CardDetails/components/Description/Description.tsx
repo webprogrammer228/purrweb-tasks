@@ -21,6 +21,7 @@ const Description: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  //зОчем тебе два состояния для дескрипшена?
   const [descriptionCard, setDescriptionCard] = useState(String(""));
   const [currentDescription, setCurrentDescription] = useState(String(""));
 
@@ -75,6 +76,7 @@ const Description: React.FC = () => {
           </CardDeleteDescription>
         </React.Fragment>
       ) : (
+        //самозакрывающийся тег
         <CardDescriptionTextarea
           placeholder="Введите описание карточки"
           onChange={(e) =>

@@ -31,7 +31,7 @@ const Comments: React.FC = () => {
     dispatch(commentAdd({ columnId, cardId, data }));
     reset();
   };
-
+//самозакрывающийся тег
   return (
     <>
       <Form onSubmit={handleSubmit(commentSubmit)}>

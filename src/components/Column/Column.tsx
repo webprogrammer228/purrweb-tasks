@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { CardType } from "../../types/type";
+import {CardType, ColumnType} from "../../types/type";
 import { addCard, editColumn, removeColumn } from "../../store/addColumnsSlice";
 import { Warning } from "../Board/Board";
 import Card from "../Card/Card";
@@ -9,11 +9,9 @@ import { editElem, endEditColumn } from "../../utils";
 import CardDetails from "../CardDetails/CardDetails";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-type ColumnProps = {
-  id: number;
-  title: string;
+//тип можно было сделать попроще:
+type ColumnProps = ColumnType & {
   name: string | null;
-  cards: CardType[];
 };
 
 export type ColumnSubmit = {
@@ -49,9 +47,11 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
     };
   }, []);
 
+  //это излишняя функция. если бы использовалась где-то еще, то имела бы смысл. к тому же название говорит, что модалка появится
   const showPopupOnEsc = () => {
     setShowPopup(false);
   };
+  //странно, что и так булевое значение, ты дополнительно приводишь к булевому значению
   const [showPopup, setShowPopup] = useState(Boolean(false));
 
   const {
@@ -89,7 +89,8 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
         />
         {errors.columnTitle && <Warning>This field is required</Warning>}
 
-        {cards.map((card) => (
+        {//используй деструктуризацию
+          cards.map((card) => (
           <Card
             key={card.id}
             title={card.title}
@@ -101,7 +102,8 @@ const Column: React.FC<ColumnProps> = ({ id, title, name, cards }) => {
           />
         ))}
 
-        {showPopup ? (
+        {//сделай через амперсанды
+          showPopup ? (
           <CardDetails
             columnTitle={title}
             setShowPopup={setShowPopup}

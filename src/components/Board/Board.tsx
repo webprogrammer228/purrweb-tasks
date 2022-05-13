@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { ColumnType } from "../../types/type";
-import Column from "../Column/Column";
+//здесь должен быть такой импорт
+import { Column } from "../Column";
 
 import { addColumn } from "../../store/addColumnsSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -19,14 +20,16 @@ type Inputs = {
 
 
 const Board: React.FC<BoardProps> = ({ name, columns }) => {
+  //any - плохо
   const blockElem = useRef<any>(null);
 
   const hideActiveBlock = (block: HTMLDivElement | null) => {
     block?.classList.remove("active");
     block?.children[0].classList.remove("active");
   };
-
+  //я не поняла, для чего подписка на каждый клик. нужно пояснение. но сейчас уже видно, что это плохая идея. на абсолютно любой клик срабатывает функция
   useEffect(() => {
+    //не должно быть эни. найди подходящий тип. ивент нужно типизировать
     const onClick = (e: any) =>
       blockElem.current?.contains(e.target) ||
       hideActiveBlock(blockElem.current);
@@ -60,15 +63,15 @@ const Board: React.FC<BoardProps> = ({ name, columns }) => {
           {columns.map((column) => (
             <Column
               key={column.id}
-              id={column.id}
-              title={column.title}
-              cards={column.cards}
+              /* чтобы не прокидывать все пропсы, можно использовать деструктуризацию */
+              {...column}
               name={name}
             />
           ))}
           <Form onSubmit={handleSubmit(onSubmit)}>
             <AddNewCol ref={blockElem}>
               <HeaderCol
+                //такие большие функции лучше выносить
                 onClick={(e: React.SyntheticEvent) => {
                   let target = e.target;
 
@@ -83,7 +86,8 @@ const Board: React.FC<BoardProps> = ({ name, columns }) => {
                 {...register("columnName", { required: true })}
                 placeholder="Введите название колонки"
               />
-              {errors.columnName && <Warning>This field is required</Warning>}
+              {//было бы хорошо еще для редактирования названия колонки добавить такую ошибку
+                errors.columnName && <Warning>This field is required</Warning>}
               <SaveButton type="submit">Сохранить</SaveButton>
             </AddNewCol>
           </Form>

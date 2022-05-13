@@ -44,6 +44,7 @@ export const initialState: StateType = {
   },
 };
 
+//плохое название для общего слайса
 const addColumnSlice = createSlice({
   name: "Column",
   initialState,
@@ -67,6 +68,7 @@ const addColumnSlice = createSlice({
       let { id } = action.payload;
 
       state.columns = state.columns.filter((state) => state.id !== id);
+      //чтобы не заниматься такой хуйней, нужно использовать uuid
       state.columns.forEach((state, index) => (state.id = index));
     },
 

@@ -13,7 +13,7 @@ function App() {
   const columns = useSelector<RootState, ColumnType[]>(
     (state) => state.columns.columns
   );
-
+  //что делает этот юзэффект?
   useEffect(() => {
     localStorage.getItem("name") === null
       ? localStorage.setItem("name", "")
