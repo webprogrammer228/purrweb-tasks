@@ -14,5 +14,8 @@ export default HeaderLayout;
 const Header = styled.div`
   width: 1270px;
   height: 100px;
-  margin: 32px auto;
+  margin: 0 auto 65px;
+
+  display: flex;
+  align-items: center;
 `;

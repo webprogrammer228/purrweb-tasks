@@ -1,149 +1,208 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
 body {
-  background: #181818;
+    background: #181818;
 }
 
 /* inter-300 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 300;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-300.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-300.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-300.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-300.woff") format("woff");
 }
+
 /* inter-regular - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-regular.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-regular.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-regular.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-regular.woff") format("woff");
 }
+
 /* inter-500 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-500.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-500.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-500.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-500.woff") format("woff");
 }
+
 /* inter-600 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-600.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-600.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-600.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-600.woff") format("woff");
 }
+
 /* inter-700 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-700.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-700.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-700.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-700.woff") format("woff");
 }
+
 /* inter-800 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 800;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-800.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-800.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 800;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-800.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-800.woff") format("woff");
 }
+
 /* inter-900 - latin */
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 900;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-900.woff2")
-      format("woff2"),
-    /* Super Modern Browsers */
-      url("../assets/fonts/Inter/inter-v11-latin-900.woff") format("woff");
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 900;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Inter/inter-v11-latin-900.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("../assets/fonts/Inter/inter-v11-latin-900.woff") format("woff");
 }
 
 /* Thicccboi */
 
 /* Thicccboi-300 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 300;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Light.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 300;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Light.woff2") format("woff2");
 }
+
 /* Thicccboi-500 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 500;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Medium.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 500;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Medium.woff2") format("woff2");
 }
 
 /* Thicccboi-600 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 600;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-SemiBold.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 600;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-SemiBold.woff2") format("woff2");
 }
 
 /* Thicccboi-650 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 650;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-ExtraBold.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 650;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-ExtraBold.woff2") format("woff2");
 }
 
 /* Thicccboi-700 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 700;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Bold.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 700;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Bold.woff2") format("woff2");
 }
 
 /* Thicccboi-800 */
 @font-face {
-  font-family: "Thicccboi";
-  font-style: normal;
-  font-weight: 800;
-  src: local(""),
-    /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Black.woff2")
-      format("woff2");
+    font-family: "Thicccboi";
+    font-style: normal;
+    font-weight: 800;
+    src: local(""),
+        /* IE6-IE8 */ url("../assets/fonts/Thicccboi/THICCCBOI-Black.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-Regular.eot");
+    src: local("DM Sans Regular"), local("DMSans-Regular"),
+    url("../assets/fonts/DMSans/DMSans-Regular.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-Regular.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-Regular.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-Medium.eot");
+    src: local("DM Sans Medium"), local("DMSans-Medium"),
+    url("../assets/fonts/DMSans/DMSans-Medium.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-Medium.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-Medium.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-MediumItalic.eot");
+    src: local("DM Sans Medium Italic"), local("DMSans-MediumItalic"),
+    url("../assets/fonts/DMSans/DMSans-MediumItalic.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-MediumItalic.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-MediumItalic.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-BoldItalic.eot");
+    src: local("DM Sans Bold Italic"), local("DMSans-BoldItalic"),
+    url("../assets/fonts/DMSans/DMSans-BoldItalic.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-BoldItalic.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-BoldItalic.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-Italic.eot");
+    src: local("DM Sans Italic"), local("DMSans-Italic"),
+    url("../assets/fonts/DMSans/DMSans-Italic.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-Italic.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-Italic.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/DMSans/DMSans-Bold.eot");
+    src: local("DM Sans Bold"), local("DMSans-Bold"),
+    url("../assets/fonts/DMSans/DMSans-Bold.eot?#iefix") format("embedded-opentype"),
+    url("../assets/fonts/DMSans/DMSans-Bold.woff2") format("woff2"),
+    url("../assets/fonts/DMSans/DMSans-Bold.woff") format("woff"),
+    url("../assets/fonts/DMSans/DMSans-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
 }
