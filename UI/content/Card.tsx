@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Check } from "./Check";
 import { v4 as uuidv4 } from "uuid";
-import { editElem } from "../../utils/utils";
 
 const cardsInfo = [
   {
@@ -43,17 +42,24 @@ const cardsInfo = [
   },
 ];
 
-const setActiveCard = (e: React.SyntheticEvent<HTMLDivElement>) => {
-  let target = e.currentTarget;
-  if (target.tagName !== "DIV") return;
-  editElem(target);
-};
-
 const Card: React.FC = () => {
+  const [activeCard, setActiveCard] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <CardWrapper>
       {cardsInfo.map((cardInfo, id) => (
-        <CardBody key={uuidv4()} onClick={(e) => setActiveCard(e)}>
+        <CardBody
+          key={uuidv4()}
+          onMouseEnter={() => {
+            setActiveCard(id);
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => {
+            setActiveCard(id);
+            setIsHovered(false);
+          }}
+        >
           <CardBodyHeader>
             <CardPrice>${cardInfo.price}</CardPrice>
             <CardTitle>{cardInfo.title}</CardTitle>
@@ -62,7 +68,14 @@ const Card: React.FC = () => {
           <CardList>
             {cardInfo.benefits.map((benefit) => (
               <CardListItem key={uuidv4()}>
-                <Check height="26px" width="26px" color="white" />
+                <Check
+                  height="26px"
+                  width="26px"
+                  color="white"
+                  secondaryColor={
+                    id === activeCard && isHovered ? "#fc5842" : "#272727"
+                  }
+                />
                 {benefit}
               </CardListItem>
             ))}
@@ -77,9 +90,6 @@ const Card: React.FC = () => {
 export default Card;
 
 const CardWrapper = styled.div`
-  width: 100%;
-  margin: 0 auto;
-
   display: flex;
   justify-content: center;
 `;
@@ -90,18 +100,36 @@ const CardBody = styled.div`
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 
-  min-height: 612px;
+  height: 612px;
   max-width: 412px;
 
   padding: 42px 48px;
   margin: 27.5px 0 27.5px 33px;
 
+  transition: ease-in 0.6s;
+
   cursor: pointer;
 
   @media (max-width: 1280px) {
     padding: 21px 24px;
-    width: 350px;
-    min-height: 550px;
+    max-width: 370px;
+  }
+
+  &:hover {
+    background: #fc5842;
+    margin-top: -30px;
+
+    & > div {
+      border-bottom: 1px solid #ffffff;
+    }
+
+    p {
+      color: #ffffff;
+    }
+
+    button {
+      color: #fc5842;
+    }
   }
 `;
 

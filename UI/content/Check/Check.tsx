@@ -4,8 +4,11 @@ const Check = ({
   height = "26px",
   width = "26px",
   color = "white",
+  secondaryColor,
   ...props
-}: React.SVGProps<SVGSVGElement>) => {
+}: React.SVGProps<SVGSVGElement> & {
+  secondaryColor?: string;
+}) => {
   return (
     <svg
       width={width}
@@ -22,7 +25,7 @@ const Check = ({
       />
       <path
         d="M7.1167 13.8406L10.4785 17.2024L18.8831 8.79785"
-        stroke="#272727"
+        stroke={secondaryColor}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -9,7 +9,7 @@ export const Logo = ({
   ...props
 }: React.SVGProps<SVGSVGElement> & { secondaryColor?: string }) => {
   return (
-    <>
+    <Wrapper>
       <svg
         width={width}
         height={height}
@@ -140,7 +140,7 @@ export const Logo = ({
         />
       </svg>
       <LogoTitle>Gscore</LogoTitle>
-    </>
+    </Wrapper>
   );
 };
 
@@ -150,4 +150,9 @@ const LogoTitle = styled.h3`
   text-transform: uppercase;
   font-size: 26px;
   margin-left: 10px;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
