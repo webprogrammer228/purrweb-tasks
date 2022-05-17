@@ -2,35 +2,28 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { HeaderLayout } from "../UI/header";
 import { Logo } from "../UI/header/Logo/Logo";
-import { Stage } from "../UI/Stage";
+import { Stage } from "../UI/stage";
 import { FooterLayout } from "../UI/footer";
 import { TopBlock } from "../UI/footer/TopBlock";
 import { BottomBlock } from "../UI/footer/BottomBlock";
-import {
-  Form,
-  Input,
-  Main,
-  RegisterTitle,
-  Stages,
-  SubmitButton,
-  Warning,
-} from "./registration";
-
-type Inputs = {
-  example: string;
-  exampleRequired: string;
-};
+import { Stages } from "../UI/form/Stages";
+import { Main } from "../UI/form/Main";
+import { Title } from "../UI/form/Title";
+import { Input } from "../UI/form/Input";
+import { SubmitButton } from "../UI/form/SubmitButton";
+import { Form } from "../UI/form/Form";
+import { Warning } from "../UI/form/Warning";
+import { LoginInputs } from "../types/type";
 
 const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<LoginInputs>();
+  const onSubmit: SubmitHandler<LoginInputs> = (data) => console.log(data);
 
-  console.log(watch("example")); // watch input value by passing the name of it
+  console.log(process.env);
   return (
     <>
       <HeaderLayout>
@@ -47,16 +40,16 @@ const Login = () => {
           <Stage title="Log In" color="#FC5842" />
           <Stage title="Checkout" />
         </Stages>
-        <RegisterTitle>Log In</RegisterTitle>
+        <Title>Log In</Title>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register("example")} placeholder="Username" />
-          {errors.exampleRequired && <Warning>This field is required</Warning>}
+          <Input {...register("userName")} placeholder="Username" />
+          {errors.userName && <Warning>This field is required</Warning>}
 
           <Input
-            {...register("exampleRequired", { required: true })}
+            {...register("password", { required: true })}
             placeholder="Password"
           />
-          {errors.exampleRequired && <Warning>This field is required</Warning>}
+          {errors.password && <Warning>This field is required</Warning>}
 
           <SubmitButton type="submit">Send password</SubmitButton>
         </Form>

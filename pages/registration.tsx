@@ -6,24 +6,27 @@ import { TopBlock } from "../UI/footer/TopBlock";
 import { BottomBlock } from "../UI/footer/BottomBlock";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Stage } from "../UI/Stage";
+import { Stage } from "../UI/stage";
 import Link from "next/link";
-
-type Inputs = {
-  example: string;
-  exampleRequired: string;
-};
+import { Stages } from "../UI/form/Stages";
+import { Main } from "../UI/form/Main";
+import { Title } from "../UI/form/Title";
+import { Form } from "../UI/form/Form";
+import { Input } from "../UI/form/Input";
+import { Warning } from "../UI/form/Warning";
+import { SubmitButton } from "../UI/form/SubmitButton";
+import { RegisterInputs } from "../types/type";
+import { signupUser } from "../api/signup";
 
 const Registration = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<RegisterInputs>();
+  const onSubmit: SubmitHandler<RegisterInputs> = (data) =>
+    signupUser(data.username, data.email, data.password);
 
-  console.log(watch("example")); // watch input value by passing the name of it
   return (
     <>
       <HeaderLayout>
@@ -40,32 +43,50 @@ const Registration = () => {
           <Stage title="Log In" />
           <Stage title="Checkout" />
         </Stages>
-        <RegisterTitle>Create account</RegisterTitle>
+        <Title>Create account</Title>
         <Hint>
           You need to enter your name and email. We will send you a temporary
           password by email
         </Hint>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register("example")} placeholder="Username" />
-          {errors.exampleRequired && <Warning>This field is required</Warning>}
+          <Input
+            {...register("username", { required: true })}
+            placeholder="Username"
+          />
+          {errors.username && <Warning>Username is not be empty</Warning>}
 
           <Input
-            {...register("exampleRequired", { required: true })}
+            {...register("email", {
+              required: "Email is requried.",
+              pattern: {
+                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                message: "Please enter a valid email",
+              },
+            })}
             placeholder="Email"
           />
-          {errors.exampleRequired && <Warning>This field is required</Warning>}
+          {errors?.email && <Warning>{errors.email.message}</Warning>}
 
           <Input
-            {...register("exampleRequired", { required: true })}
+            {...register("password", {
+              required: "This is required.",
+              minLength: 6,
+            })}
             placeholder="Password"
+            type={"password"}
           />
-          {errors.exampleRequired && <Warning>This field is required</Warning>}
+          {errors.password && errors.password.type === "required" && (
+            <Warning>Password is not be empty</Warning>
+          )}
+          {errors.password && errors.password.type === "minLength" && (
+            <Warning>Minimal length your password is 6 symbols</Warning>
+          )}
 
           <SubmitButton type="submit">Send password</SubmitButton>
         </Form>
         <UnderButtonText>
           <HaveAnAccount>Have an account? </HaveAnAccount>
-          <Link href="#">Go to the next step</Link>
+          <Link href="/login">Go to the next step</Link>
         </UnderButtonText>
       </Main>
       <FooterLayout>
@@ -78,26 +99,6 @@ const Registration = () => {
 
 export default Registration;
 
-export const Main = styled.main`
-  margin: 0 auto;
-  width: 620px;
-`;
-
-export const Stages = styled.div`
-  display: flex;
-`;
-
-export const RegisterTitle = styled.h1`
-  font-family: "Thicccboi", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 44px;
-  line-height: 54px;
-
-  color: #ffffff;
-  margin-bottom: 16px;
-`;
-
 const Hint = styled.p`
   font-family: "Thicccboi", sans-serif;
   font-style: normal;
@@ -107,59 +108,6 @@ const Hint = styled.p`
 
   color: #ffffff;
   margin-bottom: 32px;
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  height: 68px;
-
-  padding: 25px 23px;
-  margin-bottom: 24px;
-
-  font-family: "Thicccboi", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-
-  color: #969696;
-
-  border: 0;
-  border-radius: 10px;
-
-  &:nth-child(3) {
-    margin-bottom: 48px;
-  }
-`;
-
-export const Warning = styled.span`
-  color: red;
-`;
-
-export const SubmitButton = styled.button`
-  width: 200px;
-  height: 58px;
-
-  background: #fc5842;
-  box-shadow: 0px 10px 28px rgba(252, 88, 66, 0.2);
-  border-radius: 4px;
-  border: 0;
-
-  font-family: "Thicccboi", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 18px;
-
-  text-align: center;
-
-  color: #ffffff;
-  margin-bottom: 48px;
 `;
 
 const UnderButtonText = styled.div`
