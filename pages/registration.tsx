@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { HeaderLayout } from "../UI/header";
 import { Logo } from "../UI/header/Logo/Logo";
 import { FooterLayout } from "../UI/footer";
@@ -16,16 +16,42 @@ import { Input } from "../UI/form/Input";
 import { Warning } from "../UI/form/Warning";
 import { SubmitButton } from "../UI/form/SubmitButton";
 import { RegisterInputs } from "../types/type";
-import { signupUser } from "../api/signup";
+import { useSignUpMutation } from "../store/RegisterApi";
+import { useDispatch } from "react-redux";
+import { signUp } from "../store/UserSlice";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 const Registration = () => {
+  const [signUpUser] = useSignUpMutation();
+  const [errs, setErrs] = useState("");
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterInputs>();
-  const onSubmit: SubmitHandler<RegisterInputs> = (data) =>
-    signupUser(data.username, data.email, data.password);
+  const onSubmit: SubmitHandler<RegisterInputs> = async (
+    data: RegisterInputs
+  ) => {
+    if (data) {
+      await signUpUser({ ...data })
+        .unwrap()
+        .catch((e) => {
+          console.log(e);
+          setErrs(e.data.message);
+        })
+        .then((response: RegisterInputs) => {
+          setErrs("");
+          dispatch(signUp({ ...response }));
+          Cookies.set("token", response.token);
+          router.push("/login");
+        });
+    }
+  };
 
   return (
     <>
@@ -59,7 +85,7 @@ const Registration = () => {
             {...register("email", {
               required: "Email is requried.",
               pattern: {
-                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                value: /^[a-z\d._%+-]+@[a-z\d.-]+\.[a-z]{2,4}$/,
                 message: "Please enter a valid email",
               },
             })}
@@ -84,6 +110,12 @@ const Registration = () => {
 
           <SubmitButton type="submit">Send password</SubmitButton>
         </Form>
+        {errs && (
+          <ErrorsBlock>
+            <ErrorTitle>{errs}</ErrorTitle>
+          </ErrorsBlock>
+        )}
+
         <UnderButtonText>
           <HaveAnAccount>Have an account? </HaveAnAccount>
           <Link href="/login">Go to the next step</Link>
@@ -134,4 +166,24 @@ const HaveAnAccount = styled.p`
 
   color: #ffffff;
   margin-right: 8px;
+`;
+
+const ErrorsBlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+
+  background: darkred;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
+const ErrorTitle = styled.h1`
+  font-family: "Thicccboi", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 18px;
 `;

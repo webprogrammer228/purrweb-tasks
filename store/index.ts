@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import columnReducer from "./addColumnsSlice";
+
 import {
   FLUSH,
   PAUSE,
@@ -12,9 +12,12 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userSlice from "./UserSlice";
+import { userApi } from "./RegisterApi";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 const rootReducer = combineReducers({
   users: userSlice,
+  [userApi.reducerPath]: userApi.reducer,
 });
 
 const persistConfig = {
@@ -31,8 +34,10 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(userApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
 
