@@ -6,20 +6,18 @@ type Props = {
 };
 
 const HeaderLayout = ({ children }: Props) => {
-  return (
-    <header>
-      <Header>{children}</Header>
-    </header>
-  );
+  return <Header>{children}</Header>;
 };
 
 export default HeaderLayout;
 
-const Header = styled.div`
-  width: 1270px;
+const Header = styled.header`
+  width: 100%;
   height: 100px;
-  margin: 0 50px 65px;
+  margin: 0 0 65px;
 
+  padding: 0 50px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 `;

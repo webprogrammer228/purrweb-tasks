@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Check } from "./Check";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { addSubscription } from "../../store/UserSlice";
+import { useRouter } from "next/router";
+import { CardDescription } from "../CardDescription";
 
 const cardsInfo = [
   {
@@ -46,6 +50,9 @@ const Card: React.FC = () => {
   const [activeCard, setActiveCard] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  const router = useRouter();
+
+  const dispatch = useDispatch();
   return (
     <CardWrapper>
       {cardsInfo.map((cardInfo, id) => (
@@ -80,7 +87,14 @@ const Card: React.FC = () => {
               </CardListItem>
             ))}
           </CardList>
-          <CardButton>Get Gscore</CardButton>
+          <CardButton
+            onClick={() => {
+              dispatch(addSubscription({ ...cardInfo }));
+              router.push("/registration");
+            }}
+          >
+            Get Gscore
+          </CardButton>
         </CardBody>
       ))}
     </CardWrapper>
@@ -100,7 +114,7 @@ const CardBody = styled.div`
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 
-  height: 612px;
+  height: 560px;
   max-width: 412px;
 
   padding: 42px 48px;
@@ -169,23 +183,6 @@ const CardTitle = styled.h4`
 
   @media (max-width: 1280px) {
     font-size: 22px;
-    line-height: 24px;
-  }
-`;
-
-const CardDescription = styled.p`
-  font-family: "Thicccboi", sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 30px;
-  text-align: center;
-
-  color: #c7c7c7;
-  margin-bottom: 40px;
-
-  @media (max-width: 1280px) {
-    font-size: 16px;
     line-height: 24px;
   }
 `;

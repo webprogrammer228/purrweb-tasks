@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { SubmitButtonType } from "../../types/type";
 
-export const SubmitButton = styled.button`
-  width: 200px;
+export const SubmitButton = styled.button<SubmitButtonType>`
+  width: ${(props) => props.width};
   height: 58px;
 
   background: #fc5842;
@@ -19,4 +20,6 @@ export const SubmitButton = styled.button`
 
   color: #ffffff;
   margin-bottom: 48px;
+
+  cursor: pointer;
 `;

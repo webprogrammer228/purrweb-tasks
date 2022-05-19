@@ -8,12 +8,20 @@ export type RegisterInputs = {
 export type LoginInputs = {
   email: string;
   password: string;
+  token: string;
 };
 
-export type Errors = {
-  message: string[];
+export type User = {
+  name: string;
+  email: string;
 };
 
-export type ErrorType = {
-  data: string;
+export type Subscriptions = { title: string; price: number }[];
+
+export type SubscriptionWrapperType = {
+  padding: string;
+};
+
+export type SubmitButtonType = {
+  width: string;
 };

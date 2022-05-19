@@ -6,16 +6,12 @@ type Props = {
 };
 
 const FooterLayout = ({ children }: Props) => {
-  return (
-    <footer>
-      <Footer>{children}</Footer>
-    </footer>
-  );
+  return <Footer>{children}</Footer>;
 };
 
 export default FooterLayout;
 
-const Footer = styled.div`
+const Footer = styled.footer`
   margin: 0 50px;
 
   display: flex;

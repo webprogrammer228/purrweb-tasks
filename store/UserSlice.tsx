@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type StateType = {
+export type StateType = {
   users: {
     id?: number;
     name: string;
     email: string;
   };
+  subscriptions: { title: string; price: number }[];
 };
 
 export const initialState: StateType = {
   users: { name: "", email: "" },
+  subscriptions: [],
 };
 
 const userSlice = createSlice({
@@ -29,9 +31,13 @@ const userSlice = createSlice({
       state.users.email = email;
       state.users.id = id;
     },
+    addSubscription(state, action) {
+      const { title, price } = action.payload;
+      state.subscriptions.push({ title: title, price: price });
+    },
   },
 });
 
-export const { signUp, signIn } = userSlice.actions;
+export const { signUp, signIn, addSubscription } = userSlice.actions;
 
 export default userSlice.reducer;
