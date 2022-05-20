@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { InputType } from "../../types/type";
 
-export const Input = styled.input`
-  width: 100%;
+export const Input = styled.input<InputType>`
+  width: ${(props) => props.width};
   height: 68px;
 
   padding: 25px 23px;
@@ -17,4 +18,5 @@ export const Input = styled.input`
 
   border: 0;
   border-radius: 10px;
+  outline: 0;
 `;

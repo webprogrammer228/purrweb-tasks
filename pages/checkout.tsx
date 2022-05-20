@@ -6,7 +6,7 @@ import { Form } from "../UI/form/Form";
 import { SubmitButton } from "../UI/form/SubmitButton";
 import { FormWrapper } from "../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginInputs, Subscriptions } from "../types/type";
+import { SubscribeType, Subscription } from "../types/type";
 import { PurchaseWrapper } from "../UI/checkout/PurchaseWrapper";
 import { PurchaseHeaderWrapper } from "../UI/checkout/PurchaseHeaderWrapper";
 import { PurchaseHeaderTitle } from "../UI/checkout/PurchaseHeaderTitle";
@@ -15,24 +15,39 @@ import { PurchaseSubscriptionWrapper } from "../UI/checkout/SubscriptionWrapper"
 import { PurchaseSubscriptionTitle } from "../UI/checkout/PurchaseSubscriptionTitle";
 import { Basket } from "../UI/checkout/Basket";
 import { Wrapper } from "../UI/Wrapper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { v4 as uuidv4 } from "uuid";
 import { TotalTitle } from "../UI/checkout/TotalTitle";
 import { TotalWrapper } from "../UI/checkout/TotalWrapper";
+import { buySubscription } from "../store/UserSlice";
+import { useRouter } from "next/router";
+import { useBuySubscriptionMutation } from "../store/RegisterApi";
 
 const Checkout = () => {
+  const subscription = useSelector<RootState, Subscription>(
+    (state) => state.users.subscriptions
+  );
+  let { priceId } = subscription;
+  const dispatch = useDispatch();
+  const [buySub] = useBuySubscriptionMutation();
+
+  const router = useRouter();
   const {
     handleSubmit,
     formState: {},
-  } = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = (data) => {};
-
-  const subscriptions = useSelector<RootState, Subscriptions>(
-    (state) => state.users.subscriptions
-  );
-
-  const sum = subscriptions.map((sub) => sub.price).reduce((a, b) => a + b);
+  } = useForm<SubscribeType>();
+  const onSubmit: SubmitHandler<SubscribeType> = async (data) => {
+    await buySub({ priceId })
+      .unwrap()
+      .then((response: SubscribeType) => {
+        dispatch(buySubscription({ ...response }));
+        router.push("/finish");
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
 
   return (
     <FormWrapper>
@@ -49,29 +64,27 @@ const Checkout = () => {
             <PurchaseHeaderTitle>Price</PurchaseHeaderTitle>
           </PurchaseHeaderWrapper>
           <Line />
-          {subscriptions.map((subscription) => (
-            <PurchaseSubscriptionWrapper
-              key={uuidv4()}
-              padding="32px 48px 48px 32px"
-            >
+          <PurchaseSubscriptionWrapper
+            key={uuidv4()}
+            padding="32px 48px 48px 32px"
+          >
+            <PurchaseSubscriptionTitle>
+              {subscription.title}
+            </PurchaseSubscriptionTitle>
+            <Wrapper align="center" direction="row">
               <PurchaseSubscriptionTitle>
-                {subscription.title}
+                ${subscription.price}
               </PurchaseSubscriptionTitle>
-              <Wrapper>
-                <PurchaseSubscriptionTitle>
-                  ${subscription.price}
-                </PurchaseSubscriptionTitle>
-                <Basket width="24px" height="24px" color="#969696" />
-              </Wrapper>
-            </PurchaseSubscriptionWrapper>
-          ))}
+              <Basket width="24px" height="24px" color="#969696" />
+            </Wrapper>
+          </PurchaseSubscriptionWrapper>
         </PurchaseWrapper>
         <TotalWrapper>
           <TotalTitle>Total:</TotalTitle>
 
-          <TotalTitle>${sum}</TotalTitle>
+          <TotalTitle>${subscription.price}</TotalTitle>
         </TotalWrapper>
-        <SubmitButton width="200px" type="submit">
+        <SubmitButton width="200px" type="submit" marginBottom="290px">
           Purchase
         </SubmitButton>
       </Form>

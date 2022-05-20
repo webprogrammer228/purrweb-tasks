@@ -9,7 +9,8 @@ export const Title = styled.p`
 
   text-align: center;
 
-  color: #ffffff;
+  color: ${(props) =>
+    props.color !== "/subscriptions" ? "#ffffff" : "#969696"};
 
   &:first-child {
     margin-left: 32px;

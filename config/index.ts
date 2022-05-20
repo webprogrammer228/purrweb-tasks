@@ -16,3 +16,5 @@ export const configLogin = {
   "Access-Control-Allow-Headers":
     "Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length",
 };
+
+export const URL = process.env.NEXT_PUBLIC_URL;

@@ -69,12 +69,14 @@ const Registration = () => {
       </Hint>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          width="100%"
           {...register("username", { required: true })}
           placeholder="Username"
         />
         {errors.username && <Warning>Username is not be empty</Warning>}
 
         <Input
+          width="100%"
           {...register("email", {
             required: "Email is requried.",
             pattern: {
@@ -87,6 +89,7 @@ const Registration = () => {
         {errors?.email && <Warning>{errors.email.message}</Warning>}
 
         <Input
+          width="100%"
           {...register("password", {
             required: "This is required.",
             minLength: 6,
@@ -101,7 +104,7 @@ const Registration = () => {
           <Warning>Minimal length your password is 6 symbols</Warning>
         )}
 
-        <SubmitButton width="200px" type="submit">
+        <SubmitButton width="200px" type="submit" marginBottom="48px">
           Send password
         </SubmitButton>
       </Form>

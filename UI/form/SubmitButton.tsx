@@ -19,7 +19,7 @@ export const SubmitButton = styled.button<SubmitButtonType>`
   text-align: center;
 
   color: #ffffff;
-  margin-bottom: 48px;
+  margin-bottom: ${(props) => props.marginBottom};
 
   cursor: pointer;
 `;

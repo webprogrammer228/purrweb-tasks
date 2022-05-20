@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { HeaderLayout } from "../UI/header";
 import { Logo } from "../UI/header/Logo/Logo";
 import React from "react";
-import { Main } from "../UI/checkout/Main";
+import { Main } from "../UI/Main";
 import { FooterLayout } from "../UI/footer";
 import { TopBlock } from "../UI/footer/TopBlock";
 import { BottomBlock } from "../UI/footer/BottomBlock";

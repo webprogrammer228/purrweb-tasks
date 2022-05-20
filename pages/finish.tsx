@@ -16,19 +16,21 @@ import { PurchaseSubscriptionTitle } from "../UI/checkout/PurchaseSubscriptionTi
 import { Wrapper } from "../UI/Wrapper";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useRouter } from "next/router";
 
 const Finish = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     formState: {},
   } = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = (data) => {};
+  const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+    router.push("/subscriptions");
+  };
 
-  const subscriptions = useSelector<RootState, Subscriptions>(
+  const subscription = useSelector<RootState, Subscriptions>(
     (state) => state.users.subscriptions
   );
-
-  const sum = subscriptions.map((sub) => sub.price).reduce((a, b) => a + b);
 
   return (
     <FormWrapper>
@@ -43,24 +45,22 @@ const Finish = () => {
           <PurchaseHeaderTitle>Price</PurchaseHeaderTitle>
         </PurchaseHeaderWrapper>
         <Line />
-        {subscriptions.map((subscription) => (
-          <PurchaseSubscriptionWrapper
-            key={uuidv4()}
-            padding="32px 72px 48px 32px"
-          >
+        <PurchaseSubscriptionWrapper
+          key={uuidv4()}
+          padding="32px 72px 48px 32px"
+        >
+          <PurchaseSubscriptionTitle>
+            {subscription.title}
+          </PurchaseSubscriptionTitle>
+          <Wrapper align="center" direction="row">
             <PurchaseSubscriptionTitle>
-              {subscription.title}
+              ${subscription.price}
             </PurchaseSubscriptionTitle>
-            <Wrapper>
-              <PurchaseSubscriptionTitle>
-                ${subscription.price}
-              </PurchaseSubscriptionTitle>
-            </Wrapper>
-          </PurchaseSubscriptionWrapper>
-        ))}
+          </Wrapper>
+        </PurchaseSubscriptionWrapper>
       </PurchaseWrapper>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <SubmitButton type="submit" width="100%">
+        <SubmitButton type="submit" width="100%" marginBottom="390px">
           Go to my subscriptions
         </SubmitButton>
       </Form>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 export const Logo = ({
   height = "42px",
@@ -8,8 +9,10 @@ export const Logo = ({
   secondaryColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & { secondaryColor?: string }) => {
+  const router = useRouter();
+
   return (
-    <Wrapper>
+    <Wrapper onClick={() => router.push("/")}>
       <svg
         width={width}
         height={height}
@@ -155,4 +158,6 @@ const LogoTitle = styled.h3`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 `;

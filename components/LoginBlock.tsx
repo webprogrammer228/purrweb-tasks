@@ -5,14 +5,22 @@ import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
 import { CheckMark } from "../UI/header/Login/CheckMark";
 import styled from "styled-components";
 import { Title } from "../UI/header/Login/Title";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { logOut } from "../store/UserSlice";
 
 const LoginBlock = ({ ...props }) => {
   const { width, height, color, name } = props;
   const [showSettingsUser, setShowSettingsUser] = useState(false);
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
   return (
     <Wrapper>
       <WrapperLogin onClick={() => setShowSettingsUser(!showSettingsUser)}>
-        <Title>{name}</Title>
+        <Title color={"/"}>{name}</Title>
         <CheckMark
           width={width}
           color={color}
@@ -23,11 +31,23 @@ const LoginBlock = ({ ...props }) => {
 
       {showSettingsUser && (
         <UserSettings>
-          <IconWrapper>
+          <IconWrapper
+            onClick={() => {
+              setShowSettingsUser(false);
+              router.push("/settings");
+            }}
+          >
             <GearIcon height="24px" width="24px" color="white" />
             <IconTitle>Settings</IconTitle>
           </IconWrapper>
-          <IconWrapper>
+          <IconWrapper
+            onClick={() => {
+              dispatch(logOut({}));
+              Cookies.set("token", "");
+              setShowSettingsUser(false);
+              router.push("/");
+            }}
+          >
             <QuitIcon height="24px" width="24px" color="white" />
             <IconTitle>Logout</IconTitle>
           </IconWrapper>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Check } from "./Check";
+import { Check } from "../UI/content/Check";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
-import { addSubscription } from "../../store/UserSlice";
+import { addSubscription } from "../store/UserSlice";
 import { useRouter } from "next/router";
-import { CardDescription } from "../CardDescription";
+import { CardDescription } from "../UI/CardDescription";
 
 const cardsInfo = [
   {
@@ -89,7 +89,7 @@ const Card: React.FC = () => {
           </CardList>
           <CardButton
             onClick={() => {
-              dispatch(addSubscription({ ...cardInfo }));
+              dispatch(addSubscription({ ...cardInfo, id }));
               router.push("/registration");
             }}
           >
