@@ -7,4 +7,5 @@ export const Wrapper = styled.div<WrapperType>`
 
   flex-direction: ${(props) => props.direction};
   margin-bottom: ${(props) => props.marginBottom};
+  justify-content: ${(props) => props.justifyContent};
 `;

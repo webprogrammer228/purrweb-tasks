@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginInputs, RegisterInputs, SubscriptionsType } from "../types/type";
+import { LoginInputs, RegisterInputs } from "../types/type";
 import { config, configLogin } from "../config";
 
 export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
@@ -35,12 +35,12 @@ export const userApi = createApi({
         body: subscription,
       }),
     }),
-    getSubscriptions: builder.query<SubscriptionsType, string>({
-      query: () => ({
-        url: `${URL}subscribe/self`,
-        headers: configLogin,
-      }),
-    }),
+    // getSubscriptions: builder.query<SubscriptionsType, string>({
+    //   query: () => ({
+    //     url: `${URL}subscribe/self`,
+    //     headers: configLogin,
+    //   }),
+    // }),
   }),
 });
 
@@ -48,5 +48,5 @@ export const {
   useSignUpMutation,
   useSignInMutation,
   useBuySubscriptionMutation,
-  useGetSubscriptionsQuery,
+  // useGetSubscriptionsQuery,
 } = userApi;

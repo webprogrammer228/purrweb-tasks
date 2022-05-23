@@ -8,22 +8,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: "/subscriptions",
-        headers: [
-          {
-            key: "Authorization",
-            value: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjI1LCJlbWFpbCI6InVzZXJuYW1lMjJAbWFpbC5ydSIsImlhdCI6MTY1MzAzNTMxNX0.jERiBwxpMT4NLdUxCeK05UMRgf7kzxiKk8McCJIzCYQ`,
-          },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
-          },
-        ],
-      },
-    ];
-  },
-};

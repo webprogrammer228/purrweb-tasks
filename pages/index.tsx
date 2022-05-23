@@ -2,8 +2,18 @@ import type { NextPage } from "next";
 import styled from "styled-components";
 import { Card } from "../components";
 import Link from "next/link";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { logOut } from "../store/UserSlice";
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (Cookies.get("token") === undefined) {
+      dispatch(logOut({}));
+    }
+  }, []);
   return (
     <>
       <GreetingHome>Get started with Gscore today!</GreetingHome>

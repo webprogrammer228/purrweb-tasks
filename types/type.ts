@@ -24,6 +24,7 @@ export type Subscription = {
 
 export type SubscriptionWrapperType = {
   padding: string;
+  border?: string;
 };
 
 export type SubmitButtonType = {
@@ -39,6 +40,7 @@ export type WrapperType = {
   direction: string;
   align: string;
   marginBottom?: string;
+  justifyContent?: string;
 };
 
 export type SettingsMenuTitleType = {
@@ -59,8 +61,8 @@ export type SubscriptionsType = [
     id: number;
     userId: number;
     productId: number;
-    currentPeriodStart: string;
-    currentPeriodEnd: string;
+    currentPeriodStart: string | number;
+    currentPeriodEnd: string | number;
     status: string;
     product: {
       id: 3;
@@ -87,3 +89,59 @@ export type SubscriptionsType = [
     ];
   }
 ];
+
+export type SubscriptionType = {
+  info: SubscriptionsType;
+};
+
+export type AllMySubscriptions = {
+  id: number;
+  userId: number;
+  productId: number;
+  currentPeriodStart: string;
+  currentPeriodEnd: string;
+  status: string;
+  product: {
+    id: 3;
+    sitesCount: 7;
+    name: "Seven sites";
+    prices: [
+      {
+        id: number;
+        isActive: boolean;
+        productId: number;
+        price: string;
+      }
+    ];
+  };
+  codes: [
+    {
+      id: number;
+      code: string;
+      origin: null;
+      status: string;
+      subscribeId: number;
+      userId: number;
+    }
+  ];
+};
+
+export type SubscriptionTitleType = {
+  color: string;
+  fontWeight: string;
+  lineHeight: string;
+  fontSize: string;
+  padding?: string;
+};
+
+export type ViewSubscriptionButtonType = {
+  color: string;
+  background: string;
+  width: string;
+  height: string;
+};
+
+export type SwiperNavigationType = {
+  color?: string;
+  marginRight?: string;
+};

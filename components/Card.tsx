@@ -152,6 +152,8 @@ const CardBodyHeader = styled.div`
   flex: 1 0 auto;
   flex-direction: column;
   align-items: center;
+
+  text-align: center;
   border-bottom: 1px solid gray;
 `;
 
