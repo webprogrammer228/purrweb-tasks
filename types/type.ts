@@ -41,6 +41,8 @@ export type WrapperType = {
   align: string;
   marginBottom?: string;
   justifyContent?: string;
+  marginRight?: string;
+  width?: string;
 };
 
 export type SettingsMenuTitleType = {
@@ -144,4 +146,13 @@ export type ViewSubscriptionButtonType = {
 export type SwiperNavigationType = {
   color?: string;
   marginRight?: string;
+};
+
+export type CheckboxType = {
+  isActive: boolean;
+};
+
+export type CodeInputType = {
+  width?: string;
+  padding?: string;
 };

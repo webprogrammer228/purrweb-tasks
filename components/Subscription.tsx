@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   AllMySubscriptions,
@@ -8,113 +8,125 @@ import {
   SwiperNavigationType,
   ViewSubscriptionButtonType,
 } from "../types/type";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Navigation } from "swiper";
 import { Wrapper } from "UI/Wrapper";
 import { PaginationArrow } from "../UI/subscription/PaginationArrow";
+import { Navigation } from "swiper";
+import Code from "./Code";
 import { v4 as uuidv4 } from "uuid";
 import { DateTime } from "luxon";
 
 const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
   const datas = Object.values(info).map((elem) => elem.res);
+  console.log("datas", datas);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  console.log(datas);
+  // console.log(datas[0]);
+
   return (
     <>
       <Swiper
-        modules={[A11y, Navigation]}
+        modules={[Navigation]}
         spaceBetween={28}
-        slidesPerView={2.2}
+        slidesPerView={2}
         direction={"horizontal"}
         navigation={{ nextEl: ".next-el", prevEl: ".prev-el" }}
+        onSlideChange={(el) => {
+          setActiveIndex(el.realIndex);
+        }}
+        onClick={() => {
+          return false;
+        }}
       >
-        {datas.map((allSubscriptions: AllMySubscriptions[]) => (
-          <Wrapper align="left" direction="row" key={uuidv4()}>
-            {allSubscriptions.map((subscription) => (
-              <SwiperSlide>
-                <SubscriptionWrapper>
-                  <SubscriptionHeader
-                    padding="0 32px 32px 0"
-                    border="1px solid #969696"
-                  >
-                    <SubscriptionTitle
-                      color="#ffffff"
-                      lineHeight="28px"
-                      fontSize="22px"
-                      fontWeight="700"
-                    >
-                      Gscore
-                    </SubscriptionTitle>
-                    <SubscriptionTitle
-                      color="#05C168"
-                      lineHeight="28px"
-                      fontSize="22px"
-                      fontWeight="700"
-                    >
-                      {subscription.status}
-                    </SubscriptionTitle>
-                  </SubscriptionHeader>
-                  <SubscriptionHeader padding="32px 49px 12px 0">
-                    <SubscriptionTitle
-                      color="#ffffff"
-                      lineHeight="26px"
-                      fontSize="24px"
-                      fontWeight="500"
-                    >
-                      {subscription.product.name}
-                    </SubscriptionTitle>
-                    {subscription.product.prices.map((allPrices) => (
-                      <SubscriptionTitle
-                        color="#ffffff"
-                        lineHeight="26px"
-                        fontSize="24px"
-                        fontWeight="500"
-                      >
-                        ${allPrices.price}
-                      </SubscriptionTitle>
-                    ))}
-                  </SubscriptionHeader>
+        {datas[0].map((subscription: AllMySubscriptions) => (
+          <SwiperSlide key={uuidv4()}>
+            <SubscriptionWrapper>
+              <SubscriptionHeader
+                padding="0 32px 32px 0"
+                border="1px solid #969696"
+              >
+                <SubscriptionTitle
+                  color="#ffffff"
+                  lineHeight="28px"
+                  fontSize="22px"
+                  fontWeight="700"
+                >
+                  Gscore
+                </SubscriptionTitle>
+                <SubscriptionTitle
+                  color="#05C168"
+                  lineHeight="28px"
+                  fontSize="22px"
+                  fontWeight="700"
+                >
+                  {subscription.status}
+                </SubscriptionTitle>
+              </SubscriptionHeader>
+              <SubscriptionHeader padding="32px 49px 12px 0">
+                <SubscriptionTitle
+                  color="#ffffff"
+                  lineHeight="26px"
+                  fontSize="24px"
+                  fontWeight="500"
+                >
+                  {subscription.product.name}
+                </SubscriptionTitle>
+                {subscription.product.prices.map((allPrices) => (
                   <SubscriptionTitle
-                    fontSize="16px"
-                    lineHeight="18px"
+                    color="#ffffff"
+                    lineHeight="26px"
+                    fontSize="24px"
                     fontWeight="500"
-                    color="#969696"
+                    key={uuidv4()}
                   >
-                    valid until{" "}
-                    {DateTime.fromSeconds(
-                      Number(`${subscription.currentPeriodEnd}`)
-                    ).toLocaleString()}
+                    ${allPrices.price}
                   </SubscriptionTitle>
-                  <ViewSubscriptionButton
-                    height="50"
-                    width="120"
-                    color="#FC5842"
-                    background="#ffffff"
-                  >
-                    View
-                  </ViewSubscriptionButton>
-                </SubscriptionWrapper>
-              </SwiperSlide>
-            ))}
-          </Wrapper>
+                ))}
+              </SubscriptionHeader>
+              <SubscriptionTitle
+                fontSize="16px"
+                lineHeight="18px"
+                fontWeight="500"
+                color="#969696"
+              >
+                valid until{" "}
+                {DateTime.fromSeconds(
+                  Number(`${subscription.currentPeriodEnd}`)
+                ).toLocaleString()}
+              </SubscriptionTitle>
+              <React.Fragment>
+                <ViewSubscriptionButton
+                  height="50"
+                  width="120"
+                  color="#FC5842"
+                  background="#ffffff"
+                  onClick={() => console.log("Some text")}
+                >
+                  View
+                </ViewSubscriptionButton>
+              </React.Fragment>
+            </SubscriptionWrapper>
+          </SwiperSlide>
         ))}
 
         <Wrapper direction="row" align="left" marginBottom="32px">
           <Button marginRight="12px" className="prev-el">
             <PaginationArrow rotate="180deg" />
           </Button>
-          <Pagination className="swiper-pagination">{}</Pagination>
-          <Pagination>/{datas[0].length}</Pagination>
+          <Pagination>{activeIndex + 1}</Pagination>
+          <Pagination>/</Pagination>
+          <Pagination>{datas[0].length}</Pagination>
           <Button className="next-el">
             <PaginationArrow rotate="0deg" />
           </Button>
         </Wrapper>
       </Swiper>
+
+      <Code />
     </>
   );
 };
@@ -133,6 +145,8 @@ const SubscriptionWrapper = styled.div`
 
   max-width: 620px;
   max-height: 334px;
+
+  opacity: ${(props) => (props.index ? "0.6" : "1")};
 `;
 
 const SubscriptionHeader = styled.div<SubscriptionWrapperType>`
@@ -170,6 +184,8 @@ const ViewSubscriptionButton = styled.button<ViewSubscriptionButtonType>`
   margin: 32px 0 48px 0;
 
   cursor: pointer;
+
+  z-index: 100;
 `;
 
 const Button = styled.button<SwiperNavigationType>`
