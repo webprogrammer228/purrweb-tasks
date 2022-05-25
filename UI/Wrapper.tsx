@@ -10,5 +10,6 @@ export const Wrapper = styled.div<WrapperType>`
   margin-bottom: ${(props) => props.marginBottom};
   justify-content: ${(props) => props.justifyContent};
   margin-right: ${(props) => props.marginRight};
+  margin-left: ${(props) => props.marginLeft};
   width: ${(props) => props.width};
 `;

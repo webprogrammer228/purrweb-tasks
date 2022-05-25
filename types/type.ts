@@ -42,6 +42,7 @@ export type WrapperType = {
   marginBottom?: string;
   justifyContent?: string;
   marginRight?: string;
+  marginLeft?: string;
   width?: string;
 };
 
@@ -155,4 +156,30 @@ export type CheckboxType = {
 export type CodeInputType = {
   width?: string;
   padding?: string;
+};
+
+export type SubscriptionWrapperPropsType = {
+  index: number;
+  activeIndex: number;
+};
+
+export type SubscriptionProps = {
+  code: {
+    id: number;
+    code: string;
+    origin: null;
+    status: string;
+    subscribeId: number;
+    userId: number;
+  };
+  // selectedCodes: number[];
+  // setSelectedCodes: (value: number[]) => void;
+};
+
+export type CodeStatusType = {
+  color: string;
+};
+
+export type CheckboxesType = {
+  id: number;
 };

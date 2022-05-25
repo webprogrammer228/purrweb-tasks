@@ -7,7 +7,7 @@ export const CheckBox = styled.input<CheckboxType>`
   position: relative;
 
   background: #c7c7c7;
-  border: 1px solid ${(props) => (!props.isActive ? "#c7c7c7" : "#FC5842")};
+  border: 1px solid ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
   margin-top: 25px;
 
   box-shadow: 0px 2px 6px rgba(20, 20, 43, 0.06);
@@ -24,12 +24,12 @@ export const CheckBox = styled.input<CheckboxType>`
   &:checked {
     &::after {
       border-radius: 5px;
-      border: 1px solid ${(props) => (!props.isActive ? "#c7c7c7" : "#FC5842")};
+      border: 1px solid ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
       appearance: none;
       content: "";
       display: block;
       z-index: 1;
-      background: ${(props) => (props.isActive ? "#FC5842" : "#c7c7c7")};
+      background: ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
       width: 100%;
       height: 100%;
     }
@@ -44,7 +44,7 @@ export const CheckBox = styled.input<CheckboxType>`
       height: 100%;
       color: #c7c7c7;
       z-index: 1;
-      background: ${(props) => (props.isActive ? "#FC5842" : "#c7c7c7")};
+      background: ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
     }
   }
 `;

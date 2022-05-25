@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import {
   AllMySubscriptions,
+  CheckboxesType,
   SubscriptionTitleType,
   SubscriptionType,
+  SubscriptionWrapperPropsType,
   SubscriptionWrapperType,
   SwiperNavigationType,
   ViewSubscriptionButtonType,
@@ -19,14 +21,22 @@ import { Navigation } from "swiper";
 import Code from "./Code";
 import { v4 as uuidv4 } from "uuid";
 import { DateTime } from "luxon";
+import { Form } from "../UI/form/Form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
   const datas = Object.values(info).map((elem) => elem.res);
-  console.log("datas", datas);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndexSlide, setActiveIndexSlide] = useState(0);
+  const [activeIndexCard, setActiveIndexCard] = useState(0);
 
-  // console.log(datas[0]);
-
+  // const norender = useMemo(() => );
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<CheckboxesType>();
+  const onSubmit: SubmitHandler<CheckboxesType> = (data) => console.log(data);
   return (
     <>
       <Swiper
@@ -35,16 +45,13 @@ const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
         slidesPerView={2}
         direction={"horizontal"}
         navigation={{ nextEl: ".next-el", prevEl: ".prev-el" }}
-        onSlideChange={(el) => {
-          setActiveIndex(el.realIndex);
-        }}
-        onClick={() => {
-          return false;
+        onSlideChange={(slide) => {
+          setActiveIndexSlide(slide.realIndex);
         }}
       >
-        {datas[0].map((subscription: AllMySubscriptions) => (
+        {datas[0].map((subscription: AllMySubscriptions, id: number) => (
           <SwiperSlide key={uuidv4()}>
-            <SubscriptionWrapper>
+            <SubscriptionWrapper index={activeIndexCard} activeIndex={id}>
               <SubscriptionHeader
                 padding="0 32px 32px 0"
                 border="1px solid #969696"
@@ -104,7 +111,7 @@ const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
                   width="120"
                   color="#FC5842"
                   background="#ffffff"
-                  onClick={() => console.log("Some text")}
+                  onClick={() => setActiveIndexCard(id)}
                 >
                   View
                 </ViewSubscriptionButton>
@@ -117,7 +124,7 @@ const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
           <Button marginRight="12px" className="prev-el">
             <PaginationArrow rotate="180deg" />
           </Button>
-          <Pagination>{activeIndex + 1}</Pagination>
+          <Pagination>{activeIndexSlide + 1}</Pagination>
           <Pagination>/</Pagination>
           <Pagination>{datas[0].length}</Pagination>
           <Button className="next-el">
@@ -126,14 +133,22 @@ const Subscription: React.FC<SubscriptionType> = ({ ...info }) => {
         </Wrapper>
       </Swiper>
 
-      <Code />
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        {datas[0].map(
+          (subscription: AllMySubscriptions, id: number) =>
+            activeIndexCard === id &&
+            subscription.codes.map((code) => (
+              <Code key={uuidv4()} code={code} />
+            ))
+        )}
+      </Form>
     </>
   );
 };
 
-export default Subscription;
+export default React.memo(Subscription);
 
-const SubscriptionWrapper = styled.div`
+const SubscriptionWrapper = styled.div<SubscriptionWrapperPropsType>`
   background: #393939;
   display: flex;
   flex-direction: column;
@@ -145,8 +160,7 @@ const SubscriptionWrapper = styled.div`
 
   max-width: 620px;
   max-height: 334px;
-
-  opacity: ${(props) => (props.index ? "0.6" : "1")};
+  opacity: ${(props) => (props.index !== props.activeIndex ? ".6" : "1")};
 `;
 
 const SubscriptionHeader = styled.div<SubscriptionWrapperType>`
@@ -168,10 +182,10 @@ const SubscriptionTitle = styled.span<SubscriptionTitleType>`
   padding: ${(props) => (props.padding ? props.padding : "")};
 `;
 
-const ViewSubscriptionButton = styled.button<ViewSubscriptionButtonType>`
+export const ViewSubscriptionButton = styled.button<ViewSubscriptionButtonType>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  padding: 20px 42px;
+  padding: 20px 0;
   border: 0;
   color: ${(props) => props.color};
 
