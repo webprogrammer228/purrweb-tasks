@@ -22,7 +22,7 @@ export const userApi = createApi({
     signIn: builder.mutation({
       query: (user: LoginInputs) => ({
         url: URLLogin,
-        headers: configLogin,
+        headers: config,
         method: "POST",
         body: user,
       }),
@@ -35,12 +35,30 @@ export const userApi = createApi({
         body: subscription,
       }),
     }),
-    // getSubscriptions: builder.query<SubscriptionsType, string>({
-    //   query: () => ({
-    //     url: `${URL}subscribe/self`,
-    //     headers: configLogin,
-    //   }),
-    // }),
+    activateCode: builder.mutation({
+      query: (code) => ({
+        url: `${URL}code/activate`,
+        headers: configLogin,
+        method: "POST",
+        body: code,
+      }),
+    }),
+    changePersonalInfo: builder.mutation({
+      query: (personalInfo) => ({
+        url: `${URL}users`,
+        headers: configLogin,
+        method: "PATCH",
+        body: personalInfo,
+      }),
+    }),
+    changePassword: builder.mutation({
+      query: (password) => ({
+        url: `${URL}users/update-password`,
+        headers: configLogin,
+        method: "PATCH",
+        body: password,
+      }),
+    }),
   }),
 });
 
@@ -48,5 +66,7 @@ export const {
   useSignUpMutation,
   useSignInMutation,
   useBuySubscriptionMutation,
-  // useGetSubscriptionsQuery,
+  useActivateCodeMutation,
+  useChangePersonalInfoMutation,
+  useChangePasswordMutation,
 } = userApi;

@@ -4,7 +4,7 @@ import { Form } from "../UI/form/Form";
 import { SubmitButton } from "../UI/form/SubmitButton";
 import { FormWrapper } from "../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginInputs, Subscriptions } from "../types/type";
+import { LoginInputs, PurchasedSubscription } from "../types/type";
 import { CardDescription } from "../UI/CardDescription";
 import { PurchaseWrapper } from "../UI/checkout/PurchaseWrapper";
 import { PurchaseHeaderWrapper } from "../UI/checkout/PurchaseHeaderWrapper";
@@ -28,8 +28,8 @@ const Finish = () => {
     router.push("/subscriptions");
   };
 
-  const subscription = useSelector<RootState, Subscriptions>(
-    (state) => state.users.subscriptions
+  const subscription = useSelector<RootState, PurchasedSubscription>(
+    (state) => state.users.currentSubscription
   );
 
   return (

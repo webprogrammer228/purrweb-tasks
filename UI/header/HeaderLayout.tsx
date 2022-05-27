@@ -11,7 +11,7 @@ const HeaderLayout = ({ children }: Props) => {
 
 export default HeaderLayout;
 
-const Header = styled.header`
+export const Header = styled.header`
   width: 100%;
   height: 100px;
   margin: 0 0 65px;

@@ -69,6 +69,7 @@ const WrapperLogin = styled.div`
   align-items: center;
 
   cursor: pointer;
+  z-index: 20;
 `;
 
 const IconWrapper = styled.div`

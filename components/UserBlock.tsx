@@ -1,15 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import { User } from "../types/type";
 import { LoginWrapper } from "../UI/header/Login/LoginWrapper";
 import { Title } from "../UI/header/Login/Title";
 import CheckMark from "./LoginBlock";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const UserBlock: React.FC = () => {
-  const user = useSelector<RootState, User>((state) => state.users.users);
-  const { name } = user;
+  const name = Cookies.get("username");
   const router = useRouter();
   return (
     <LoginWrapper>

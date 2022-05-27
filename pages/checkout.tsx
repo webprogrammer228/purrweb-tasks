@@ -26,7 +26,7 @@ import { useBuySubscriptionMutation } from "../store/RegisterApi";
 
 const Checkout = () => {
   const subscription = useSelector<RootState, Subscription>(
-    (state) => state.users.subscriptions
+    (state) => state.users.currentSubscription
   );
   let { priceId } = subscription;
   const dispatch = useDispatch();

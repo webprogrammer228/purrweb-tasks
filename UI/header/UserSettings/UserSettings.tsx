@@ -11,4 +11,5 @@ export const UserSettings = styled.div`
   right: 50px;
 
   padding: 24px 28px;
+  z-index: 20;
 `;

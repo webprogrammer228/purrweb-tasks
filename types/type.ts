@@ -1,3 +1,5 @@
+import { UseFormRegister } from "react-hook-form";
+
 export type RegisterInputs = {
   username: string;
   email: string;
@@ -7,8 +9,18 @@ export type RegisterInputs = {
 
 export type LoginInputs = {
   email: string;
+  username?: string;
   password: string;
   token: string;
+};
+
+export type LoginResponseType = {
+  token: string;
+  user: {
+    email: string;
+    id: number;
+    username: string;
+  };
 };
 
 export type User = {
@@ -37,8 +49,8 @@ export type InputType = {
 };
 
 export type WrapperType = {
-  direction: string;
-  align: string;
+  direction?: string;
+  align?: string;
   marginBottom?: string;
   justifyContent?: string;
   marginRight?: string;
@@ -50,8 +62,16 @@ export type SettingsMenuTitleType = {
   activeTitle: boolean;
 };
 
+export type PurchasedSubscription = {
+  title?: string;
+  price?: number;
+  priceId?: number | undefined;
+};
+
 export type SubscribeType = {
   userId: number | null;
+  title?: string;
+  price?: string;
   productId: number | null;
   currentPeriodStart: number | null;
   currentPeriodEnd: number | null;
@@ -68,9 +88,9 @@ export type SubscriptionsType = [
     currentPeriodEnd: string | number;
     status: string;
     product: {
-      id: 3;
-      sitesCount: 7;
-      name: "Seven sites";
+      id: number;
+      sitesCount: number;
+      name: string;
       prices: [
         {
           id: number;
@@ -93,11 +113,7 @@ export type SubscriptionsType = [
   }
 ];
 
-export type SubscriptionType = {
-  info: SubscriptionsType;
-};
-
-export type AllMySubscriptions = {
+export type MySubscription = {
   id: number;
   userId: number;
   productId: number;
@@ -105,9 +121,9 @@ export type AllMySubscriptions = {
   currentPeriodEnd: string;
   status: string;
   product: {
-    id: 3;
-    sitesCount: 7;
-    name: "Seven sites";
+    id: number;
+    sitesCount: number;
+    name: string;
     prices: [
       {
         id: number;
@@ -135,6 +151,7 @@ export type SubscriptionTitleType = {
   lineHeight: string;
   fontSize: string;
   padding?: string;
+  marginBottom?: string;
 };
 
 export type ViewSubscriptionButtonType = {
@@ -142,6 +159,7 @@ export type ViewSubscriptionButtonType = {
   background: string;
   width: string;
   height: string;
+  margin?: string;
 };
 
 export type SwiperNavigationType = {
@@ -151,11 +169,6 @@ export type SwiperNavigationType = {
 
 export type CheckboxType = {
   isActive: boolean;
-};
-
-export type CodeInputType = {
-  width?: string;
-  padding?: string;
 };
 
 export type SubscriptionWrapperPropsType = {
@@ -172,8 +185,7 @@ export type SubscriptionProps = {
     subscribeId: number;
     userId: number;
   };
-  // selectedCodes: number[];
-  // setSelectedCodes: (value: number[]) => void;
+  reg: UseFormRegister<CheckboxesType>;
 };
 
 export type CodeStatusType = {
@@ -181,5 +193,57 @@ export type CodeStatusType = {
 };
 
 export type CheckboxesType = {
+  code: string;
+};
+
+export type SettingsPersonalInfoType = {
+  username: string;
+  email: string;
+};
+
+export type SettingsPersonalInfoResponseType = {
   id: number;
+  email: string;
+  username: string;
+  subscribes: [];
+  codes: [
+    {
+      id: number;
+      code: string;
+      origin: string;
+      status: string;
+      subscribeId: number;
+      subscribe: {
+        id: number;
+        userId: number;
+        user: string;
+        productId: number;
+        product: {
+          id: number;
+          sitesCount: number;
+          name: number;
+          prices: [
+            {
+              id: number;
+              isActive: boolean;
+              productId: number;
+              product: {};
+              price: string;
+            }
+          ];
+        };
+        currentPeriodStart: string;
+        currentPeriodEnd: string;
+        status: string;
+        codes: string[];
+      };
+      userId: number;
+      user: string;
+    }
+  ];
+};
+
+export type SettingsPasswordType = {
+  currentPassword: string;
+  newPassword: string;
 };

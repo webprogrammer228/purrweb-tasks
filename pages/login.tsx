@@ -8,7 +8,7 @@ import { Input } from "../UI/form/Input";
 import { SubmitButton } from "../UI/form/SubmitButton";
 import { Form } from "../UI/form/Form";
 import { Warning } from "../UI/form/Warning";
-import { LoginInputs } from "../types/type";
+import { LoginInputs, LoginResponseType } from "../types/type";
 import { signIn } from "../store/UserSlice";
 import { useSignInMutation } from "../store/RegisterApi";
 import { useDispatch } from "react-redux";
@@ -32,9 +32,10 @@ const Login = () => {
     if (data) {
       await signInUser({ ...data })
         .unwrap()
-        .then((response: LoginInputs) => {
+        .then((response: LoginResponseType) => {
           dispatch(signIn({ ...response }));
           Cookies.set("token", response.token);
+          Cookies.set("username", response.user.username);
           router.push("/checkout");
         })
         .catch((e) => {
@@ -67,7 +68,7 @@ const Login = () => {
         <Input
           width="100%"
           {...register("password", {
-            required: "This is required.",
+            required: "This field is required.",
             minLength: 6,
           })}
           placeholder="Password"

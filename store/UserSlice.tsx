@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { MySubscription, PurchasedSubscription } from "../types/type";
+import Cookies from "js-cookie";
 
 export type StateType = {
   users: {
@@ -6,11 +8,7 @@ export type StateType = {
     name: string;
     email: string;
   };
-  subscriptions: {
-    title?: string;
-    price?: number;
-    priceId?: number | undefined;
-  };
+  currentSubscription: PurchasedSubscription;
   subscribe: {
     userId: number | null;
     productId: number | null;
@@ -19,11 +17,12 @@ export type StateType = {
     status: string;
     id: number | null;
   };
+  allSubscriptions: MySubscription[];
 };
 
 export const initialState: StateType = {
   users: { name: "", email: "" },
-  subscriptions: {},
+  currentSubscription: {},
   subscribe: {
     userId: null,
     productId: null,
@@ -32,6 +31,7 @@ export const initialState: StateType = {
     status: "",
     id: null,
   },
+  allSubscriptions: [],
 };
 
 const userSlice = createSlice({
@@ -53,16 +53,18 @@ const userSlice = createSlice({
     },
     addSubscription(state, action) {
       const { title, price, id } = action.payload;
-      state.subscriptions.title = title;
-      state.subscriptions.price = price;
-      state.subscriptions.priceId = id + 1;
+      state.currentSubscription.title = title;
+      state.currentSubscription.price = price;
+      state.currentSubscription.priceId = id + 1;
     },
     logOut(state, action) {
       state.users.name = "";
       state.users.email = "";
       state.users.id = null;
+      Cookies.set("username", "");
+      Cookies.set("token", "");
 
-      state.subscriptions = {};
+      state.currentSubscription = {};
     },
     buySubscription(state, action) {
       const {
@@ -80,10 +82,35 @@ const userSlice = createSlice({
       state.subscribe.currentPeriodEnd = currentPeriodEnd;
       state.subscribe.status = status;
     },
+    codeActivate(state, action) {
+      const { id, status, origin } = action.payload;
+      state.allSubscriptions.map((subscription) =>
+        subscription.codes.map((code) => {
+          if (code.id === id) {
+            code.status = status;
+            code.origin = origin;
+          }
+        })
+      );
+    },
+    getAllSubscription(state, action) {
+      const { datas } = action.payload;
+      state.allSubscriptions.length === 0 &&
+        datas[0].map((subscription: MySubscription) =>
+          state.allSubscriptions.push(subscription)
+        );
+    },
   },
 });
 
-export const { signUp, signIn, addSubscription, logOut, buySubscription } =
-  userSlice.actions;
+export const {
+  signUp,
+  signIn,
+  addSubscription,
+  logOut,
+  buySubscription,
+  codeActivate,
+  getAllSubscription,
+} = userSlice.actions;
 
 export default userSlice.reducer;

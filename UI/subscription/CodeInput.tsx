@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { CodeInputType } from "../../types/type";
 
-export const CodeInput = styled.input<CodeInputType>`
+export const CodeInput = styled.input<{
+  width?: string;
+  padding?: string;
+}>`
   background: #393939;
   position: relative;
 
