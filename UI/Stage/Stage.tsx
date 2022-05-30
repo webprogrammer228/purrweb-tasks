@@ -6,7 +6,7 @@ type Stage = {
   color?: string;
 };
 
-const Stage: React.FC<Stage> = ({ title, color }) => {
+export const Stage: React.FC<Stage> = ({ title, color }) => {
   return (
     <StageWrapper>
       <StageTitle>{title}</StageTitle>
@@ -15,7 +15,6 @@ const Stage: React.FC<Stage> = ({ title, color }) => {
   );
 };
 
-export default Stage;
 
 const StageWrapper = styled.div`
   display: flex;

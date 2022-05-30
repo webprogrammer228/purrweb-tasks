@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addSubscription } from "../store/UserSlice";
 import { useRouter } from "next/router";
 import { CardDescription } from "../UI/CardDescription";
+import { token } from "../utils/utils";
 
 const cardsInfo = [
   {
@@ -90,7 +91,7 @@ const Card: React.FC = () => {
           <CardButton
             onClick={() => {
               dispatch(addSubscription({ ...cardInfo, id }));
-              router.push("/registration");
+              token ? router.push("/checkout") : router.push("/registration");
             }}
           >
             Get Gscore
@@ -106,6 +107,8 @@ export default Card;
 const CardWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  flex-wrap: wrap;
 `;
 
 const CardBody = styled.div`
@@ -114,7 +117,7 @@ const CardBody = styled.div`
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 
-  height: 560px;
+  height: 602px;
   max-width: 412px;
 
   padding: 42px 48px;
@@ -127,11 +130,25 @@ const CardBody = styled.div`
   @media (max-width: 1280px) {
     padding: 21px 24px;
     max-width: 370px;
+    height: 560px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 0 27.5px 0;
+  }
+
+  @media (max-width: 550px) {
+    padding: 20px;
+    height: 510px;
   }
 
   &:hover {
     background: #fc5842;
     margin-top: -30px;
+
+    @media (max-width: 768px) {
+      margin-top: 0;
+    }
 
     & > div {
       border-bottom: 1px solid #ffffff;
@@ -171,6 +188,11 @@ const CardPrice = styled.h1`
     font-size: 50px;
     line-height: 62px;
   }
+
+  @media (max-width: 550px) {
+    font-size: 40px;
+    line-height: 52px;
+  }
 `;
 
 const CardTitle = styled.h4`
@@ -192,6 +214,10 @@ const CardTitle = styled.h4`
 const CardList = styled.ul`
   margin-top: 38px;
   list-style-type: none;
+
+  @media (max-width: 550px) {
+    margin-top: 23px;
+  }
 `;
 
 const CardListItem = styled.li`
@@ -236,4 +262,9 @@ const CardButton = styled.button`
 
   color: #181818;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    height: 62px;
+    min-width: 100%;
+  }
 `;

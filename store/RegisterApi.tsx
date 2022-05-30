@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { LoginInputs, RegisterInputs } from "../types/type";
 import { config, configLogin } from "../config";
 
-export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
-export const URLLogin: string = process.env.NEXT_PUBLIC_URL_SIGNIN!;
+// export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
+// export const URLLogin: string = process.env.NEXT_PUBLIC_URL_SIGNIN!;
 export const URL: string = process.env.NEXT_PUBLIC_URL!;
 
 export const userApi = createApi({
@@ -13,7 +13,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (user: RegisterInputs) => ({
-        url: URLRegister,
+        url: `${URL}/users/sign-up`,
         headers: config,
         method: "POST",
         body: user,
@@ -21,7 +21,7 @@ export const userApi = createApi({
     }),
     signIn: builder.mutation({
       query: (user: LoginInputs) => ({
-        url: URLLogin,
+        url: `${URL}/users/sign-in`,
         headers: config,
         method: "POST",
         body: user,
@@ -29,7 +29,7 @@ export const userApi = createApi({
     }),
     buySubscription: builder.mutation({
       query: (subscription) => ({
-        url: `${URL}payments/buy`,
+        url: `${URL}/payments/buy`,
         headers: configLogin,
         method: "POST",
         body: subscription,
@@ -37,7 +37,7 @@ export const userApi = createApi({
     }),
     activateCode: builder.mutation({
       query: (code) => ({
-        url: `${URL}code/activate`,
+        url: `${URL}/code/activate`,
         headers: configLogin,
         method: "POST",
         body: code,
@@ -45,7 +45,7 @@ export const userApi = createApi({
     }),
     changePersonalInfo: builder.mutation({
       query: (personalInfo) => ({
-        url: `${URL}users`,
+        url: `${URL}/users`,
         headers: configLogin,
         method: "PATCH",
         body: personalInfo,
@@ -53,7 +53,7 @@ export const userApi = createApi({
     }),
     changePassword: builder.mutation({
       query: (password) => ({
-        url: `${URL}users/update-password`,
+        url: `${URL}/users/update-password`,
         headers: configLogin,
         method: "PATCH",
         body: password,

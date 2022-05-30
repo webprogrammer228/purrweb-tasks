@@ -1,6 +1,6 @@
 import React from "react";
 import { Stages } from "../UI/form/Stages";
-import { Stage } from "../UI/stage";
+import { Stage } from "../UI/Stage";
 import { Title } from "../UI/form/Title";
 import { Form } from "../UI/form/Form";
 import { SubmitButton } from "../UI/form/SubmitButton";

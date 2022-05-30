@@ -8,7 +8,6 @@ export const CheckBox = styled.input<CheckboxType>`
 
   background: #c7c7c7;
   border: 1px solid ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
-  margin-top: 25px;
 
   box-shadow: 0px 2px 6px rgba(20, 20, 43, 0.06);
   border-radius: 7px;
@@ -18,7 +17,6 @@ export const CheckBox = styled.input<CheckboxType>`
 
   display: flex;
   appearance: none;
-  margin-right: 48px;
   overflow: hidden;
 
   &:checked {
@@ -46,5 +44,10 @@ export const CheckBox = styled.input<CheckboxType>`
       z-index: 1;
       background: ${(props) => (props.isActive ? "#c7c7c7" : "#FC5842")};
     }
+  }
+
+  @media (max-width: 1200px) {
+    margin-top: 0;
+    margin-right: 0;
   }
 `;

@@ -20,4 +20,9 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 680px) {
+    margin: 0 0 30px;
+    padding: 0 15px;
+  }
 `;

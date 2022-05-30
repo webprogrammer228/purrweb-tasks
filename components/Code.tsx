@@ -24,8 +24,16 @@ const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
           onChange={() => setActiveCheckbox(!activeCheckbox)}
           defaultValue={code.code}
         />
+        <CodeStatus color={code.status}>{code.status}</CodeStatus>
       </Label>
-      <Wrapper direction="column" align="left" marginRight="28px">
+
+      <Wrapper
+        direction="column"
+        align="left"
+        marginRight="28px"
+        order="2"
+        marginMedium="24px 0 24px 0"
+      >
         <CodeTitle>License code</CodeTitle>
         <CodeInput
           defaultValue={code.code}
@@ -40,7 +48,7 @@ const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
           onClick={() => navigator.clipboard.writeText(code.code)}
         />
       </Wrapper>
-      <Wrapper direction="column" align="left">
+      <Wrapper direction="column" align="left" style={{ flex: "1" }} order="3">
         <CodeTitle>Domain</CodeTitle>
         <CodeInput
           type="url"
@@ -50,19 +58,26 @@ const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
         />
       </Wrapper>
       {code.status === "INACTIVE" && (
-        <Wrapper>
-          <ViewSubscriptionButton
-            height="58"
-            width="111"
-            background="#ffffff"
-            color="#FC5842"
-            margin="32px 40px 48px 40px"
-          >
-            Activate
-          </ViewSubscriptionButton>
-        </Wrapper>
+        <ViewSubscriptionButton
+          height="58"
+          width="111"
+          background="#ffffff"
+          color="#FC5842"
+          margin="30px 0 0 20px"
+          mediumMargin="30px 0 0 20px"
+          isCode={true}
+        >
+          Activate
+        </ViewSubscriptionButton>
       )}
-      <Wrapper direction="column" align="left" marginLeft="56px">
+      <Wrapper
+        direction="column"
+        align="left"
+        marginLeft="56px"
+        marginMedium="26px"
+        order="1"
+        visible={true}
+      >
         <CodeTitle>Status</CodeTitle>
         <CodeStatus color={code.status}>{code.status}</CodeStatus>
       </Wrapper>

@@ -55,7 +55,10 @@ export type WrapperType = {
   justifyContent?: string;
   marginRight?: string;
   marginLeft?: string;
+  marginMedium?: string;
   width?: string;
+  order?: string;
+  visible?: boolean;
 };
 
 export type SettingsMenuTitleType = {
@@ -157,9 +160,13 @@ export type SubscriptionTitleType = {
 export type ViewSubscriptionButtonType = {
   color: string;
   background: string;
-  width: string;
+  width?: string;
   height: string;
   margin?: string;
+  minWidth?: string;
+
+  mediumMargin?: string;
+  isCode?: boolean;
 };
 
 export type SwiperNavigationType = {

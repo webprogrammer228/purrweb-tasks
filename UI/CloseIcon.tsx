@@ -1,28 +1,30 @@
 import * as React from "react";
 
-export const CheckMark = ({
+export const CloseIcon = ({
   height = "24px",
-  width = "25px",
+  width = "24px",
   color = "white",
-  isShow,
   ...props
-}: React.SVGProps<SVGSVGElement> & { isShow?: boolean }) => {
+}: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      style={{
-        marginLeft: "7px",
-        transform: isShow ? "rotate(180deg)" : "",
-        transition: "all .5s",
-      }}
       width={width}
       height={height}
-      viewBox="0 0 25 24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ cursor: "pointer" }}
       {...props}
     >
       <path
-        d="M5.31152 8.5L12.3115 15.5L19.3115 8.5"
+        d="M3 21L21 3"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 21L3 3"
         stroke={color}
         strokeWidth="2"
         strokeLinecap="round"

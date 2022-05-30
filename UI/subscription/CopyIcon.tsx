@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import media from "styled-media-query";
 
 export const CopyIcon = ({
   height,
@@ -39,5 +40,3 @@ export const CopyIcon = ({
     </svg>
   );
 };
-
-export const svg = styled.svg``;

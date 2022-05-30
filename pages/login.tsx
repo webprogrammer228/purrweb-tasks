@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Stage } from "../UI/stage";
+import { Stage } from "../UI/Stage";
 import { Stages } from "../UI/form/Stages";
 import { FormWrapper } from "../UI/form/FormWrapper";
 import { Title } from "../UI/form/Title";

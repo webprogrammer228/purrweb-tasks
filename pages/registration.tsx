@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 // UI
-import { Stage } from "../UI/stage";
+import {Stage} from "../UI/Stage";
 import Link from "next/link";
 import { Stages } from "../UI/form/Stages";
 import { Title } from "../UI/form/Title";
@@ -50,6 +50,7 @@ const Registration = () => {
           router.push("/login");
         })
         .catch((e) => {
+            e.data &&
           setErrs(e.data.message);
         });
     }

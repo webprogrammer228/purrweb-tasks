@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context;
 
   const res = await axios
-    .get(`${URL}subscribe/self`, {
+    .get(`${URL}/subscribe/self`, {
       headers: { Authorization: `Bearer ${req.cookies.token}` },
     })
     .then((res: AxiosResponse<SubscriptionsType, string>) => res.data)

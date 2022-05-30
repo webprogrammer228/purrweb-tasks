@@ -16,4 +16,8 @@ const Footer = styled.footer`
 
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 550px) {
+    margin: 0 25px;
+  }
 `;

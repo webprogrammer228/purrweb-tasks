@@ -54,7 +54,7 @@ const Subscription: React.FC<Props> = ({ ...info }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {},
   } = useForm<CheckboxesType>();
   const onSubmit: SubmitHandler<CheckboxesType> = async (data) => {
     let code = data.code[0];
@@ -245,6 +245,23 @@ export const ViewSubscriptionButton = styled.button<ViewSubscriptionButtonType>`
   cursor: pointer;
 
   z-index: 100;
+
+  @media (max-width: 1200px) {
+    margin-left: 0 !important;
+
+    position: ${(props) => props.isCode && "absolute"};
+    top: 20px;
+    right: 40px;
+    margin-top: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    right: 20px;
+  }
+
+  @media (max-width: 1400px) {
+    margin: ${(props) => props.mediumMargin};
+  }
 `;
 
 const Button = styled.button<SwiperNavigationType>`

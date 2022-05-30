@@ -18,9 +18,9 @@ const LoginBlock = ({ ...props }) => {
   const router = useRouter();
 
   return (
-    <Wrapper>
+    <>
       <WrapperLogin onClick={() => setShowSettingsUser(!showSettingsUser)}>
-        <Title color={"/"}>{name}</Title>
+        <Title path={"/"}>{name}</Title>
         <CheckMark
           width={width}
           color={color}
@@ -53,16 +53,11 @@ const LoginBlock = ({ ...props }) => {
           </IconWrapper>
         </UserSettings>
       )}
-    </Wrapper>
+    </>
   );
 };
 
 export default LoginBlock;
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const WrapperLogin = styled.div`
   display: flex;
