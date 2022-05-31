@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import { SettingsTitle } from "../UI/SettingsTitle";
-import { Main } from "../UI/Main";
-import { Line } from "../UI/checkout/Line";
-import { Wrapper } from "../UI/Wrapper";
-import { SettingsMenuTitle } from "../UI/Stage/SettingsMenuTitle";
-import { SettingsSubtitle } from "../UI/Stage/SettingsSubtitle";
-import { Input } from "../UI/form/Input";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import { Form } from "../UI/form/Form";
+import { SettingsTitle } from "../../UI/SettingsTitle";
+import { Main } from "../../UI/Main";
+import { Line } from "../../UI/checkout/Line";
+import { Wrapper } from "../../UI/Wrapper";
+import { SettingsMenuTitle } from "../../UI/Stage/SettingsMenuTitle";
+import { SettingsSubtitle } from "../../UI/Stage/SettingsSubtitle";
+import { Input } from "../../UI/form/Input";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import { Form } from "../../UI/form/Form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   SettingsPasswordType,
   SettingsPersonalInfoResponseType,
   SettingsPersonalInfoType,
-} from "../types/type";
+} from "../../types/type";
 import {
   useChangePasswordMutation,
   useChangePersonalInfoMutation,
-} from "../store/RegisterApi";
+} from "../../store/RegisterApi";
 import Cookies from "js-cookie";
-import { Warning } from "../UI/form/Warning";
-import { MessageBlock } from "../UI/form/MessageBlock";
-import { MessageTitle } from "../UI/form/MessageTitle";
+import { Warning } from "../../UI/form/Warning";
+import { MessageBlock } from "../../UI/form/MessageBlock";
+import { MessageTitle } from "../../UI/form/MessageTitle";
 import { useDispatch } from "react-redux";
-import { signUp } from "../store/UserSlice";
+import { signUp } from "../../store/UserSlice";
 
 const Settings = () => {
   const [activeTitle, setActiveTitle] = useState(true);
@@ -93,7 +93,12 @@ const Settings = () => {
         <>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <SettingsSubtitle>Personal Info</SettingsSubtitle>
-            <Wrapper direction="column" align="flex-start" marginBottom="48px">
+            <Wrapper
+              direction="column"
+              align="flex-start"
+              marginBottom="48px"
+              noMargin={true}
+            >
               <Input
                 {...register("username", {
                   required: "This field is required.",
@@ -133,7 +138,12 @@ const Settings = () => {
         <>
           <Form onSubmit={handleSubmit(onSubmitPassword)}>
             <SettingsSubtitle>Change Password</SettingsSubtitle>
-            <Wrapper direction="column" align="flex-start" marginBottom="48px">
+            <Wrapper
+              direction="column"
+              align="flex-start"
+              marginBottom="48px"
+              noMargin={true}
+            >
               <Input
                 type="password"
                 {...register("currentPassword", {

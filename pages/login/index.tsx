@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Stage } from "../UI/Stage";
-import { Stages } from "../UI/form/Stages";
-import { FormWrapper } from "../UI/form/FormWrapper";
-import { Title } from "../UI/form/Title";
-import { Input } from "../UI/form/Input";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import { Form } from "../UI/form/Form";
-import { Warning } from "../UI/form/Warning";
-import { LoginInputs, LoginResponseType } from "../types/type";
-import { signIn } from "../store/UserSlice";
-import { useSignInMutation } from "../store/RegisterApi";
+import { Stage } from "../../UI/Stage";
+import { Stages } from "../../UI/form/Stages";
+import { FormWrapper } from "../../UI/form/FormWrapper";
+import { Title } from "../../UI/form/Title";
+import { Input } from "../../UI/form/Input";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import { Form } from "../../UI/form/Form";
+import { Warning } from "../../UI/form/Warning";
+import { AuthInputs, LoginResponseType } from "../../types/type";
+import { signIn } from "../../store/UserSlice";
+import { useSignInMutation } from "../../store/RegisterApi";
 import { useDispatch } from "react-redux";
-import { MessageBlock } from "../UI/form/MessageBlock";
-import { MessageTitle } from "../UI/form/MessageTitle";
+import { MessageBlock } from "../../UI/form/MessageBlock";
+import { MessageTitle } from "../../UI/form/MessageTitle";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
@@ -27,8 +27,8 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = async (data: LoginInputs) => {
+  } = useForm<AuthInputs>();
+  const onSubmit: SubmitHandler<AuthInputs> = async (data: AuthInputs) => {
     if (data) {
       await signInUser({ ...data })
         .unwrap()
@@ -43,6 +43,7 @@ const Login = () => {
         });
     }
   };
+
   return (
     <FormWrapper>
       <Stages>

@@ -8,4 +8,12 @@ export const TextUnderForm = styled.span`
   line-height: 22px;
 
   color: #ffffff;
+
+  @media (max-width: 540px) {
+    margin-bottom: 10px;
+
+    & + button {
+      margin-bottom: 24px;
+    }
+  }
 `;

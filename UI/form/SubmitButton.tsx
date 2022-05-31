@@ -22,4 +22,12 @@ export const SubmitButton = styled.button<SubmitButtonType>`
   margin-bottom: ${(props) => props.marginBottom};
 
   cursor: pointer;
+
+  @media (max-width: 540px) {
+    width: ${(props) => props.smConfig && "auto"};
+    height: ${(props) => props.smConfig && "0"};
+    background: ${(props) => props.smConfig && "transparent"};
+    color: ${(props) => props.smConfig && "#fc5842"};
+    margin-top: ${(props) => props.smConfig && "12px;"};
+  }
 `;

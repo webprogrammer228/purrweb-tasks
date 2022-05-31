@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Main = styled.div`
   padding: 0 50px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 680px) {
     padding: 0 25px;
   }
 

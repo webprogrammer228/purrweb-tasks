@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { CardDescription } from "../UI/CardDescription";
 import { token } from "../utils/utils";
 
-const cardsInfo = [
+export const cardsInfo = [
   {
     price: 77,
     title: "Single site license",
@@ -47,7 +47,7 @@ const cardsInfo = [
   },
 ];
 
-const Card: React.FC = () => {
+export const Card: React.FC = () => {
   const [activeCard, setActiveCard] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -101,8 +101,6 @@ const Card: React.FC = () => {
     </CardWrapper>
   );
 };
-
-export default Card;
 
 const CardWrapper = styled.div`
   display: flex;

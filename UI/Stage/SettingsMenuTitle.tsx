@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { SettingsMenuTitleType } from "../../types/type";
+
+type SettingsMenuTitleType = {
+  activeTitle: boolean;
+};
 
 export const SettingsMenuTitle = styled.p<SettingsMenuTitleType>`
   font-family: "Thicccboi", sans-serif;

@@ -11,7 +11,6 @@ import { Wrapper } from "../UI/Wrapper";
 import { GearIcon } from "../UI/header/UserSettings/GearIcon/GearIcon";
 import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
 import { useOnClickOutside } from "../hooks/useClickOutside";
-import { token } from "utils/utils";
 
 const MobileMenu: React.FC = () => {
   const name = Cookies.get("username");
@@ -26,7 +25,7 @@ const MobileMenu: React.FC = () => {
 
   return (
     <>
-      {token && (
+      {name && (
         <LineWrapper>
           <LineWrapper>
             {" "}
@@ -112,7 +111,7 @@ const Menu = styled.div`
   top: 0;
   right: 0;
   background-color: #272727;
-  z-index: 20;
+  z-index: 1000;
 
   @media (max-width: 550px) {
     display: block;

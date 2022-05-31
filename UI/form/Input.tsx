@@ -19,4 +19,8 @@ export const Input = styled.input<InputType>`
   border: 0;
   border-radius: 10px;
   outline: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

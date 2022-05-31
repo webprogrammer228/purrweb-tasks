@@ -1,31 +1,31 @@
 import React from "react";
-import { Stages } from "../UI/form/Stages";
-import { Stage } from "../UI/Stage";
-import { Title } from "../UI/form/Title";
-import { Form } from "../UI/form/Form";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import { FormWrapper } from "../UI/form/FormWrapper";
+import { Stages } from "../../UI/form/Stages";
+import { Stage } from "../../UI/Stage";
+import { Title } from "../../UI/form/Title";
+import { Form } from "../../UI/form/Form";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import { FormWrapper } from "../../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SubscribeType, Subscription } from "../types/type";
-import { PurchaseWrapper } from "../UI/checkout/PurchaseWrapper";
-import { PurchaseHeaderWrapper } from "../UI/checkout/PurchaseHeaderWrapper";
-import { PurchaseHeaderTitle } from "../UI/checkout/PurchaseHeaderTitle";
-import { Line } from "../UI/checkout/Line";
-import { PurchaseSubscriptionWrapper } from "../UI/checkout/SubscriptionWrapper";
-import { PurchaseSubscriptionTitle } from "../UI/checkout/PurchaseSubscriptionTitle";
-import { Basket } from "../UI/checkout/Basket";
-import { Wrapper } from "../UI/Wrapper";
+import { PurchasedSubscription, SubscribeType } from "../../types/type";
+import { PurchaseWrapper } from "../../UI/checkout/PurchaseWrapper";
+import { PurchaseHeaderWrapper } from "../../UI/checkout/PurchaseHeaderWrapper";
+import { PurchaseHeaderTitle } from "../../UI/checkout/PurchaseHeaderTitle";
+import { Line } from "../../UI/checkout/Line";
+import { PurchaseSubscriptionWrapper } from "../../UI/checkout/SubscriptionWrapper";
+import { PurchaseSubscriptionTitle } from "../../UI/checkout/PurchaseSubscriptionTitle";
+import { Basket } from "../../UI/checkout/Basket";
+import { Wrapper } from "../../UI/Wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 import { v4 as uuidv4 } from "uuid";
-import { TotalTitle } from "../UI/checkout/TotalTitle";
-import { TotalWrapper } from "../UI/checkout/TotalWrapper";
-import { buySubscription } from "../store/UserSlice";
+import { TotalTitle } from "../../UI/checkout/TotalTitle";
+import { TotalWrapper } from "../../UI/checkout/TotalWrapper";
+import { buySubscription } from "../../store/UserSlice";
 import { useRouter } from "next/router";
-import { useBuySubscriptionMutation } from "../store/RegisterApi";
+import { useBuySubscriptionMutation } from "../../store/RegisterApi";
 
 const Checkout = () => {
-  const subscription = useSelector<RootState, Subscription>(
+  const subscription = useSelector<RootState, PurchasedSubscription>(
     (state) => state.users.currentSubscription
   );
   let { priceId } = subscription;

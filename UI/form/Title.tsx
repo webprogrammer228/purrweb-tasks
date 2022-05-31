@@ -9,4 +9,9 @@ export const Title = styled.h1`
 
   color: #ffffff;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 42px;
+  }
 `;

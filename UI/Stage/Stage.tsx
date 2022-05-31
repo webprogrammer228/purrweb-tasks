@@ -15,12 +15,15 @@ export const Stage: React.FC<Stage> = ({ title, color }) => {
   );
 };
 
-
 const StageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 64px;
   margin-right: 16px;
+
+  @media (max-width: 786px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const StageTitle = styled.p`
@@ -41,4 +44,8 @@ const StageLine = styled.div`
   border-radius: 10px;
   width: 195px;
   height: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

@@ -19,4 +19,12 @@ export const Wrapper = styled.div<WrapperType>`
     order: ${(props) => props.order};
     display: ${(props) => (props.visible ? "none" : "flex")};
   }
+
+  @media (max-width: 540px) {
+    flex-direction: ${(props) => props.changeDirection && "column"};
+    text-align: ${(props) => props.changeDirection && "center"};
+    align-items: ${(props) => props.changeDirection && "center"};
+
+    margin: ${(props) => props.noMargin && "0"};
+  }
 `;

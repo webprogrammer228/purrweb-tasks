@@ -3,26 +3,26 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 // UI
-import {Stage} from "../UI/Stage";
+import { Stage } from "../../UI/Stage";
 import Link from "next/link";
-import { Stages } from "../UI/form/Stages";
-import { Title } from "../UI/form/Title";
-import { Form } from "../UI/form/Form";
-import { Input } from "../UI/form/Input";
-import { Warning } from "../UI/form/Warning";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import { FormWrapper } from "../UI/form/FormWrapper";
-import { MessageBlock } from "../UI/form/MessageBlock";
-import { MessageTitle } from "../UI/form/MessageTitle";
+import { Stages } from "../../UI/form/Stages";
+import { Title } from "../../UI/form/Title";
+import { Form } from "../../UI/form/Form";
+import { Input } from "../../UI/form/Input";
+import { Warning } from "../../UI/form/Warning";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import { FormWrapper } from "../../UI/form/FormWrapper";
+import { MessageBlock } from "../../UI/form/MessageBlock";
+import { MessageTitle } from "../../UI/form/MessageTitle";
 
 // types
-import { RegisterInputs } from "../types/type";
+import { AuthInputs } from "../../types/type";
 
 // functions
 import { useRouter } from "next/router";
-import { useSignUpMutation } from "../store/RegisterApi";
+import { useSignUpMutation } from "../../store/RegisterApi";
 import { useDispatch } from "react-redux";
-import { signUp } from "../store/UserSlice";
+import { signUp } from "../../store/UserSlice";
 import Cookies from "js-cookie";
 
 const Registration = () => {
@@ -36,22 +36,19 @@ const Registration = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterInputs>();
-  const onSubmit: SubmitHandler<RegisterInputs> = async (
-    data: RegisterInputs
-  ) => {
+  } = useForm<AuthInputs>();
+  const onSubmit: SubmitHandler<AuthInputs> = async (data: AuthInputs) => {
     if (data) {
       await signUpUser({ ...data })
         .unwrap()
-        .then((response: RegisterInputs) => {
+        .then((response: AuthInputs) => {
           setErrs("");
           dispatch(signUp({ ...response }));
           Cookies.set("token", response.token);
           router.push("/login");
         })
         .catch((e) => {
-            e.data &&
-          setErrs(e.data.message);
+          e.data && setErrs(e.data.message);
         });
     }
   };

@@ -22,7 +22,7 @@ export type StateType = {
 
 export const initialState: StateType = {
   users: { name: "", email: "" },
-  currentSubscription: {},
+  currentSubscription: { price: 0, priceId: 0, title: "" },
   subscribe: {
     userId: null,
     productId: null,
@@ -64,7 +64,7 @@ const userSlice = createSlice({
       Cookies.set("username", "");
       Cookies.set("token", "");
 
-      state.currentSubscription = {};
+      state.currentSubscription = { price: 0, title: "", priceId: 0 };
     },
     buySubscription(state, action) {
       const {
@@ -94,9 +94,9 @@ const userSlice = createSlice({
       );
     },
     getAllSubscription(state, action) {
-      const { datas } = action.payload;
+      const { allSubscriptions } = action.payload;
       state.allSubscriptions.length === 0 &&
-        datas[0].map((subscription: MySubscription) =>
+        allSubscriptions[0].map((subscription: MySubscription) =>
           state.allSubscriptions.push(subscription)
         );
     },

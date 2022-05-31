@@ -1,21 +1,21 @@
 import React from "react";
-import { Title } from "../UI/form/Title";
-import { Form } from "../UI/form/Form";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import { FormWrapper } from "../UI/form/FormWrapper";
+import { Title } from "../../UI/form/Title";
+import { Form } from "../../UI/form/Form";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import { FormWrapper } from "../../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginInputs, PurchasedSubscription } from "../types/type";
-import { CardDescription } from "../UI/CardDescription";
-import { PurchaseWrapper } from "../UI/checkout/PurchaseWrapper";
-import { PurchaseHeaderWrapper } from "../UI/checkout/PurchaseHeaderWrapper";
-import { PurchaseHeaderTitle } from "../UI/checkout/PurchaseHeaderTitle";
-import { Line } from "../UI/checkout/Line";
-import { PurchaseSubscriptionWrapper } from "../UI/checkout/SubscriptionWrapper";
+import { LoginInputs, PurchasedSubscription } from "../../types/type";
+import { CardDescription } from "../../UI/CardDescription";
+import { PurchaseWrapper } from "../../UI/checkout/PurchaseWrapper";
+import { PurchaseHeaderWrapper } from "../../UI/checkout/PurchaseHeaderWrapper";
+import { PurchaseHeaderTitle } from "../../UI/checkout/PurchaseHeaderTitle";
+import { Line } from "../../UI/checkout/Line";
+import { PurchaseSubscriptionWrapper } from "../../UI/checkout/SubscriptionWrapper";
 import { v4 as uuidv4 } from "uuid";
-import { PurchaseSubscriptionTitle } from "../UI/checkout/PurchaseSubscriptionTitle";
-import { Wrapper } from "../UI/Wrapper";
+import { PurchaseSubscriptionTitle } from "../../UI/checkout/PurchaseSubscriptionTitle";
+import { Wrapper } from "../../UI/Wrapper";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 import { useRouter } from "next/router";
 
 const Finish = () => {

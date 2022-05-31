@@ -9,4 +9,14 @@ export const SettingsTitle = styled.h1`
 
   color: #ffffff;
   margin-bottom: 48px;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 28px;
+    line-height: 40px;
+  }
 `;

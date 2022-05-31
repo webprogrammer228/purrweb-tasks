@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import { Card } from "../components";
+import Card from "../components";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";

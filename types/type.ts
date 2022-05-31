@@ -1,15 +1,6 @@
-import { UseFormRegister } from "react-hook-form";
-
-export type RegisterInputs = {
+export type AuthInputs = {
   username: string;
   email: string;
-  password: string;
-  token: string;
-};
-
-export type LoginInputs = {
-  email: string;
-  username?: string;
   password: string;
   token: string;
 };
@@ -28,47 +19,10 @@ export type User = {
   email: string;
 };
 
-export type Subscription = {
-  title?: string;
-  price?: number;
-  priceId?: number | undefined;
-};
-
-export type SubscriptionWrapperType = {
-  padding: string;
-  border?: string;
-};
-
-export type SubmitButtonType = {
-  width: string;
-  marginBottom?: string;
-};
-
-export type InputType = {
-  width: string;
-};
-
-export type WrapperType = {
-  direction?: string;
-  align?: string;
-  marginBottom?: string;
-  justifyContent?: string;
-  marginRight?: string;
-  marginLeft?: string;
-  marginMedium?: string;
-  width?: string;
-  order?: string;
-  visible?: boolean;
-};
-
-export type SettingsMenuTitleType = {
-  activeTitle: boolean;
-};
-
 export type PurchasedSubscription = {
-  title?: string;
-  price?: number;
-  priceId?: number | undefined;
+  title: string;
+  price: number;
+  priceId: number | undefined;
 };
 
 export type SubscribeType = {
@@ -82,39 +36,7 @@ export type SubscribeType = {
   id: number | null;
 };
 
-export type SubscriptionsType = [
-  {
-    id: number;
-    userId: number;
-    productId: number;
-    currentPeriodStart: string | number;
-    currentPeriodEnd: string | number;
-    status: string;
-    product: {
-      id: number;
-      sitesCount: number;
-      name: string;
-      prices: [
-        {
-          id: number;
-          isActive: boolean;
-          productId: number;
-          price: string;
-        }
-      ];
-    };
-    codes: [
-      {
-        id: number;
-        code: string;
-        origin: null;
-        status: string;
-        subscribeId: number;
-        userId: number;
-      }
-    ];
-  }
-];
+export type SubscriptionsType = [MySubscription];
 
 export type MySubscription = {
   id: number;
@@ -146,57 +68,6 @@ export type MySubscription = {
       userId: number;
     }
   ];
-};
-
-export type SubscriptionTitleType = {
-  color: string;
-  fontWeight: string;
-  lineHeight: string;
-  fontSize: string;
-  padding?: string;
-  marginBottom?: string;
-};
-
-export type ViewSubscriptionButtonType = {
-  color: string;
-  background: string;
-  width?: string;
-  height: string;
-  margin?: string;
-  minWidth?: string;
-
-  mediumMargin?: string;
-  isCode?: boolean;
-};
-
-export type SwiperNavigationType = {
-  color?: string;
-  marginRight?: string;
-};
-
-export type CheckboxType = {
-  isActive: boolean;
-};
-
-export type SubscriptionWrapperPropsType = {
-  index: number;
-  activeIndex: number;
-};
-
-export type SubscriptionProps = {
-  code: {
-    id: number;
-    code: string;
-    origin: null;
-    status: string;
-    subscribeId: number;
-    userId: number;
-  };
-  reg: UseFormRegister<CheckboxesType>;
-};
-
-export type CodeStatusType = {
-  color: string;
 };
 
 export type CheckboxesType = {
@@ -253,4 +124,76 @@ export type SettingsPersonalInfoResponseType = {
 export type SettingsPasswordType = {
   currentPassword: string;
   newPassword: string;
+};
+
+//styled components
+
+export type SubscriptionTitleType = {
+  color: string;
+  fontWeight: string;
+  lineHeight: string;
+  fontSize: string;
+  padding?: string;
+  marginBottom?: string;
+  validDate?: string;
+};
+
+export type ViewSubscriptionButtonType = {
+  color: string;
+  background: string;
+  width?: string;
+  height: string;
+  margin?: string;
+  minWidth?: string;
+
+  mediumMargin?: string;
+  isCode?: boolean;
+};
+
+export type SwiperNavigationType = {
+  color?: string;
+  marginRight?: string;
+};
+
+export type CheckboxType = {
+  isActive: boolean;
+};
+
+export type SubscriptionWrapperPropsType = {
+  index: number;
+  activeIndex: number;
+};
+
+export type CodeStatusType = {
+  color: string;
+};
+
+export type SubscriptionWrapperType = {
+  padding: string;
+  border?: string;
+};
+
+export type SubmitButtonType = {
+  width: string;
+  marginBottom?: string;
+  smConfig?: boolean;
+};
+
+export type InputType = {
+  width: string;
+};
+
+export type WrapperType = {
+  direction?: string;
+  align?: string;
+  marginBottom?: string;
+  justifyContent?: string;
+  marginRight?: string;
+  marginLeft?: string;
+  marginMedium?: string;
+  width?: string;
+  order?: string;
+  visible?: boolean;
+  changeDirection?: boolean;
+  noMargin?: boolean;
 };

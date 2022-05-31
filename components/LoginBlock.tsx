@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { UserSettings } from "../UI/header/UserSettings/UserSettings";
 import { GearIcon } from "../UI/header/UserSettings/GearIcon/GearIcon";
 import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/UserSlice";
+import { useOnClickOutside } from "../hooks/useClickOutside";
 
 const LoginBlock = ({ ...props }) => {
   const { width, height, color, name } = props;
@@ -16,6 +17,12 @@ const LoginBlock = ({ ...props }) => {
   const dispatch = useDispatch();
 
   const router = useRouter();
+
+  const blockRef = useRef<HTMLDivElement>(null);
+  const clickOutsidehandler = () => {
+    setShowSettingsUser(false);
+  };
+  useOnClickOutside(blockRef, clickOutsidehandler);
 
   return (
     <>
@@ -30,7 +37,7 @@ const LoginBlock = ({ ...props }) => {
       </WrapperLogin>
 
       {showSettingsUser && (
-        <UserSettings>
+        <UserSettings ref={blockRef}>
           <IconWrapper
             onClick={() => {
               setShowSettingsUser(false);

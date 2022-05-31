@@ -8,4 +8,8 @@ export const PurchaseWrapper = styled.div`
 
   margin-top: 16px;
   margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

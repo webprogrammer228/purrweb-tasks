@@ -1,19 +1,21 @@
 import React from "react";
-import { SubscriptionsType } from "../types/type";
+import { SubscriptionsType } from "../../types/type";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { GetServerSideProps } from "next";
-import { URL } from "../config";
-import { Wrapper } from "../UI/Wrapper";
-import { SettingsTitle } from "../UI/SettingsTitle";
-import { SubmitButton } from "../UI/form/SubmitButton";
-import Subscription from "../components/Subscription";
+import { URL } from "../../config";
+import { Wrapper } from "../../UI/Wrapper";
+import { SettingsTitle } from "../../UI/SettingsTitle";
+import { SubmitButton } from "../../UI/form/SubmitButton";
+import Subscription from "../../components/Subscription";
 
 const Subscriptions = ({ ...props }: SubscriptionsType) => {
   return (
     <>
       <Wrapper direction="row" align="left" justifyContent="space-between">
         <SettingsTitle>My subscriptions</SettingsTitle>
-        <SubmitButton width="152px">Upgrade</SubmitButton>
+        <SubmitButton width="152px" smConfig={true}>
+          Upgrade
+        </SubmitButton>
       </Wrapper>
       <Subscription info={props} />
     </>

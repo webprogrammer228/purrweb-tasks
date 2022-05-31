@@ -5,10 +5,23 @@ import { CodeTitle } from "../UI/subscription/CodeTitle";
 import { CodeInput } from "../UI/subscription/CodeInput";
 import { CopyIcon } from "../UI/subscription/CopyIcon";
 import { CodeStatus } from "../UI/subscription/CodeStatus";
-import { SubscriptionProps } from "../types/type";
 import { Label } from "../UI/subscription/Label";
 import { CheckBox } from "../UI/subscription/Checkbox";
 import { ViewSubscriptionButton } from "./Subscription";
+import { UseFormRegister } from "react-hook-form";
+import { CheckboxesType } from "../types/type";
+
+type SubscriptionProps = {
+  code: {
+    id: number;
+    code: string;
+    origin: null;
+    status: string;
+    subscribeId: number;
+    userId: number;
+  };
+  reg: UseFormRegister<CheckboxesType>;
+};
 
 const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
   const [activeCheckbox, setActiveCheckbox] = useState(true);
@@ -24,7 +37,9 @@ const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
           onChange={() => setActiveCheckbox(!activeCheckbox)}
           defaultValue={code.code}
         />
-        <CodeStatus color={code.status}>{code.status}</CodeStatus>
+        <CodeStatus color={code.status}>
+          {code.status[0].toUpperCase() + code.status.toLowerCase().slice(1)}
+        </CodeStatus>
       </Label>
 
       <Wrapper
@@ -79,7 +94,9 @@ const Code: React.FC<SubscriptionProps> = ({ code, reg }) => {
         visible={true}
       >
         <CodeTitle>Status</CodeTitle>
-        <CodeStatus color={code.status}>{code.status}</CodeStatus>
+        <CodeStatus color={code.status}>
+          {code.status[0].toUpperCase() + code.status.toLowerCase().slice(1)}
+        </CodeStatus>
       </Wrapper>
     </CodeWrapper>
   );
