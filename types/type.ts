@@ -37,7 +37,9 @@ export type SubscribeType = {
 };
 
 export type SubscriptionsType = [MySubscription];
-
+//нужно разбивать этот тип на более мелкие: прайс, продукт, код
+//далее эти мелкие типы можно использовать в SettingsPersonalInfoResponseType
+//в MySubscription и SubscribeType 6 одинаковых полей из 8, можно вычленить общие поля и к ним уже добавлять новые поля через амперсанд
 export type MySubscription = {
   id: number;
   userId: number;
@@ -73,12 +75,12 @@ export type MySubscription = {
 export type CheckboxesType = {
   code: string;
 };
-
+//этот тип очень похож на тип User, было бы хорошо их объединить
 export type SettingsPersonalInfoType = {
   username: string;
   email: string;
 };
-
+//этот тип крайне сложно читать
 export type SettingsPersonalInfoResponseType = {
   id: number;
   email: string;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MySubscription, PurchasedSubscription } from "../types/type";
+import {MySubscription, PurchasedSubscription, SettingsPersonalInfoType} from "../types/type";
 import Cookies from "js-cookie";
 
 export type StateType = {
@@ -9,6 +9,7 @@ export type StateType = {
     email: string;
   };
   currentSubscription: PurchasedSubscription;
+  //возможно, здесь было бы проще сделать subscribe?: тип (без наллов у каждого поля)
   subscribe: {
     userId: number | null;
     productId: number | null;
@@ -38,11 +39,15 @@ const userSlice = createSlice({
   name: "User",
   initialState,
   reducers: {
-    signUp(state, action) {
+    //лучше было бы типизировать все пэйлоады, чтобы не ошибиться в более сложных местах. для этого тайпскрипт и нужен
+    signUp(state, action: {payload: SettingsPersonalInfoType}) {
       {
         const { username, email } = action.payload;
         state.users.name = username;
         state.users.email = email;
+        //если бы везде типы соответствовали, то можно было бы через деструктуризацию сделать в нескольких редьюсерах
+        //особенно в buySubscription
+        //state.users = {...action.payload}
       }
     },
     signIn(state, action) {
