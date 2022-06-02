@@ -36,6 +36,13 @@ export type SubscribeType = {
   id: number | null;
 };
 
+export type AddedSubscription = {
+  price: number;
+  title: string;
+  description: string;
+  benefits: string[];
+};
+
 export type SubscriptionsType = [MySubscription];
 //нужно разбивать этот тип на более мелкие: прайс, продукт, код
 //далее эти мелкие типы можно использовать в SettingsPersonalInfoResponseType
@@ -47,41 +54,43 @@ export type MySubscription = {
   currentPeriodStart: string;
   currentPeriodEnd: string;
   status: string;
-  product: {
-    id: number;
-    sitesCount: number;
-    name: string;
-    prices: [
-      {
-        id: number;
-        isActive: boolean;
-        productId: number;
-        price: string;
-      }
-    ];
-  };
-  codes: [
-    {
-      id: number;
-      code: string;
-      origin: null;
-      status: string;
-      subscribeId: number;
-      userId: number;
-    }
-  ];
+  product: Product;
+  codes: Code[];
+};
+
+export type Product = {
+  id: number;
+  sitesCount: number;
+  name: string;
+  prices: Price[];
+};
+
+export type Price = {
+  id: number;
+  isActive: boolean;
+  productId: number;
+  price: string;
+};
+
+export type Code = {
+  id: number;
+  code: string;
+  origin: null;
+  status: string;
+  subscribeId: number;
+  userId: number;
 };
 
 export type CheckboxesType = {
   code: string;
 };
 //этот тип очень похож на тип User, было бы хорошо их объединить
-export type SettingsPersonalInfoType = {
-  username: string;
-  email: string;
-};
+// export type SettingsPersonalInfoType = {
+//   username: string;
+//   email: string;
+// };
 //этот тип крайне сложно читать
-export type SettingsPersonalInfoResponseType = {
+export type SettingsResponseType = {
   id: number;
   email: string;
   username: string;

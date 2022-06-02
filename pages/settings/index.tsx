@@ -9,11 +9,7 @@ import { Input } from "../../UI/form/Input";
 import { SubmitButton } from "../../UI/form/SubmitButton";
 import { Form } from "../../UI/form/Form";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  SettingsPasswordType,
-  SettingsPersonalInfoResponseType,
-  SettingsPersonalInfoType,
-} from "../../types/type";
+import { SettingsPasswordType, SettingsResponseType } from "../../types/type";
 import {
   useChangePasswordMutation,
   useChangePersonalInfoMutation,
@@ -38,14 +34,14 @@ const Settings = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<SettingsPersonalInfoType & SettingsPasswordType>();
+  } = useForm<SettingsResponseType & SettingsPasswordType>();
   const onSubmit: SubmitHandler<
-    SettingsPersonalInfoType & SettingsPasswordType
-  > = async (data: SettingsPersonalInfoType) => {
+    SettingsResponseType & SettingsPasswordType
+  > = async (data: SettingsResponseType) => {
     reset();
     await changePersonalInfo({ ...data })
       .unwrap()
-      .then((response: SettingsPersonalInfoResponseType) => {
+      .then((response: SettingsResponseType) => {
         dispatch(signUp({ ...response }));
         Cookies.set("username", response.username);
         alert("Data has been changed");
@@ -61,7 +57,7 @@ const Settings = () => {
     reset();
     await changePassword({ ...dataPassword })
       .unwrap()
-      .then((response: SettingsPersonalInfoResponseType) => {
+      .then((response: SettingsResponseType) => {
         alert("Data has been changed");
       })
       .catch((e) => {

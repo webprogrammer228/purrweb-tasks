@@ -1,11 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {MySubscription, PurchasedSubscription, SettingsPersonalInfoType} from "../types/type";
+import {
+  AddedSubscription,
+  AuthInputs,
+  Code,
+  LoginResponseType,
+  MySubscription,
+  PurchasedSubscription,
+  SubscribeType,
+  User,
+} from "../types/type";
 import Cookies from "js-cookie";
 
 export type StateType = {
   users: {
     id?: number | null;
-    name: string;
+    username: string;
     email: string;
   };
   currentSubscription: PurchasedSubscription;
@@ -22,7 +31,7 @@ export type StateType = {
 };
 
 export const initialState: StateType = {
-  users: { name: "", email: "" },
+  users: { username: "", email: "" },
   currentSubscription: { price: 0, priceId: 0, title: "" },
   subscribe: {
     userId: null,
@@ -40,30 +49,33 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     //лучше было бы типизировать все пэйлоады, чтобы не ошибиться в более сложных местах. для этого тайпскрипт и нужен
-    signUp(state, action: {payload: SettingsPersonalInfoType}) {
+    signUp(state, action: { payload: Omit<AuthInputs, "token" | "password"> }) {
       {
-        const { username, email } = action.payload;
-        state.users.name = username;
-        state.users.email = email;
+        state.users = { ...action.payload };
         //если бы везде типы соответствовали, то можно было бы через деструктуризацию сделать в нескольких редьюсерах
         //особенно в buySubscription
         //state.users = {...action.payload}
       }
     },
-    signIn(state, action) {
-      const { id, username, email } = action.payload.user;
-      state.users.name = username;
-      state.users.email = email;
-      state.users.id = id;
+    signIn(
+      state,
+      action: {
+        payload: Omit<LoginResponseType, "token">;
+      }
+    ) {
+      state.users = { ...action.payload.user };
     },
-    addSubscription(state, action) {
+    addSubscription(
+      state,
+      action: { payload: AddedSubscription & { id: number } }
+    ) {
       const { title, price, id } = action.payload;
       state.currentSubscription.title = title;
       state.currentSubscription.price = price;
       state.currentSubscription.priceId = id + 1;
     },
-    logOut(state, action) {
-      state.users.name = "";
+    logOut(state, _) {
+      state.users.username = "";
       state.users.email = "";
       state.users.id = null;
       Cookies.set("username", "");
@@ -71,23 +83,10 @@ const userSlice = createSlice({
 
       state.currentSubscription = { price: 0, title: "", priceId: 0 };
     },
-    buySubscription(state, action) {
-      const {
-        id,
-        userId,
-        productId,
-        currentPeriodStart,
-        currentPeriodEnd,
-        status,
-      } = action.payload.subscribe;
-      state.subscribe.id = id;
-      state.subscribe.userId = userId;
-      state.subscribe.productId = productId;
-      state.subscribe.currentPeriodStart = currentPeriodStart;
-      state.subscribe.currentPeriodEnd = currentPeriodEnd;
-      state.subscribe.status = status;
+    buySubscription(state, action: { payload: SubscribeType }) {
+      state.subscribe = { ...action.payload };
     },
-    codeActivate(state, action) {
+    codeActivate(state, action: { payload: Code }) {
       const { id, status, origin } = action.payload;
       state.allSubscriptions.map((subscription) =>
         subscription.codes.map((code) => {

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 //такие типы отсутствуют
-import { LoginInputs, RegisterInputs } from "../types/type";
+import { AuthInputs } from "../types/type";
 import { config, configLogin } from "../config";
 
 // export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
@@ -13,7 +13,7 @@ export const userApi = createApi({
   tagTypes: ["User"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
-      query: (user: RegisterInputs) => ({
+      query: (user: AuthInputs) => ({
         //baseUrl уже есть. избыточно его еще раз прописывать
         url: `/users/sign-up`,
         headers: config,
@@ -22,7 +22,7 @@ export const userApi = createApi({
       }),
     }),
     signIn: builder.mutation({
-      query: (user: LoginInputs) => ({
+      query: (user: AuthInputs) => ({
         url: `/users/sign-in`,
         headers: config,
         method: "POST",

@@ -2,15 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 type Stage = {
-  title: string;
-  color?: string;
+  title?: string;
+  index?: number;
+  idd: number;
 };
 
-export const Stage: React.FC<Stage> = ({ title, color }) => {
+export const Stage: React.FC<Stage> = ({ title, index, idd }) => {
   return (
     <StageWrapper>
       <StageTitle>{title}</StageTitle>
-      <StageLine color={color} />
+      <StageLine idd={idd} index={index} />
     </StageWrapper>
   );
 };
@@ -37,10 +38,11 @@ const StageTitle = styled.p`
   margin-bottom: 10px;
 `;
 
-const StageLine = styled.div`
+const StageLine = styled.div<Stage>`
   transition: all 0.5s;
 
-  background: ${(props) => (props.color ? props.color : "#373737")};
+  background: ${(props) =>
+    props.index && props.idd <= props.index ? "#FC5842" : "#373737"};
   border-radius: 10px;
   width: 195px;
   height: 8px;
