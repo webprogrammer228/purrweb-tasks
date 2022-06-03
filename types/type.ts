@@ -24,16 +24,18 @@ export type PurchasedSubscription = {
   price: number;
   priceId: number | undefined;
 };
+export type Subscribe = {
+  userId: number;
+  productId: number;
+  currentPeriodStart: number;
+  currentPeriodEnd: number;
+  status: string;
+  id: number;
+}
 
-export type SubscribeType = {
-  userId: number | null;
+export type SubscribeType = Subscribe & {
   title?: string;
   price?: string;
-  productId: number | null;
-  currentPeriodStart: number | null;
-  currentPeriodEnd: number | null;
-  status: string;
-  id: number | null;
 };
 
 export type AddedSubscription = {
@@ -47,13 +49,7 @@ export type SubscriptionsType = [MySubscription];
 //нужно разбивать этот тип на более мелкие: прайс, продукт, код
 //далее эти мелкие типы можно использовать в SettingsPersonalInfoResponseType
 //в MySubscription и SubscribeType 6 одинаковых полей из 8, можно вычленить общие поля и к ним уже добавлять новые поля через амперсанд
-export type MySubscription = {
-  id: number;
-  userId: number;
-  productId: number;
-  currentPeriodStart: string;
-  currentPeriodEnd: string;
-  status: string;
+export type MySubscription = Subscribe & {
   product: Product;
   codes: Code[];
 };

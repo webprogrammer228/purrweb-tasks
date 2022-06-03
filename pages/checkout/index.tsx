@@ -27,7 +27,7 @@ const Checkout = () => {
   const subscription = useSelector<RootState, PurchasedSubscription>(
     (state) => state.users.currentSubscription
   );
-  let { priceId } = subscription;
+  const { priceId } = subscription;
   const dispatch = useDispatch();
   const [buySub] = useBuySubscriptionMutation();
 

@@ -77,9 +77,6 @@ export const Card: React.FC = () => {
             {cardInfo.benefits.map((benefit) => (
               <CardListItem key={uuidv4()}>
                 <Check
-                  height="26px"
-                  width="26px"
-                  color="white"
                   secondaryColor={
                     id === activeCard && isHovered ? "#fc5842" : "#272727"
                   }

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {
   AddedSubscription,
   AuthInputs,
@@ -6,10 +6,11 @@ import {
   LoginResponseType,
   MySubscription,
   PurchasedSubscription,
+  Subscribe,
   SubscribeType,
-  User,
 } from "../types/type";
 import Cookies from "js-cookie";
+import {CookiesEnum, setTokenToCookies} from "../utils/utils";
 
 export type StateType = {
   users: {
@@ -19,28 +20,13 @@ export type StateType = {
   };
   currentSubscription: PurchasedSubscription;
   //возможно, здесь было бы проще сделать subscribe?: тип (без наллов у каждого поля)
-  subscribe: {
-    userId: number | null;
-    productId: number | null;
-    currentPeriodStart: number | null;
-    currentPeriodEnd: number | null;
-    status: string;
-    id: number | null;
-  };
+  subscribe?: Subscribe;
   allSubscriptions: MySubscription[];
 };
 
 export const initialState: StateType = {
   users: { username: "", email: "" },
   currentSubscription: { price: 0, priceId: 0, title: "" },
-  subscribe: {
-    userId: null,
-    productId: null,
-    currentPeriodEnd: null,
-    currentPeriodStart: null,
-    status: "",
-    id: null,
-  },
   allSubscriptions: [],
 };
 
@@ -69,17 +55,15 @@ const userSlice = createSlice({
       state,
       action: { payload: AddedSubscription & { id: number } }
     ) {
-      const { title, price, id } = action.payload;
-      state.currentSubscription.title = title;
-      state.currentSubscription.price = price;
-      state.currentSubscription.priceId = id + 1;
+      state.currentSubscription = {...action.payload, priceId: action.payload.id++};
     },
     logOut(state, _) {
       state.users.username = "";
       state.users.email = "";
       state.users.id = null;
-      Cookies.set("username", "");
-      Cookies.set("token", "");
+      Cookies.set(CookiesEnum.USERNAME, "");
+      Cookies.set(CookiesEnum.TOKEN, "");
+      //setTokenToCookies('')
 
       state.currentSubscription = { price: 0, title: "", priceId: 0 };
     },

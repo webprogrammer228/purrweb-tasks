@@ -10,7 +10,7 @@ import { AuthInputs, LoginResponseType } from "../../types/type";
 import { signIn } from "../../store/UserSlice";
 import { useSignInMutation } from "../../store/RegisterApi";
 import { useDispatch } from "react-redux";
-import { MessageBlock } from "../../UI/form/MessageBlock";
+import {Message, MessageBlock} from "../../UI/form/MessageBlock";
 import { MessageTitle } from "../../UI/form/MessageTitle";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -81,11 +81,7 @@ const Login = () => {
           Send password
         </SubmitButton>
       </Form>
-      {err && (
-        <MessageBlock>
-          <MessageTitle>{err}</MessageTitle>
-        </MessageBlock>
-      )}
+      {err && <Message text={err}/>}
     </FormWrapper>
   );
 };
