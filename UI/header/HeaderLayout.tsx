@@ -1,12 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import {Logo} from "./Logo/Logo";
+import dynamic from "next/dynamic";
 
 type Props = {
-  children?: React.ReactNode;
+  name?: string;
 };
 
-const HeaderLayout = ({ children }: Props) => {
-  return <Header>{children}</Header>;
+const HeaderLayout = ({ name }: Props) => {
+  const UserBlock = dynamic(() => import("../../components/UserBlock"));
+  const MobileMenu = dynamic(() => import("../../components/MobileMenu"));
+  return <Header>
+    <Logo
+      height="42px"
+      width="42px"
+      color="#FFFFFF"
+      secondaryColor="#FC5842"
+    />
+    {name && <UserBlock name={name} />}
+    <MobileMenu />
+  </Header>;
 };
 
 export default HeaderLayout;

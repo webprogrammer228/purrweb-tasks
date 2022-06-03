@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { SubmitButtonType } from "../../types/type";
 
+//везде, где используется эта кнопка, тэг открывается и закрывается
+//этого можно избежать, если сделать компонент
+export const SubmitBtn = ({width, label}) => {
+  return <SubmitButton width={width} type={'submit'}>{label}</SubmitButton>
+}
 export const SubmitButton = styled.button<SubmitButtonType>`
   width: ${(props) => props.width};
   height: 58px;

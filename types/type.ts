@@ -24,62 +24,69 @@ export type PurchasedSubscription = {
   price: number;
   priceId: number | undefined;
 };
+export type Subscribe = {
+  userId: number;
+  productId: number;
+  currentPeriodStart: number;
+  currentPeriodEnd: number;
+  status: string;
+  id: number;
+}
 
-export type SubscribeType = {
-  userId: number | null;
+export type SubscribeType = Subscribe & {
   title?: string;
   price?: string;
-  productId: number | null;
-  currentPeriodStart: number | null;
-  currentPeriodEnd: number | null;
-  status: string;
-  id: number | null;
+};
+
+export type AddedSubscription = {
+  price: number;
+  title: string;
+  description: string;
+  benefits: string[];
 };
 
 export type SubscriptionsType = [MySubscription];
+//нужно разбивать этот тип на более мелкие: прайс, продукт, код
+//далее эти мелкие типы можно использовать в SettingsPersonalInfoResponseType
+//в MySubscription и SubscribeType 6 одинаковых полей из 8, можно вычленить общие поля и к ним уже добавлять новые поля через амперсанд
+export type MySubscription = Subscribe & {
+  product: Product;
+  codes: Code[];
+};
 
-export type MySubscription = {
+export type Product = {
   id: number;
-  userId: number;
+  sitesCount: number;
+  name: string;
+  prices: Price[];
+};
+
+export type Price = {
+  id: number;
+  isActive: boolean;
   productId: number;
-  currentPeriodStart: string;
-  currentPeriodEnd: string;
+  price: string;
+};
+
+export type Code = {
+  id: number;
+  code: string;
+  origin: null;
   status: string;
-  product: {
-    id: number;
-    sitesCount: number;
-    name: string;
-    prices: [
-      {
-        id: number;
-        isActive: boolean;
-        productId: number;
-        price: string;
-      }
-    ];
-  };
-  codes: [
-    {
-      id: number;
-      code: string;
-      origin: null;
-      status: string;
-      subscribeId: number;
-      userId: number;
-    }
-  ];
+  subscribeId: number;
+  userId: number;
 };
 
 export type CheckboxesType = {
   code: string;
 };
-
-export type SettingsPersonalInfoType = {
-  username: string;
-  email: string;
-};
-
-export type SettingsPersonalInfoResponseType = {
+//этот тип очень похож на тип User, было бы хорошо их объединить
+// export type SettingsPersonalInfoType = {
+//   username: string;
+//   email: string;
+// };
+//этот тип крайне сложно читать
+export type SettingsResponseType = {
   id: number;
   email: string;
   username: string;

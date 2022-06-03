@@ -18,9 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const name = Cookies.get("username");
   const [loading, setLoading] = useState(false);
 
-  const UserBlock = dynamic(() => import("../components/UserBlock"));
-  const MobileMenu = dynamic(() => import("../components/MobileMenu"));
-
   Router.events.on("routeChangeStart", (url) => {
     setLoading(true);
   });
@@ -31,16 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <HeaderLayout>
-        <Logo
-          height="42px"
-          width="42px"
-          color="#FFFFFF"
-          secondaryColor="#FC5842"
-        />
-        {name && <UserBlock name={name} />}
-        <MobileMenu />
-      </HeaderLayout>
+      <HeaderLayout name={name} />
       <Main>
         {loading && (
           <LoaderWrapper>
@@ -49,10 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         )}
         <Component {...pageProps} />
       </Main>
-      <FooterLayout>
-        <TopBlock />
-        <BottomBlock />
-      </FooterLayout>
+      <FooterLayout />
     </Provider>
   );
 }

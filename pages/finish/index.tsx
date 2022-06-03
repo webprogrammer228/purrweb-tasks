@@ -4,7 +4,7 @@ import { Form } from "../../UI/form/Form";
 import { SubmitButton } from "../../UI/form/SubmitButton";
 import { FormWrapper } from "../../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginInputs, PurchasedSubscription } from "../../types/type";
+import { AuthInputs, PurchasedSubscription } from "../../types/type";
 import { CardDescription } from "../../UI/CardDescription";
 import { PurchaseWrapper } from "../../UI/checkout/PurchaseWrapper";
 import { PurchaseHeaderWrapper } from "../../UI/checkout/PurchaseHeaderWrapper";
@@ -23,8 +23,8 @@ const Finish = () => {
   const {
     handleSubmit,
     formState: {},
-  } = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+  } = useForm<AuthInputs>();
+  const onSubmit: SubmitHandler<AuthInputs> = (data) => {
     router.push("/subscriptions");
   };
 

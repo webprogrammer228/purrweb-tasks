@@ -3,9 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 // UI
-import { Stage } from "../../UI/Stage";
 import Link from "next/link";
-import { Stages } from "../../UI/form/Stages";
 import { Title } from "../../UI/form/Title";
 import { Form } from "../../UI/form/Form";
 import { Input } from "../../UI/form/Input";
@@ -24,6 +22,7 @@ import { useSignUpMutation } from "../../store/RegisterApi";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/UserSlice";
 import Cookies from "js-cookie";
+import StageComponent from "../../components/StageComponent";
 
 const Registration = () => {
   const [signUpUser] = useSignUpMutation();
@@ -55,11 +54,7 @@ const Registration = () => {
 
   return (
     <FormWrapper>
-      <Stages>
-        <Stage title="Create Account" color="#FC5842" />
-        <Stage title="Log In" />
-        <Stage title="Checkout" />
-      </Stages>
+      <StageComponent index={0} />
       <Title>Create account</Title>
       <Hint>
         You need to enter your name and email. We will send you a temporary

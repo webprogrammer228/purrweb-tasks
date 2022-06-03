@@ -1,6 +1,4 @@
 import React from "react";
-import { Stages } from "../../UI/form/Stages";
-import { Stage } from "../../UI/Stage";
 import { Title } from "../../UI/form/Title";
 import { Form } from "../../UI/form/Form";
 import { SubmitButton } from "../../UI/form/SubmitButton";
@@ -23,12 +21,13 @@ import { TotalWrapper } from "../../UI/checkout/TotalWrapper";
 import { buySubscription } from "../../store/UserSlice";
 import { useRouter } from "next/router";
 import { useBuySubscriptionMutation } from "../../store/RegisterApi";
+import StageComponent from "../../components/StageComponent";
 
 const Checkout = () => {
   const subscription = useSelector<RootState, PurchasedSubscription>(
     (state) => state.users.currentSubscription
   );
-  let { priceId } = subscription;
+  const { priceId } = subscription;
   const dispatch = useDispatch();
   const [buySub] = useBuySubscriptionMutation();
 
@@ -48,14 +47,11 @@ const Checkout = () => {
         alert(e);
       });
   };
-
+  //Stages должен быть в отдельном компоненте и переиспользоваться. Если бы было не три, а десять таких табов?!
+  //дополнительные пропсы нужно туда прокидывать вроде индекса, и по этому индексу задавать цвет
   return (
     <FormWrapper>
-      <Stages>
-        <Stage title="Create Account" color="#FC5842" />
-        <Stage title="Log In" color="#FC5842" />
-        <Stage title="Checkout" color="#FC5842" />
-      </Stages>
+      <StageComponent index={2} />
       <Title>Checkout</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <PurchaseWrapper>

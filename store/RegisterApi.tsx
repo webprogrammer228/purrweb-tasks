@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginInputs, RegisterInputs } from "../types/type";
+//такие типы отсутствуют
+import { AuthInputs } from "../types/type";
 import { config, configLogin } from "../config";
 
 // export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
@@ -8,20 +9,21 @@ export const URL: string = process.env.NEXT_PUBLIC_URL!;
 
 export const userApi = createApi({
   reducerPath: "User",
-  baseQuery: fetchBaseQuery({ baseUrl: `${URL}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: URL }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
     signUp: builder.mutation({
-      query: (user: RegisterInputs) => ({
-        url: `${URL}/users/sign-up`,
+      query: (user: AuthInputs) => ({
+        //baseUrl уже есть. избыточно его еще раз прописывать
+        url: `/users/sign-up`,
         headers: config,
         method: "POST",
         body: user,
       }),
     }),
     signIn: builder.mutation({
-      query: (user: LoginInputs) => ({
-        url: `${URL}/users/sign-in`,
+      query: (user: AuthInputs) => ({
+        url: `/users/sign-in`,
         headers: config,
         method: "POST",
         body: user,
@@ -29,7 +31,7 @@ export const userApi = createApi({
     }),
     buySubscription: builder.mutation({
       query: (subscription) => ({
-        url: `${URL}/payments/buy`,
+        url: `/payments/buy`,
         headers: configLogin,
         method: "POST",
         body: subscription,
@@ -37,7 +39,7 @@ export const userApi = createApi({
     }),
     activateCode: builder.mutation({
       query: (code) => ({
-        url: `${URL}/code/activate`,
+        url: `/code/activate`,
         headers: configLogin,
         method: "POST",
         body: code,
@@ -45,7 +47,7 @@ export const userApi = createApi({
     }),
     changePersonalInfo: builder.mutation({
       query: (personalInfo) => ({
-        url: `${URL}/users`,
+        url: `/users`,
         headers: configLogin,
         method: "PATCH",
         body: personalInfo,
@@ -53,7 +55,7 @@ export const userApi = createApi({
     }),
     changePassword: builder.mutation({
       query: (password) => ({
-        url: `${URL}/users/update-password`,
+        url: `/users/update-password`,
         headers: configLogin,
         method: "PATCH",
         body: password,
