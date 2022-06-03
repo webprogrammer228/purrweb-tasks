@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styled from "styled-components";
 
 // UI
 import Link from "next/link";
-import { Title } from "../../UI/form/Title";
-import { Form } from "../../UI/form/Form";
-import { Input } from "../../UI/form/Input";
-import { Warning } from "../../UI/form/Warning";
-import { SubmitButton } from "../../UI/form/SubmitButton";
-import { FormWrapper } from "../../UI/form/FormWrapper";
-import { MessageBlock } from "../../UI/form/MessageBlock";
-import { MessageTitle } from "../../UI/form/MessageTitle";
+import {
+  Form,
+  FormWrapper,
+  Input,
+  Message,
+  SubmitBtn,
+  Title,
+  Warning,
+} from "../../UI/form";
 
 // types
 import { AuthInputs } from "../../types/type";
@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { signUp } from "../../store/UserSlice";
 import Cookies from "js-cookie";
 import StageComponent from "../../components/StageComponent";
+import styled from "styled-components";
 
 const Registration = () => {
   const [signUpUser] = useSignUpMutation();
@@ -54,7 +55,7 @@ const Registration = () => {
 
   return (
     <FormWrapper>
-      <StageComponent index={0} />
+      <StageComponent index={0.5} />
       <Title>Create account</Title>
       <Hint>
         You need to enter your name and email. We will send you a temporary
@@ -97,15 +98,9 @@ const Registration = () => {
           <Warning>Minimal length your password is 6 symbols</Warning>
         )}
 
-        <SubmitButton width="200px" type="submit" marginBottom="48px">
-          Send password
-        </SubmitButton>
+        <SubmitBtn width="200px" marginBottom="48px" label="Send password" />
       </Form>
-      {errs && (
-        <MessageBlock>
-          <MessageTitle>{errs}</MessageTitle>
-        </MessageBlock>
-      )}
+      {errs && <Message text={errs} />}
 
       <UnderButtonText>
         <HaveAnAccount>Have an account? </HaveAnAccount>

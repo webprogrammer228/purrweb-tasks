@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   AddedSubscription,
   AuthInputs,
@@ -8,9 +8,10 @@ import {
   PurchasedSubscription,
   Subscribe,
   SubscribeType,
+  User,
 } from "../types/type";
 import Cookies from "js-cookie";
-import {CookiesEnum, setTokenToCookies} from "../utils/utils";
+import { CookiesEnum } from "../utils/utils";
 
 export type StateType = {
   users: {
@@ -55,13 +56,15 @@ const userSlice = createSlice({
       state,
       action: { payload: AddedSubscription & { id: number } }
     ) {
-      state.currentSubscription = {...action.payload, priceId: action.payload.id++};
+      state.currentSubscription = {
+        ...action.payload,
+        priceId: action.payload.id++,
+      };
     },
     logOut(state, _) {
       state.users.username = "";
       state.users.email = "";
       state.users.id = null;
-      Cookies.set(CookiesEnum.USERNAME, "");
       Cookies.set(CookiesEnum.TOKEN, "");
       //setTokenToCookies('')
 
@@ -83,10 +86,13 @@ const userSlice = createSlice({
     },
     getAllSubscription(state, action) {
       const { allSubscriptions } = action.payload;
-      state.allSubscriptions.length === 0 &&
-        allSubscriptions[0].map((subscription: MySubscription) =>
-          state.allSubscriptions.push(subscription)
-        );
+      state.allSubscriptions = [...allSubscriptions][0];
+    },
+    getMe(
+      state,
+      action: { payload: Omit<User, "name"> & { username: string } }
+    ) {
+      state.users = { ...action.payload };
     },
   },
 });
@@ -99,6 +105,7 @@ export const {
   buySubscription,
   codeActivate,
   getAllSubscription,
+  getMe,
 } = userSlice.actions;
 
 export default userSlice.reducer;

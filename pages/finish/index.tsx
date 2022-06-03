@@ -1,18 +1,17 @@
 import React from "react";
-import { Title } from "../../UI/form/Title";
-import { Form } from "../../UI/form/Form";
-import { SubmitButton } from "../../UI/form/SubmitButton";
-import { FormWrapper } from "../../UI/form/FormWrapper";
+import { Form, FormWrapper, SubmitBtn, Title } from "../../UI/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthInputs, PurchasedSubscription } from "../../types/type";
 import { CardDescription } from "../../UI/CardDescription";
-import { PurchaseWrapper } from "../../UI/checkout/PurchaseWrapper";
-import { PurchaseHeaderWrapper } from "../../UI/checkout/PurchaseHeaderWrapper";
-import { PurchaseHeaderTitle } from "../../UI/checkout/PurchaseHeaderTitle";
-import { Line } from "../../UI/checkout/Line";
-import { PurchaseSubscriptionWrapper } from "../../UI/checkout/SubscriptionWrapper";
+import {
+  Line,
+  PurchaseHeaderTitle,
+  PurchaseHeaderWrapper,
+  PurchaseSubscriptionTitle,
+  PurchaseSubscriptionWrapper,
+  PurchaseWrapper,
+} from "../../UI/checkout";
 import { v4 as uuidv4 } from "uuid";
-import { PurchaseSubscriptionTitle } from "../../UI/checkout/PurchaseSubscriptionTitle";
 import { Wrapper } from "../../UI/Wrapper";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -60,9 +59,11 @@ const Finish = () => {
         </PurchaseSubscriptionWrapper>
       </PurchaseWrapper>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <SubmitButton type="submit" width="100%" marginBottom="390px">
-          Go to my subscriptions
-        </SubmitButton>
+        <SubmitBtn
+          width="100%"
+          marginBottom="390px"
+          label="Go to my subscriptions"
+        />
       </Form>
     </FormWrapper>
   );

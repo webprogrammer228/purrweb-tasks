@@ -1,23 +1,23 @@
 import React from "react";
-import { Title } from "../../UI/form/Title";
-import { Form } from "../../UI/form/Form";
-import { SubmitButton } from "../../UI/form/SubmitButton";
-import { FormWrapper } from "../../UI/form/FormWrapper";
+import { Form, FormWrapper, SubmitBtn, Title } from "../../UI/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { PurchasedSubscription, SubscribeType } from "../../types/type";
-import { PurchaseWrapper } from "../../UI/checkout/PurchaseWrapper";
-import { PurchaseHeaderWrapper } from "../../UI/checkout/PurchaseHeaderWrapper";
-import { PurchaseHeaderTitle } from "../../UI/checkout/PurchaseHeaderTitle";
-import { Line } from "../../UI/checkout/Line";
-import { PurchaseSubscriptionWrapper } from "../../UI/checkout/SubscriptionWrapper";
-import { PurchaseSubscriptionTitle } from "../../UI/checkout/PurchaseSubscriptionTitle";
-import { Basket } from "../../UI/checkout/Basket";
+import {
+  Line,
+  PurchaseHeaderTitle,
+  PurchaseHeaderWrapper,
+  PurchaseSubscriptionTitle,
+  PurchaseSubscriptionWrapper,
+  PurchaseWrapper,
+  TotalTitle,
+  TotalWrapper,
+} from "../../UI/checkout";
+
+import { Basket } from "../../UI/icons";
 import { Wrapper } from "../../UI/Wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { v4 as uuidv4 } from "uuid";
-import { TotalTitle } from "../../UI/checkout/TotalTitle";
-import { TotalWrapper } from "../../UI/checkout/TotalWrapper";
 import { buySubscription } from "../../store/UserSlice";
 import { useRouter } from "next/router";
 import { useBuySubscriptionMutation } from "../../store/RegisterApi";
@@ -80,9 +80,7 @@ const Checkout = () => {
 
           <TotalTitle>${subscription.price}</TotalTitle>
         </TotalWrapper>
-        <SubmitButton width="200px" type="submit" marginBottom="290px">
-          Purchase
-        </SubmitButton>
+        <SubmitBtn width="200px" marginBottom="290px" label="Purchase" />
       </Form>
     </FormWrapper>
   );

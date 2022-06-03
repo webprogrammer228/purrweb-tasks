@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import Card from "../components";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { logOut } from "../store/UserSlice";
+import { Cards } from "../components";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   return (
     <>
       <GreetingHome>Get started with Gscore today!</GreetingHome>
-      <Card />
+      <Cards />
       <UnderCardsTextBlock>
         <OfferText>Have more than 10 sites?</OfferText>
         <Link href="#">Contact us</Link>

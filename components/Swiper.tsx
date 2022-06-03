@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
 import { DateTime } from "luxon";
 import { Wrapper } from "../UI/Wrapper";
-import { PaginationArrow } from "../UI/subscription/PaginationArrow";
+import { PaginationArrow } from "../UI/icons";
 import { ViewSubscriptionButton } from "./Subscription";
 import styled from "styled-components";
 import "swiper/css";
@@ -133,7 +133,17 @@ export const SwiperComponent: React.FC<SwiperProps> = ({
           </SwiperSlide>
         ))}
 
-      <Wrapper direction="row" align="left" marginBottom="32px">
+      <Wrapper
+        direction="row"
+        align="left"
+        marginBottom="32px"
+        style={{
+          position: "absolute",
+          bottom: "-20px",
+          left: "0",
+          zIndex: "200",
+        }}
+      >
         <Button marginRight="12px" className="prev-el">
           <PaginationArrow rotate="180deg" />
         </Button>

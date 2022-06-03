@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const UserSettings = styled.div`
+const UserSettings = styled.div`
   background: #272727;
   border-radius: 12px;
   width: 188px;
@@ -13,3 +13,5 @@ export const UserSettings = styled.div`
   padding: 24px 28px;
   z-index: 20;
 `;
+
+export { UserSettings };

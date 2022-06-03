@@ -1,110 +1,71 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Check } from "../UI/content/Check";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
-import { addSubscription } from "../store/UserSlice";
-import { useRouter } from "next/router";
 import { CardDescription } from "../UI/CardDescription";
+import { Check } from "../UI";
+import { addSubscription } from "../store/UserSlice";
 import { token } from "../utils/utils";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
-export const cardsInfo = [
-  {
-    price: 77,
-    title: "Single site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "Single site license",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-  {
-    price: 117,
-    title: "3 Site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "All features for 3 sites",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-  {
-    price: 167,
-    title: "10 Site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "All features for 10 sites",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-];
+type CardsProps = {
+  cardInfo: {
+    price: number;
+    title: string;
+    description: string;
+    benefits: string[];
+  };
+  id: number;
+};
 
-export const Card: React.FC = () => {
-  const [activeCard, setActiveCard] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
+const Card: React.FC<CardsProps> = ({ cardInfo }, id) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+  const [activeCard, setActiveCard] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <CardWrapper>
-      {cardsInfo.map((cardInfo, id) => (
-        <CardBody
-          key={uuidv4()}
-          onMouseEnter={() => {
-            setActiveCard(id);
-            setIsHovered(true);
-          }}
-          onMouseLeave={() => {
-            setActiveCard(id);
-            setIsHovered(false);
-          }}
-        >
-          <CardBodyHeader>
-            <CardPrice>${cardInfo.price}</CardPrice>
-            <CardTitle>{cardInfo.title}</CardTitle>
-            <CardDescription>{cardInfo.description}</CardDescription>
-          </CardBodyHeader>
-          <CardList>
-            {cardInfo.benefits.map((benefit) => (
-              <CardListItem key={uuidv4()}>
-                <Check
-                  secondaryColor={
-                    id === activeCard && isHovered ? "#fc5842" : "#272727"
-                  }
-                />
-                {benefit}
-              </CardListItem>
-            ))}
-          </CardList>
-          <CardButton
-            onClick={() => {
-              dispatch(addSubscription({ ...cardInfo, id }));
-              token ? router.push("/checkout") : router.push("/registration");
-            }}
-          >
-            Get Gscore
-          </CardButton>
-        </CardBody>
-      ))}
-    </CardWrapper>
+    <CardBody
+      key={uuidv4()}
+      onMouseEnter={() => {
+        setActiveCard(id);
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setActiveCard(id);
+        setIsHovered(false);
+      }}
+    >
+      <CardBodyHeader>
+        <CardPrice>${cardInfo.price}</CardPrice>
+        <CardTitle>{cardInfo.title}</CardTitle>
+        <CardDescription>{cardInfo.description}</CardDescription>
+      </CardBodyHeader>
+      <CardList>
+        {cardInfo.benefits.map((benefit) => (
+          <CardListItem key={uuidv4()}>
+            <Check
+              secondaryColor={
+                id === activeCard && isHovered ? "#fc5842" : "#272727"
+              }
+            />
+            {benefit}
+          </CardListItem>
+        ))}
+      </CardList>
+      <CardButton
+        onClick={() => {
+          dispatch(addSubscription({ ...cardInfo, id }));
+          token ? router.push("/checkout") : router.push("/registration");
+        }}
+      >
+        Get Gscore
+      </CardButton>
+    </CardBody>
   );
 };
 
-const CardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-
-  flex-wrap: wrap;
-`;
+export default Card;
 
 const CardBody = styled.div`
   background: #272727;

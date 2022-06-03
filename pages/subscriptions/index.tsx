@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import { URL } from "../../config";
 import { Wrapper } from "../../UI/Wrapper";
 import { SettingsTitle } from "../../UI/SettingsTitle";
-import { SubmitButton } from "../../UI/form/SubmitButton";
+import { SubmitBtn } from "../../UI/form";
 import Subscription from "../../components/Subscription";
 
 const Subscriptions = ({ ...props }: SubscriptionsType) => {
@@ -13,9 +13,7 @@ const Subscriptions = ({ ...props }: SubscriptionsType) => {
     <>
       <Wrapper direction="row" align="left" justifyContent="space-between">
         <SettingsTitle>My subscriptions</SettingsTitle>
-        <SubmitButton width="152px" smConfig={true}>
-          Upgrade
-        </SubmitButton>
+        <SubmitBtn width="152px" smConfig={true} label="upgrade" />
       </Wrapper>
       <Subscription info={props} />
     </>
@@ -26,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context;
 
   const res = await axios
-    .get(`${URL}/subscribe/self`, {
+    .get(`${URL}subscribe/self`, {
       headers: { Authorization: `Bearer ${req.cookies.token}` },
     })
     .then((res: AxiosResponse<SubscriptionsType, string>) => res.data)

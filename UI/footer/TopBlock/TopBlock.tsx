@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo } from "../../header/Logo/Logo";
+import { Logo } from "../../icons";
 import styled from "styled-components";
 
 const TopBlock = () => {

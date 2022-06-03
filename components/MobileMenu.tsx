@@ -1,19 +1,25 @@
 import React, { useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { Burger } from "../UI/header/Burger/Burger";
-import { CloseIcon } from "../UI/CloseIcon";
-import { Logo } from "../UI/header/Logo/Logo";
+import {
+  Burger,
+  CheckMark,
+  CloseIcon,
+  GearIcon,
+  Logo,
+  QuitIcon,
+} from "../UI/icons";
+
 import Link from "next/link";
-import { CheckMark } from "../UI/header/Login/CheckMark";
 import Cookies from "js-cookie";
-import { Title } from "../UI/header/Login/Title";
+import { Title } from "../UI/header";
 import { Wrapper } from "../UI/Wrapper";
-import { GearIcon } from "../UI/header/UserSettings/GearIcon/GearIcon";
-import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
+
 import { useOnClickOutside } from "../hooks/useClickOutside";
 
-const MobileMenu: React.FC = () => {
-  const name = Cookies.get("username");
+type Props = {
+  name: string | undefined;
+};
+const MobileMenu: React.FC<Props> = ({ name }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isShowSubMenu, setIsShowSubMenu] = useState(false);
 
@@ -62,7 +68,6 @@ const MobileMenu: React.FC = () => {
                     <Wrapper
                       onClick={() => {
                         setShowMenu(false);
-                        Cookies.set("username", "");
                         Cookies.set("token", "");
                       }}
                     >
@@ -146,6 +151,7 @@ const MenuContent = styled.div`
     margin-top: 20px;
     align-items: center;
   }
+
   div > p:first-child {
     margin-left: 16px;
   }

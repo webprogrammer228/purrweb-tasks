@@ -19,6 +19,11 @@ export type User = {
   email: string;
 };
 
+export type user = Omit<User, "name"> & {
+  username: string;
+  id?: number | null | undefined;
+};
+
 export type PurchasedSubscription = {
   title: string;
   price: number;
@@ -31,7 +36,7 @@ export type Subscribe = {
   currentPeriodEnd: number;
   status: string;
   id: number;
-}
+};
 
 export type SubscribeType = Subscribe & {
   title?: string;

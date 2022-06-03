@@ -1,6 +1,5 @@
 import React from "react";
-import { LoginWrapper } from "../UI/header/Login/LoginWrapper";
-import { Title } from "../UI/header/Login/Title";
+import { LoginWrapper, Title } from "../UI/header";
 import { useRouter } from "next/router";
 import LoginBlock from "./LoginBlock";
 

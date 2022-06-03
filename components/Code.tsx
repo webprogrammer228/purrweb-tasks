@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { CodeWrapper } from "../UI/subscription/CodeWrapper";
+import {
+  CheckBox,
+  CodeInput,
+  CodeStatus,
+  CodeTitle,
+  CodeWrapper,
+  Label,
+} from "../UI/subscription";
 import { Wrapper } from "../UI/Wrapper";
-import { CodeTitle } from "../UI/subscription/CodeTitle";
-import { CodeInput } from "../UI/subscription/CodeInput";
-import { CopyIcon } from "../UI/subscription/CopyIcon";
-import { CodeStatus } from "../UI/subscription/CodeStatus";
-import { Label } from "../UI/subscription/Label";
-import { CheckBox } from "../UI/subscription/Checkbox";
+import { CopyIcon } from "../UI/icons/CopyIcon";
 import { ViewSubscriptionButton } from "./Subscription";
 import { UseFormRegister } from "react-hook-form";
 import { CheckboxesType } from "../types/type";

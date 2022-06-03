@@ -4,14 +4,15 @@ import styled from "styled-components";
 type Stage = {
   title?: string;
   index?: number;
-  idd: number;
+  dataIndex: number;
 };
 
-export const Stage: React.FC<Stage> = ({ title, index, idd }) => {
+export const Stage: React.FC<Stage> = ({ title, index, dataIndex }) => {
+  console.log("index", index);
   return (
     <StageWrapper>
       <StageTitle>{title}</StageTitle>
-      <StageLine idd={idd} index={index} />
+      <StageLine index={index} dataIndex={dataIndex} />
     </StageWrapper>
   );
 };
@@ -40,9 +41,8 @@ const StageTitle = styled.p`
 
 const StageLine = styled.div<Stage>`
   transition: all 0.5s;
-
   background: ${(props) =>
-    props.index && props.idd <= props.index ? "#FC5842" : "#373737"};
+    props.index && props.dataIndex <= props.index ? "#FC5842" : "#373737"};
   border-radius: 10px;
   width: 195px;
   height: 8px;

@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-//такие типы отсутствуют
-import { AuthInputs } from "../types/type";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"; //такие типы отсутствуют
+import { AuthInputs, User } from "../types/type";
 import { config, configLogin } from "../config";
 
-// export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
-// export const URLLogin: string = process.env.NEXT_PUBLIC_URL_SIGNIN!;
 export const URL: string = process.env.NEXT_PUBLIC_URL!;
 
 export const userApi = createApi({
@@ -28,6 +25,12 @@ export const userApi = createApi({
         method: "POST",
         body: user,
       }),
+    }),
+    getMe: builder.query<
+      Omit<User, "name"> & { id: number; username: string },
+      string
+    >({
+      query: () => ({ url: "users/me", headers: configLogin, method: "GET" }),
     }),
     buySubscription: builder.mutation({
       query: (subscription) => ({
@@ -71,4 +74,5 @@ export const {
   useActivateCodeMutation,
   useChangePersonalInfoMutation,
   useChangePasswordMutation,
+  useGetMeQuery,
 } = userApi;

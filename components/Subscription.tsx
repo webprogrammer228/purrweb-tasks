@@ -11,10 +11,9 @@ import { Wrapper } from "UI/Wrapper";
 
 import Code from "./Code";
 import { v4 as uuidv4 } from "uuid";
-import { Form } from "../UI/form/Form";
+import { Form, SubmitBtn } from "../UI/form";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { TextUnderForm } from "../UI/subscription/TextUnderForm";
-import { SubmitButton } from "../UI/form/SubmitButton";
+import { TextUnderForm } from "../UI/subscription";
 import { useActivateCodeMutation } from "../store/RegisterApi";
 import { useDispatch, useSelector } from "react-redux";
 import { codeActivate, getAllSubscription } from "../store/UserSlice";
@@ -30,18 +29,20 @@ const Subscription: React.FC<Props> = ({ ...info }) => {
   const allSubscriptions: MySubscription[][] = Object.values(info).map(
     (elem) => elem.res
   );
+
   const [activeIndexSlide, setActiveIndexSlide] = useState(0);
   const [activeIndexCard, setActiveIndexCard] = useState(0);
 
   const [activateCode] = useActivateCodeMutation();
   const dispatch = useDispatch();
-  const allData = useSelector<RootState, MySubscription[]>(
-    (state) => state.users.allSubscriptions
-  );
 
   useEffect(() => {
     dispatch(getAllSubscription({ allSubscriptions }));
   }, []);
+
+  const allData = useSelector<RootState, MySubscription[]>(
+    (state) => state.users.allSubscriptions
+  );
 
   const {
     register,
@@ -64,17 +65,19 @@ const Subscription: React.FC<Props> = ({ ...info }) => {
 
   return (
     <>
-      <SwiperComponent
-        activeIndexSlide={activeIndexSlide}
-        setActiveIndexSlide={setActiveIndexSlide}
-        allData={allData}
-        activeIndexCard={activeIndexCard}
-        setActiveIndexCard={setActiveIndexCard}
-        allSubscriptions={allSubscriptions}
-      />
+      {allData.length > 0 && (
+        <SwiperComponent
+          activeIndexSlide={activeIndexSlide}
+          setActiveIndexSlide={setActiveIndexSlide}
+          allData={allData}
+          activeIndexCard={activeIndexCard}
+          setActiveIndexCard={setActiveIndexCard}
+          allSubscriptions={allSubscriptions}
+        />
+      )}
 
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {allData &&
+        {allData.length &&
           allData.map(
             (subscription: MySubscription, id: number) =>
               activeIndexCard === id &&
@@ -89,7 +92,7 @@ const Subscription: React.FC<Props> = ({ ...info }) => {
           changeDirection={true}
         >
           <TextUnderForm>Select the domains you want to keep</TextUnderForm>
-          <SubmitButton width="148px">Confirm</SubmitButton>
+          <SubmitBtn width="148px" label="Confirm" />
         </Wrapper>
       </Form>
     </>

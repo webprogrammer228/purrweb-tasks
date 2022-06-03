@@ -1,17 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import {TopBlock} from "./TopBlock";
-import {BottomBlock} from "./BottomBlock";
+import { BottomBlock, TopBlock } from "./index";
 
-type Props = {
-  children?: React.ReactNode;
-};
-
-const FooterLayout = ({children}: Props) => {
-  return <Footer>
-    <TopBlock/>
-    <BottomBlock/>
-  </Footer>;
+const FooterLayout = () => {
+  return (
+    <Footer>
+      <TopBlock />
+      <BottomBlock />
+    </Footer>
+  );
 };
 
 export default FooterLayout;

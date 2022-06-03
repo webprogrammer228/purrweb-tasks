@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormWrapper } from "../../UI/form/FormWrapper";
-import { Title } from "../../UI/form/Title";
-import { Input } from "../../UI/form/Input";
-import { SubmitButton } from "../../UI/form/SubmitButton";
-import { Form } from "../../UI/form/Form";
-import { Warning } from "../../UI/form/Warning";
+import {
+  Form,
+  FormWrapper,
+  Input,
+  Message,
+  SubmitBtn,
+  Title,
+  Warning,
+} from "../../UI/form";
+
 import { AuthInputs, LoginResponseType } from "../../types/type";
 import { signIn } from "../../store/UserSlice";
 import { useSignInMutation } from "../../store/RegisterApi";
 import { useDispatch } from "react-redux";
-import {Message, MessageBlock} from "../../UI/form/MessageBlock";
-import { MessageTitle } from "../../UI/form/MessageTitle";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import StageComponent from "../../components/StageComponent";
@@ -34,7 +36,6 @@ const Login = () => {
         .then((response: LoginResponseType) => {
           dispatch(signIn({ ...response }));
           Cookies.set("token", response.token);
-          Cookies.set("username", response.user.username);
           router.push("/checkout");
         })
         .catch((e) => {
@@ -77,11 +78,9 @@ const Login = () => {
           <Warning>Minimal length your password is 6 symbols</Warning>
         )}
 
-        <SubmitButton width="200px" type="submit" marginBottom="426px">
-          Send password
-        </SubmitButton>
+        <SubmitBtn width="200px" marginBottom="426px" label="Send password" />
       </Form>
-      {err && <Message text={err}/>}
+      {err && <Message text={err} />}
     </FormWrapper>
   );
 };

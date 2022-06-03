@@ -1,6 +1,6 @@
 import React from "react";
-import { Stage } from "../UI/Stage";
-import { Stages } from "../UI/form/Stages";
+import { Stage } from "../UI/stage";
+import { Stages } from "../UI/form/components/Stages";
 import { v4 as uuidv4 } from "uuid";
 
 type StagesProps = {
@@ -16,7 +16,7 @@ const StageComponent: React.FC<StagesProps> = ({ index }) => {
   return (
     <Stages>
       {data.map((d, id) => (
-        <Stage key={uuidv4()} title={d.title} idd={id} index={index} />
+        <Stage key={uuidv4()} title={d.title} index={index} dataIndex={id} />
       ))}
     </Stages>
   );

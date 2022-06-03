@@ -1,10 +1,7 @@
 import React, { useRef, useState } from "react";
-import { UserSettings } from "../UI/header/UserSettings/UserSettings";
-import { GearIcon } from "../UI/header/UserSettings/GearIcon/GearIcon";
-import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
-import { CheckMark } from "../UI/header/Login/CheckMark";
+import { Title, UserSettings } from "../UI/header";
+import { CheckMark, GearIcon, QuitIcon } from "../UI/icons";
 import styled from "styled-components";
-import { Title } from "../UI/header/Login/Title";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
@@ -12,7 +9,6 @@ import { logOut } from "../store/UserSlice";
 import { useOnClickOutside } from "../hooks/useClickOutside";
 
 const LoginBlock = ({ ...props }) => {
-  const { width, height, color, name } = props;
   const [showSettingsUser, setShowSettingsUser] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,13 +23,8 @@ const LoginBlock = ({ ...props }) => {
   return (
     <>
       <WrapperLogin onClick={() => setShowSettingsUser(!showSettingsUser)}>
-        <Title path={"/"}>{name}</Title>
-        <CheckMark
-          width={width}
-          color={color}
-          height={height}
-          isShow={showSettingsUser}
-        />
+        <Title path={"/"}>{props.name}</Title>
+        <CheckMark {...props} isShow={showSettingsUser} />
       </WrapperLogin>
 
       {showSettingsUser && (

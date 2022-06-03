@@ -4,7 +4,7 @@ type TitleProps = {
   path?: string;
 };
 
-export const Title = styled.p<TitleProps>`
+const Title = styled.p<TitleProps>`
   font-family: "Thicccboi", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -22,3 +22,5 @@ export const Title = styled.p<TitleProps>`
 
   cursor: pointer;
 `;
+
+export { Title };

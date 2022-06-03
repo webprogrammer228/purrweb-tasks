@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { SettingsTitle } from "../../UI/SettingsTitle";
 import { Main } from "../../UI/Main";
-import { Line } from "../../UI/checkout/Line";
+import { Line } from "../../UI/checkout";
 import { Wrapper } from "../../UI/Wrapper";
-import { SettingsMenuTitle } from "../../UI/Stage/SettingsMenuTitle";
-import { SettingsSubtitle } from "../../UI/Stage/SettingsSubtitle";
-import { Input } from "../../UI/form/Input";
-import { SubmitButton } from "../../UI/form/SubmitButton";
-import { Form } from "../../UI/form/Form";
+import { SettingsMenuTitle, SettingsSubtitle } from "../../UI/Settings";
+import { Form, Input, Message, SubmitBtn, Warning } from "../../UI/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SettingsPasswordType, SettingsResponseType } from "../../types/type";
 import {
   useChangePasswordMutation,
   useChangePersonalInfoMutation,
 } from "../../store/RegisterApi";
-import Cookies from "js-cookie";
-import { Warning } from "../../UI/form/Warning";
-import { MessageBlock } from "../../UI/form/MessageBlock";
-import { MessageTitle } from "../../UI/form/MessageTitle";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/UserSlice";
 
@@ -43,7 +36,6 @@ const Settings = () => {
       .unwrap()
       .then((response: SettingsResponseType) => {
         dispatch(signUp({ ...response }));
-        Cookies.set("username", response.username);
         alert("Data has been changed");
       })
       .catch((e) => {
@@ -120,15 +112,9 @@ const Settings = () => {
               />
               {errors?.email && <Warning>{errors.email.message}</Warning>}
             </Wrapper>
-            <SubmitButton width="160px" marginBottom="378px">
-              Save
-            </SubmitButton>
+            <SubmitBtn width="160px" marginBottom="378px" label="Save" />
           </Form>
-          {err && (
-            <MessageBlock>
-              <MessageTitle>{err}</MessageTitle>
-            </MessageBlock>
-          )}
+          {err && <Message text={err} />}
         </>
       ) : (
         <>
@@ -174,15 +160,9 @@ const Settings = () => {
                   <Warning>Minimal length your password is 6 symbols</Warning>
                 )}
             </Wrapper>
-            <SubmitButton width="160px" marginBottom="378px">
-              Save
-            </SubmitButton>
+            <SubmitBtn width="160px" marginBottom="378px" label="Save" />
           </Form>
-          {err && (
-            <MessageBlock>
-              <MessageTitle>{err}</MessageTitle>
-            </MessageBlock>
-          )}
+          {err && <Message text={err} />}
         </>
       )}
     </Main>
