@@ -82,13 +82,19 @@ export type CheckboxesType = {
   code: string;
 };
 
-export type SettingsResponseType = User & { subscribes: [] } & {
-  codes: Code[] & { user: string } & {
-    subscribe: Subscribe &
-      Code[] & {
-        product: Omit<Price, "price" & { prices: Price[] & { product: {} } }>;
+export type SettingsResponseType = User & {
+  subscribes: [];
+  codes: [
+    Code & { user: string } & {
+      subscribe: Subscribe & {
+        user: string;
+        codes: Code[];
+        product: Omit<Product, "prices"> & {
+          prices: [Price & { product: {} }];
+        };
       };
-  };
+    }
+  ];
 };
 
 export type SettingsPasswordType = {
