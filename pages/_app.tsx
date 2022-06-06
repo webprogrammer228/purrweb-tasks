@@ -1,38 +1,38 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
-import { persistor, store } from "../store";
-import { PersistGate } from "redux-persist/integration/react";
-import { HeaderLayout } from "../UI/header";
-import { Logo } from "../UI/header/Logo/Logo";
-import React from "react";
+import React, { useState } from "react";
 import { Main } from "../UI/Main";
+import { store } from "../store";
+
+import { Router } from "next/router";
+import { Loader, LoaderWrapper } from "../UI/Loader/Loader";
 import { FooterLayout } from "../UI/footer";
-import { TopBlock } from "../UI/footer/TopBlock";
-import { BottomBlock } from "../UI/footer/BottomBlock";
-import UserBlock from "../components/UserBlock";
+import { HeaderLayout } from "../UI/header";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [loading, setLoading] = useState(false);
+
+  Router.events.on("routeChangeStart", (url) => {
+    setLoading(true);
+  });
+
+  Router.events.on("routeChangeComplete", (url) => {
+    setLoading(false);
+  });
+
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <HeaderLayout>
-          <Logo
-            height="42px"
-            width="42px"
-            color="#FFFFFF"
-            secondaryColor="#FC5842"
-          />
-          <UserBlock />
-        </HeaderLayout>
-        <Main>
-          <Component {...pageProps} />
-        </Main>
-        <FooterLayout>
-          <TopBlock />
-          <BottomBlock />
-        </FooterLayout>
-      </PersistGate>
+      <HeaderLayout />
+      <Main>
+        {loading && (
+          <LoaderWrapper>
+            <Loader />
+          </LoaderWrapper>
+        )}
+        <Component {...pageProps} />
+      </Main>
+      <FooterLayout />
     </Provider>
   );
 }

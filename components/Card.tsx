@@ -1,112 +1,71 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Check } from "../UI/content/Check";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
-import { addSubscription } from "../store/UserSlice";
-import { useRouter } from "next/router";
 import { CardDescription } from "../UI/CardDescription";
+import { Check } from "../UI";
+import { addSubscription } from "../store/UserSlice";
+import { token } from "../utils/utils";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
-const cardsInfo = [
-  {
-    price: 77,
-    title: "Single site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "Single site license",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-  {
-    price: 117,
-    title: "3 Site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "All features for 3 sites",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-  {
-    price: 167,
-    title: "10 Site license",
-    description:
-      "Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price",
-    benefits: [
-      "All features for 10 sites",
-      "Special introductory pricing",
-      "Unlimited Pages and Keywords",
-      "Billed annually",
-    ],
-  },
-];
+type CardsProps = {
+  cardInfo: {
+    price: number;
+    title: string;
+    description: string;
+    benefits: string[];
+  };
+  id: number;
+};
 
-const Card: React.FC = () => {
-  const [activeCard, setActiveCard] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
+const Card: React.FC<CardsProps> = ({ cardInfo }, id) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+  const [activeCard, setActiveCard] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <CardWrapper>
-      {cardsInfo.map((cardInfo, id) => (
-        <CardBody
-          key={uuidv4()}
-          onMouseEnter={() => {
-            setActiveCard(id);
-            setIsHovered(true);
-          }}
-          onMouseLeave={() => {
-            setActiveCard(id);
-            setIsHovered(false);
-          }}
-        >
-          <CardBodyHeader>
-            <CardPrice>${cardInfo.price}</CardPrice>
-            <CardTitle>{cardInfo.title}</CardTitle>
-            <CardDescription>{cardInfo.description}</CardDescription>
-          </CardBodyHeader>
-          <CardList>
-            {cardInfo.benefits.map((benefit) => (
-              <CardListItem key={uuidv4()}>
-                <Check
-                  height="26px"
-                  width="26px"
-                  color="white"
-                  secondaryColor={
-                    id === activeCard && isHovered ? "#fc5842" : "#272727"
-                  }
-                />
-                {benefit}
-              </CardListItem>
-            ))}
-          </CardList>
-          <CardButton
-            onClick={() => {
-              dispatch(addSubscription({ ...cardInfo, id }));
-              router.push("/registration");
-            }}
-          >
-            Get Gscore
-          </CardButton>
-        </CardBody>
-      ))}
-    </CardWrapper>
+    <CardBody
+      key={uuidv4()}
+      onMouseEnter={() => {
+        setActiveCard(id);
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setActiveCard(id);
+        setIsHovered(false);
+      }}
+    >
+      <CardBodyHeader>
+        <CardPrice>${cardInfo.price}</CardPrice>
+        <CardTitle>{cardInfo.title}</CardTitle>
+        <CardDescription>{cardInfo.description}</CardDescription>
+      </CardBodyHeader>
+      <CardList>
+        {cardInfo.benefits.map((benefit) => (
+          <CardListItem key={uuidv4()}>
+            <Check
+              secondaryColor={
+                id === activeCard && isHovered ? "#fc5842" : "#272727"
+              }
+            />
+            {benefit}
+          </CardListItem>
+        ))}
+      </CardList>
+      <CardButton
+        onClick={() => {
+          dispatch(addSubscription({ ...cardInfo, id }));
+          token ? router.push("/checkout") : router.push("/registration");
+        }}
+      >
+        Get Gscore
+      </CardButton>
+    </CardBody>
   );
 };
 
 export default Card;
-
-const CardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const CardBody = styled.div`
   background: #272727;
@@ -114,7 +73,7 @@ const CardBody = styled.div`
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
 
-  height: 560px;
+  height: 602px;
   max-width: 412px;
 
   padding: 42px 48px;
@@ -127,11 +86,25 @@ const CardBody = styled.div`
   @media (max-width: 1280px) {
     padding: 21px 24px;
     max-width: 370px;
+    height: 560px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 0 27.5px 0;
+  }
+
+  @media (max-width: 550px) {
+    padding: 20px;
+    height: 510px;
   }
 
   &:hover {
     background: #fc5842;
     margin-top: -30px;
+
+    @media (max-width: 768px) {
+      margin-top: 0;
+    }
 
     & > div {
       border-bottom: 1px solid #ffffff;
@@ -152,6 +125,8 @@ const CardBodyHeader = styled.div`
   flex: 1 0 auto;
   flex-direction: column;
   align-items: center;
+
+  text-align: center;
   border-bottom: 1px solid gray;
 `;
 
@@ -168,6 +143,11 @@ const CardPrice = styled.h1`
   @media (max-width: 1280px) {
     font-size: 50px;
     line-height: 62px;
+  }
+
+  @media (max-width: 550px) {
+    font-size: 40px;
+    line-height: 52px;
   }
 `;
 
@@ -190,6 +170,10 @@ const CardTitle = styled.h4`
 const CardList = styled.ul`
   margin-top: 38px;
   list-style-type: none;
+
+  @media (max-width: 550px) {
+    margin-top: 23px;
+  }
 `;
 
 const CardListItem = styled.li`
@@ -234,4 +218,9 @@ const CardButton = styled.button`
 
   color: #181818;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    height: 62px;
+    min-width: 100%;
+  }
 `;

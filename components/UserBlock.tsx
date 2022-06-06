@@ -1,29 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import { User } from "../types/type";
-import { LoginWrapper } from "../UI/header/Login/LoginWrapper";
-import { Title } from "../UI/header/Login/Title";
-import CheckMark from "./LoginBlock";
+import { LoginWrapper, Title } from "../UI/header";
 import { useRouter } from "next/router";
+import LoginBlock from "./LoginBlock";
 
-const UserBlock: React.FC = () => {
-  const user = useSelector<RootState, User>((state) => state.users.users);
-  const { name } = user;
+type UserBlockProps = {
+  name: string;
+};
+
+const UserBlock: React.FC<UserBlockProps> = ({ name }) => {
   const router = useRouter();
   return (
     <LoginWrapper>
-      {name && (
-        <>
-          <Title
-            onClick={() => router.push("/subscriptions")}
-            color={router.asPath}
-          >
-            My subscriptions
-          </Title>
-          <CheckMark color="white" height="24px" width="24px" name={name} />
-        </>
-      )}
+      <Title onClick={() => router.push("/subscriptions")} path={router.asPath}>
+        My subscriptions
+      </Title>
+      <LoginBlock color="white" height="24px" width="24px" name={name} />
     </LoginWrapper>
   );
 };

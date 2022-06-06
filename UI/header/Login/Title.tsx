@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Title = styled.p`
+type TitleProps = {
+  path?: string;
+};
+
+const Title = styled.p<TitleProps>`
   font-family: "Thicccboi", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -10,7 +14,7 @@ export const Title = styled.p`
   text-align: center;
 
   color: ${(props) =>
-    props.color !== "/subscriptions" ? "#ffffff" : "#969696"};
+    props.path !== "/subscriptions" ? "#ffffff" : "#969696"};
 
   &:first-child {
     margin-left: 32px;
@@ -18,3 +22,5 @@ export const Title = styled.p`
 
   cursor: pointer;
 `;
+
+export { Title };

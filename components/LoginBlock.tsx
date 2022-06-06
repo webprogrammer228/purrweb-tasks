@@ -1,36 +1,34 @@
-import React, { useState } from "react";
-import { UserSettings } from "../UI/header/UserSettings/UserSettings";
-import { GearIcon } from "../UI/header/UserSettings/GearIcon/GearIcon";
-import { QuitIcon } from "../UI/header/UserSettings/QuitIcon/QuitIcon";
-import { CheckMark } from "../UI/header/Login/CheckMark";
+import React, { useRef, useState } from "react";
+import { Title, UserSettings } from "../UI/header";
+import { CheckMark, GearIcon, QuitIcon } from "../UI/icons";
 import styled from "styled-components";
-import { Title } from "../UI/header/Login/Title";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/UserSlice";
+import { useOnClickOutside } from "../hooks/useClickOutside";
 
 const LoginBlock = ({ ...props }) => {
-  const { width, height, color, name } = props;
   const [showSettingsUser, setShowSettingsUser] = useState(false);
   const dispatch = useDispatch();
 
   const router = useRouter();
 
+  const blockRef = useRef<HTMLDivElement>(null);
+  const clickOutsidehandler = () => {
+    setShowSettingsUser(false);
+  };
+  useOnClickOutside(blockRef, clickOutsidehandler);
+
   return (
-    <Wrapper>
+    <>
       <WrapperLogin onClick={() => setShowSettingsUser(!showSettingsUser)}>
-        <Title color={"/"}>{name}</Title>
-        <CheckMark
-          width={width}
-          color={color}
-          height={height}
-          isShow={showSettingsUser}
-        />
+        <Title path={"/"}>{props.name}</Title>
+        <CheckMark {...props} isShow={showSettingsUser} />
       </WrapperLogin>
 
       {showSettingsUser && (
-        <UserSettings>
+        <UserSettings ref={blockRef}>
           <IconWrapper
             onClick={() => {
               setShowSettingsUser(false);
@@ -53,22 +51,18 @@ const LoginBlock = ({ ...props }) => {
           </IconWrapper>
         </UserSettings>
       )}
-    </Wrapper>
+    </>
   );
 };
 
 export default LoginBlock;
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const WrapperLogin = styled.div`
   display: flex;
   align-items: center;
 
   cursor: pointer;
+  z-index: 20;
 `;
 
 const IconWrapper = styled.div`

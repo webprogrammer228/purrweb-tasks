@@ -2,26 +2,30 @@ import React from "react";
 import styled from "styled-components";
 
 type Stage = {
-  title: string;
-  color?: string;
+  title?: string;
+  index?: number;
+  dataIndex: number;
 };
 
-const Stage: React.FC<Stage> = ({ title, color }) => {
+export const Stage: React.FC<Stage> = ({ title, index, dataIndex }) => {
+  console.log("index", index);
   return (
     <StageWrapper>
       <StageTitle>{title}</StageTitle>
-      <StageLine color={color} />
+      <StageLine index={index} dataIndex={dataIndex} />
     </StageWrapper>
   );
 };
-
-export default Stage;
 
 const StageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 64px;
   margin-right: 16px;
+
+  @media (max-width: 786px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const StageTitle = styled.p`
@@ -35,11 +39,15 @@ const StageTitle = styled.p`
   margin-bottom: 10px;
 `;
 
-const StageLine = styled.div`
+const StageLine = styled.div<Stage>`
   transition: all 0.5s;
-
-  background: ${(props) => (props.color ? props.color : "#373737")};
+  background: ${(props) =>
+    props.index && props.dataIndex <= props.index ? "#FC5842" : "#373737"};
   border-radius: 10px;
   width: 195px;
   height: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

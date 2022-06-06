@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { BottomBlock, TopBlock } from "./index";
 
-type Props = {
-  children?: React.ReactNode;
-};
-
-const FooterLayout = ({ children }: Props) => {
-  return <Footer>{children}</Footer>;
+const FooterLayout = () => {
+  return (
+    <Footer>
+      <TopBlock />
+      <BottomBlock />
+    </Footer>
+  );
 };
 
 export default FooterLayout;
@@ -16,4 +18,8 @@ const Footer = styled.footer`
 
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 550px) {
+    margin: 0 25px;
+  }
 `;

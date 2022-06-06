@@ -1,90 +1,111 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  AddedSubscription,
+  AuthInputs,
+  Code,
+  LoginResponseType,
+  MySubscription,
+  PurchasedSubscription,
+  Subscribe,
+  SubscribeType,
+  User,
+} from "../types/type";
 import Cookies from "js-cookie";
+import { CookiesEnum } from "../utils/utils";
 
 export type StateType = {
   users: {
     id?: number | null;
-    name: string;
+    username: string;
     email: string;
   };
-  subscriptions: {
-    title?: string;
-    price?: number;
-    priceId?: number | undefined;
-  };
-  subscribe: {
-    userId: number | null;
-    productId: number | null;
-    currentPeriodStart: number | null;
-    currentPeriodEnd: number | null;
-    status: string;
-    id: number | null;
-  };
+  currentSubscription: PurchasedSubscription;
+  //возможно, здесь было бы проще сделать subscribe?: тип (без наллов у каждого поля)
+  subscribe?: Subscribe;
+  allSubscriptions: MySubscription[];
 };
 
 export const initialState: StateType = {
-  users: { name: "", email: "" },
-  subscriptions: {},
-  subscribe: {
-    userId: null,
-    productId: null,
-    currentPeriodEnd: null,
-    currentPeriodStart: null,
-    status: "",
-    id: null,
-  },
+  users: { username: "", email: "" },
+  currentSubscription: { price: 0, priceId: 0, title: "" },
+  allSubscriptions: [],
 };
 
 const userSlice = createSlice({
   name: "User",
   initialState,
   reducers: {
-    signUp(state, action) {
+    //лучше было бы типизировать все пэйлоады, чтобы не ошибиться в более сложных местах. для этого тайпскрипт и нужен
+    signUp(state, action: { payload: Omit<AuthInputs, "token" | "password"> }) {
       {
-        const { username, email } = action.payload;
-        state.users.name = username;
-        state.users.email = email;
+        state.users = { ...action.payload };
+        //если бы везде типы соответствовали, то можно было бы через деструктуризацию сделать в нескольких редьюсерах
+        //особенно в buySubscription
+        //state.users = {...action.payload}
       }
     },
-    signIn(state, action) {
-      const { id, username, email } = action.payload.user;
-      state.users.name = username;
-      state.users.email = email;
-      state.users.id = id;
+    signIn(
+      state,
+      action: {
+        payload: Omit<LoginResponseType, "token">;
+      }
+    ) {
+      state.users = { ...action.payload.user };
     },
-    addSubscription(state, action) {
-      const { title, price, id } = action.payload;
-      state.subscriptions.title = title;
-      state.subscriptions.price = price;
-      state.subscriptions.priceId = id + 1;
+    addSubscription(
+      state,
+      action: { payload: AddedSubscription & { id: number } }
+    ) {
+      state.currentSubscription = {
+        ...action.payload,
+        priceId: action.payload.id++,
+      };
     },
-    logOut(state, action) {
-      state.users.name = "";
+    logOut(state, _) {
+      state.users.username = "";
       state.users.email = "";
       state.users.id = null;
+      Cookies.set(CookiesEnum.TOKEN, "");
+      //setTokenToCookies('')
 
-      state.subscriptions = {};
+      state.currentSubscription = { price: 0, title: "", priceId: 0 };
     },
-    buySubscription(state, action) {
-      const {
-        id,
-        userId,
-        productId,
-        currentPeriodStart,
-        currentPeriodEnd,
-        status,
-      } = action.payload.subscribe;
-      state.subscribe.id = id;
-      state.subscribe.userId = userId;
-      state.subscribe.productId = productId;
-      state.subscribe.currentPeriodStart = currentPeriodStart;
-      state.subscribe.currentPeriodEnd = currentPeriodEnd;
-      state.subscribe.status = status;
+    buySubscription(state, action: { payload: SubscribeType }) {
+      state.subscribe = { ...action.payload };
+    },
+    codeActivate(state, action: { payload: Code }) {
+      const { id, status, origin } = action.payload;
+      state.allSubscriptions.map((subscription) =>
+        subscription.codes.map((code) => {
+          if (code.id === id) {
+            code.status = status;
+            code.origin = origin;
+          }
+        })
+      );
+    },
+    getAllSubscription(state, action) {
+      const { allSubscriptions } = action.payload;
+      state.allSubscriptions = [...allSubscriptions][0];
+    },
+    getMe(
+      state,
+      action: { payload: User }
+    ) {
+      state.users = { ...action.payload };
     },
   },
 });
 
-export const { signUp, signIn, addSubscription, logOut, buySubscription } =
-  userSlice.actions;
+export const {
+  signUp,
+  signIn,
+  addSubscription,
+  logOut,
+  buySubscription,
+  codeActivate,
+  getAllSubscription,
+  getMe,
+} = userSlice.actions;
 
 export default userSlice.reducer;

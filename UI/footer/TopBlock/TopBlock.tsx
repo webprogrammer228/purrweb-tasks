@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo } from "../../header/Logo/Logo";
+import { Logo } from "../../icons";
 import styled from "styled-components";
 
 const TopBlock = () => {
@@ -24,6 +24,10 @@ const Wrapper = styled.div`
   border-bottom: 1px solid #393939;
   width: 100%;
   margin-bottom: 44px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 32px;
+  }
 `;
 
 const UnderLogoDescription = styled.p`
@@ -39,4 +43,11 @@ const UnderLogoDescription = styled.p`
   margin-bottom: 60px;
 
   color: #c7c7c7;
+
+  @media (max-width: 550px) {
+    line-height: 23px;
+    margin-top: 24px;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
 `;

@@ -1,35 +1,21 @@
 import React from "react";
 import { SubscriptionsType } from "../../types/type";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { URL } from "../../config";
 import { GetServerSideProps } from "next";
+import { URL } from "../../config";
+import { Wrapper } from "../../UI/Wrapper";
+import { SettingsTitle } from "../../UI/SettingsTitle";
+import { SubmitBtn } from "../../UI/form";
+import Subscription from "../../components/Subscription";
 
-const Subscriptions = ({ ...res }: SubscriptionsType[]) => {
-  //Object.values(res).map((r) => {
-  //  for (let i = 0; i < r.length; i++) {
-  //    {
-  //      console.log(r[i].id);
-  //    }
-  //  }
-  //});
-
-  const obj = Object.values(res);
-
-  const getDataFromResponse = () => {
-    for (let i = 0; i < obj.length; i++) {
-      return obj[i].map((elem) => elem);
-    }
-  };
-
-  console.log();
-
+const Subscriptions = ({ ...props }: SubscriptionsType) => {
   return (
     <>
-      {getDataFromResponse()?.map((el) => (
-        <React.Fragment key={el.id}>
-          <h1 style={{ color: "red" }}>{el.id}</h1>
-        </React.Fragment>
-      ))}
+      <Wrapper direction="row" align="left" justifyContent="space-between">
+        <SettingsTitle>My subscriptions</SettingsTitle>
+        <SubmitBtn width="152px" smConfig={true} label="upgrade" />
+      </Wrapper>
+      <Subscription info={props} />
     </>
   );
 };
@@ -37,14 +23,14 @@ const Subscriptions = ({ ...res }: SubscriptionsType[]) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context;
 
-  const ress = await axios
-    .get(`${URL}/subscribe/self`, {
+  const res = await axios
+    .get(`${URL}subscribe/self`, {
       headers: { Authorization: `Bearer ${req.cookies.token}` },
     })
     .then((res: AxiosResponse<SubscriptionsType, string>) => res.data)
     .catch((e: AxiosError) => e.message);
 
-  return { props: { ress } };
+  return { props: { res } };
 };
 
 export default Subscriptions;

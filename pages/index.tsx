@@ -1,15 +1,14 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import { Card } from "../components";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { logOut } from "store/UserSlice";
+import { logOut } from "../store/UserSlice";
+import { Cards } from "../components";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (Cookies.get("token") === undefined) {
       dispatch(logOut({}));
@@ -19,7 +18,7 @@ const Home: NextPage = () => {
   return (
     <>
       <GreetingHome>Get started with Gscore today!</GreetingHome>
-      <Card />
+      <Cards />
       <UnderCardsTextBlock>
         <OfferText>Have more than 10 sites?</OfferText>
         <Link href="#">Contact us</Link>
@@ -39,6 +38,15 @@ const GreetingHome = styled.h1`
   text-align: center;
 
   margin-bottom: 98px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 40px;
+    font-size: 36px;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 32px;
+  }
 `;
 
 const UnderCardsTextBlock = styled.div`
@@ -75,6 +83,6 @@ const OfferText = styled.p`
 `;
 
 const Line = styled.hr`
-  background: #181818;
+  border: 1px solid #393939;
   margin-bottom: 60px;
 `;
