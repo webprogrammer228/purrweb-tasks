@@ -49,7 +49,7 @@ const Registration = () => {
           Cookies.set("token", response.token);
           router.push("/login");
         })
-        .catch((e) => {
+        .catch((e: { data: { message: React.SetStateAction<string>; }; }) => {
           setErrs(e.data.message);
         });
     }

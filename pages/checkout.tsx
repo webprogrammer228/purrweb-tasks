@@ -6,7 +6,7 @@ import { Form } from "../UI/form/Form";
 import { SubmitButton } from "../UI/form/SubmitButton";
 import { FormWrapper } from "../UI/form/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SubscribeType, Subscription } from "../types/type";
+import { SubscribeType, SubscriptionType } from "../types/type";
 import { PurchaseWrapper } from "../UI/checkout/PurchaseWrapper";
 import { PurchaseHeaderWrapper } from "../UI/checkout/PurchaseHeaderWrapper";
 import { PurchaseHeaderTitle } from "../UI/checkout/PurchaseHeaderTitle";
@@ -25,7 +25,7 @@ import { useRouter } from "next/router";
 import { useBuySubscriptionMutation } from "../store/RegisterApi";
 
 const Checkout = () => {
-  const subscription = useSelector<RootState, Subscription>(
+  const subscription = useSelector<RootState, SubscriptionType>(
     (state) => state.users.subscriptions
   );
   let { priceId } = subscription;

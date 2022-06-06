@@ -16,7 +16,7 @@ export type User = {
   email: string;
 };
 
-export type Subscription = {
+export type SubscriptionType = {
   title?: string;
   price?: number;
   priceId?: number | undefined;

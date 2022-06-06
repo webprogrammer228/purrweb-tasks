@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginInputs, RegisterInputs, SubscriptionsType } from "../types/type";
-import { config, configLogin } from "../config";
-
-export const URLRegister: string = process.env.NEXT_PUBLIC_URL_SIGNUP!;
-export const URLLogin: string = process.env.NEXT_PUBLIC_URL_SIGNIN!;
-export const URL: string = process.env.NEXT_PUBLIC_URL!;
+import {
+  LoginInputs,
+  RegisterInputs,
+  SubscriptionsType,
+  SubscriptionType,
+} from "../types/type";
+import { config, configLogin, URL } from "../config";
 
 export const userApi = createApi({
   reducerPath: "User",
@@ -13,7 +14,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (user: RegisterInputs) => ({
-        url: URLRegister,
+        url: `${URL}/users/sign-up`,
         headers: config,
         method: "POST",
         body: user,
@@ -21,26 +22,26 @@ export const userApi = createApi({
     }),
     signIn: builder.mutation({
       query: (user: LoginInputs) => ({
-        url: URLLogin,
+        url: `${URL}/users/sign-in`,
         headers: configLogin,
         method: "POST",
         body: user,
       }),
     }),
     buySubscription: builder.mutation({
-      query: (subscription) => ({
-        url: `${URL}payments/buy`,
+      query: (subscription: SubscriptionType) => ({
+        url: `${URL}/payments/buy`,
         headers: configLogin,
         method: "POST",
         body: subscription,
       }),
     }),
-    getSubscriptions: builder.query<SubscriptionsType, string>({
-      query: () => ({
-        url: `${URL}subscribe/self`,
-        headers: configLogin,
-      }),
-    }),
+    //getSubscriptions: builder.query<SubscriptionsType, string>({
+    //  query: () => ({
+    //    url: `${URL}/subscribe/self`,
+    //    headers: configLogin,
+    //  }),
+    //}),
   }),
 });
 
@@ -48,5 +49,5 @@ export const {
   useSignUpMutation,
   useSignInMutation,
   useBuySubscriptionMutation,
-  useGetSubscriptionsQuery,
+  //useGetSubscriptionsQuery,
 } = userApi;
